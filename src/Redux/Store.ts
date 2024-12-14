@@ -9,18 +9,24 @@ import methodResultsReducer from './Results/MethodResults/MethodResultsSlice';
 import loadTestResultsReducer from './Results/LoadTestResults/LoadTestResultsSlice';
 import historyResultsReducer from './Results/HistoryResults/HistoryResultsSlice';
 import scenariosReducer from './Services/Scenarios/ScenariosSlice';
+import exceptionResultsReducer from './Results/ExceptionResults/ExceptionResultsSlice';
+import comparesReducer from './Compares/Compares/ComparesSlice';
+import compareSettingsReducer from './Compares/CompareSettings/CompareSettingsSlice';
 
 export const store = configureStore({
   reducer: {
     core: coreReducer,
     methods: methodReducer,
     services: servicesReducer,
+    compares: comparesReducer,
     scenarios: scenariosReducer,
     analytics: analyticsReducer,
     ratioResults: ratioResultsReducer,
     methodResults: methodResultsReducer,
     historyResults: historyResultsReducer,
-    loadTestResults: loadTestResultsReducer
+    compareSettings: compareSettingsReducer,
+    loadTestResults: loadTestResultsReducer,
+    exceptionResults: exceptionResultsReducer
   }
 });
 export const persistor = persistStore(store);

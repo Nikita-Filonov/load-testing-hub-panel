@@ -1,9 +1,13 @@
 import { INITIAL_SERVICES, ServicesInitialState } from './InitialState';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Service } from '../../../Models/Services/Services';
+import { Service, ServiceDetails, ServiceType } from '../../../Models/Services/Services';
 import { PersistConfig } from 'redux-persist/es/types';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer } from 'redux-persist';
+
+type DeleteService = {
+  serviceId: number;
+};
 
 export const servicesSlice = createSlice({
   name: 'services',
@@ -15,8 +19,25 @@ export const servicesSlice = createSlice({
     setServices: (state, action: PayloadAction<Service[]>) => {
       state.services = action.payload;
     },
-    setSettingsServices: (state, action: PayloadAction<Service[]>) => {
-      state.settingsServices = action.payload;
+    createService: (state, action: PayloadAction<Service>) => {
+      state.services = [...state.services, action.payload];
+    },
+    updateService: (state, action: PayloadAction<Service>) => {
+      const newService = action.payload;
+      state.services = state.services.map((service: Service) => (service.id === newService.id ? newService : service));
+
+      if (state.service.id === newService.id) {
+        state.service = newService.type === ServiceType.Internal ? INITIAL_SERVICES.service : newService;
+      }
+    },
+    deleteService: (state, action: PayloadAction<DeleteService>) => {
+      const serviceId = action.payload.serviceId;
+      state.services = state.services.filter((service) => service.id !== serviceId);
+
+      if (state.service.id === serviceId) state.service = INITIAL_SERVICES.service;
+    },
+    setServiceDetails: (state, action: PayloadAction<ServiceDetails>) => {
+      state.serviceDetails = action.payload;
     }
   }
 });
@@ -27,6 +48,7 @@ const persistConfig: PersistConfig<ServicesInitialState> = {
   whitelist: ['service']
 };
 
-export const { setService, setServices, setSettingsServices } = servicesSlice.actions;
+export const { setService, setServices, createService, updateService, deleteService, setServiceDetails } =
+  servicesSlice.actions;
 
 export default persistReducer(persistConfig, servicesSlice.reducer);

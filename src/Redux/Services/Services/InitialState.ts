@@ -1,17 +1,24 @@
-import { Service } from '../../../Models/Services/Services';
+import { Service, ServiceDetails, ServiceType } from '../../../Models/Services/Services';
 
 export type ServicesInitialState = {
   service: Service;
   services: Service[];
-  settingsServices: Service[];
+  serviceDetails: ServiceDetails;
+};
+
+const DEFAULT_SERVICE: Service = {
+  id: 0,
+  url: '',
+  name: '',
+  type: ServiceType.Production
 };
 
 export const INITIAL_SERVICES: ServicesInitialState = {
-  service: {
-    url: '',
-    name: '',
-    isInternal: false
-  },
+  service: DEFAULT_SERVICE,
   services: [],
-  settingsServices: []
+  serviceDetails: {
+    ...DEFAULT_SERVICE,
+    cluster: '',
+    namespace: ''
+  }
 };

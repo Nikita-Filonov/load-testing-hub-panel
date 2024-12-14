@@ -1,4 +1,5 @@
 import { BaseTableHeader } from '../BaseTableHeader';
+import { MetricName } from '../../../Services/Constants/Metrics';
 
 export const MethodResultsTableHeader = () => {
   return (
@@ -6,14 +7,15 @@ export const MethodResultsTableHeader = () => {
       cells={[
         { value: undefined },
         { value: 'Method' },
-        { value: 'Max response time (ms)' },
-        { value: 'Min response time (ms)' },
-        { value: 'Number of requests' },
-        { value: 'Number of failures' },
-        { value: 'Total response time (ms)' },
-        { value: 'Requests per second' },
-        { value: 'Failures per second' },
-        { value: 'Average response time (ms)' }
+        { value: MetricName.MaxResponseTime },
+        { value: MetricName.MinResponseTime },
+        { value: MetricName.NumberOfRequests },
+        { value: MetricName.NumberOfFailures },
+        { value: MetricName.TotalResponseTime },
+        { value: MetricName.RequestsPerSecond },
+        { value: MetricName.FailuresPerSecond },
+        { value: MetricName.AverageResponseTime },
+        { value: MetricName.AverageContentLength }
       ]}
     />
   );

@@ -1,6 +1,6 @@
 import { lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { ProtectedRoute } from '../ProtectedRoute';
+import { ServicesDrawer } from '../../Components/Navigation/Services/ServicesDrawer';
 
 const MethodsPage = lazy(() => import('../../Pages/Methods/MethodsPage'));
 const MethodDetailsPage = lazy(() => import('../../Pages/Methods/MethodDetailsPage'));
@@ -8,7 +8,7 @@ const MethodDetailsPage = lazy(() => import('../../Pages/Methods/MethodDetailsPa
 export const MethodsRoutes = () => {
   return (
     <Routes>
-      <Route element={<ProtectedRoute isAllowed={true} />}>
+      <Route element={<ServicesDrawer />}>
         <Route index element={<MethodsPage />} />
         <Route path={'/details'} element={<MethodDetailsPage />} />
       </Route>

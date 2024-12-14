@@ -1,6 +1,6 @@
 import { INITIAL_HISTORY_RESULTS } from './InitialState';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { HistoryResult, HistoryResultsCompare } from '../../../Models/Results/HistoryResults';
+import { HistoryResult } from '../../../Models/Results/HistoryResults';
 
 export const historyResultsSlice = createSlice({
   name: 'historyResults',
@@ -8,13 +8,10 @@ export const historyResultsSlice = createSlice({
   reducers: {
     setHistoryResults: (state, action: PayloadAction<HistoryResult[]>) => {
       state.historyResults = action.payload;
-    },
-    setHistoryResultsCompare: (state, action: PayloadAction<HistoryResultsCompare>) => {
-      state.historyResultsCompare = action.payload;
     }
   }
 });
 
-export const { setHistoryResults, setHistoryResultsCompare } = historyResultsSlice.actions;
+export const { setHistoryResults } = historyResultsSlice.actions;
 
 export default historyResultsSlice.reducer;

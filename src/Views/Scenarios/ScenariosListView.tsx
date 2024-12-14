@@ -1,33 +1,52 @@
 import { useScenarios } from '../../Providers/Services/ScenariosProvider';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import { connect } from 'react-redux';
 import { ReduxState } from '../../Redux/ReduxState';
 import { Scenario } from '../../Models/Services/Scenarios';
 import { ScenarioListItem } from '../../Components/ListItems/Scenarios/ScenarioListItem';
-import { WidgetView } from '../../Components/Views/WidgetView';
 import List from '@mui/material/List';
 import { ScenarioDetailsModal } from '../../Components/Modals/Scenarios/ScenarioDetailsModal';
 import { EmptyView } from '../../Components/Views/EmptyView';
-import ScenarioSettingsModal from '../../Components/Modals/Scenarios/ScenarioSettingsModal';
+import UpdateScenarioSettingsModal from '../../Components/Modals/Scenarios/UpdateScenarioSettingsModal';
 import { ScenarioSettingsProvider } from '../../Providers/Services/ScenarioSettingsProvider';
 import { Service } from '../../Models/Services/Services';
-import { MethodsProvider } from '../../Providers/Results/MethodsProvider';
+import { SettingsView } from '../../Components/Views/SettingsView';
+import AddIcon from '@mui/icons-material/Add';
+import { CreateScenarioModal } from '../../Components/Modals/Scenarios/CreateScenarioModal';
+import { INITIAL_SCENARIOS } from '../../Redux/Services/Scenarios/InitialState';
+import UpdateScenarioModal from '../../Components/Modals/Scenarios/UpdateScenarioModal';
+import { SearchTextField } from '../../Components/TextFields/SearchTextField';
 
-type ScenariosListViewProps = {
+type ScenariosSettingsViewProps = {
   service: Service;
   scenarios: Scenario[];
 };
 
-const ScenariosListView: FC<ScenariosListViewProps> = (props) => {
+const ScenariosListView: FC<ScenariosSettingsViewProps> = (props) => {
   const { service, scenarios } = props;
   const { loading, getScenarios } = useScenarios();
-  const [scenario, setScenario] = useState<null | Scenario>(null);
+  const [search, setSearch] = useState('');
+  const [scenario, setScenario] = useState<Scenario>(INITIAL_SCENARIOS.scenario);
+  const [createScenarioModal, setCreateScenarioModal] = useState(false);
+  const [updateScenarioModal, setUpdateScenarioModal] = useState(false);
   const [scenarioDetailsModal, setScenarioDetailsModal] = useState(false);
   const [scenarioSettingsModal, setScenarioSettingsModal] = useState(false);
 
   useEffect(() => {
-    service.name && getScenarios({ service: service.name });
-  }, [service.name]);
+    service.id && getScenarios({ serviceId: service.id });
+  }, [service.id]);
+
+  const filteredScenarios = useMemo(
+    () => scenarios.filter((scenario) => scenario.name.toLowerCase().includes(search.toLowerCase())),
+    [search, scenarios]
+  );
+
+  const onCreateScenario = () => setCreateScenarioModal(true);
+
+  const onUpdateScenario = (scenario: Scenario) => {
+    setScenario(scenario);
+    setUpdateScenarioModal(true);
+  };
 
   const onScenarioDetails = (scenario: Scenario) => {
     setScenario(scenario);
@@ -40,43 +59,41 @@ const ScenariosListView: FC<ScenariosListViewProps> = (props) => {
   };
 
   return (
-    <WidgetView sx={{ mt: 3 }} title={'Scenarios'} loading={loading.getScenarios}>
-      {scenarios.length === 0 && !loading.getSettingsScenarios && (
+    <SettingsView
+      title={'Scenarios'}
+      loading={loading.getScenarios}
+      actions={[{ icon: <AddIcon />, onClick: onCreateScenario, disabled: !service.id }]}>
+      {scenarios.length === 0 && !loading.getScenarios && (
         <EmptyView
           title={'There is no scenarios'}
-          description={'Scenarios will be displayed here when some results will be uploaded to system'}
+          description={'To create a scenario, click on the plus sign in the upper right corner'}
         />
       )}
-      <List>
-        {scenarios.map((item, index) => (
+      {scenarios.length > 0 && !loading.getScenarios && (
+        <SearchTextField sx={{ mb: 2, mt: 0 }} label={'Search by name'} value={search} onChange={setSearch} />
+      )}
+      <List dense>
+        {filteredScenarios.map((item, index) => (
           <ScenarioListItem
             key={index}
-            selected={false}
             scenario={item}
+            onUpdateScenario={onUpdateScenario}
             onScenarioDetails={onScenarioDetails}
             onScenarioSettings={onScenarioSettings}
           />
         ))}
       </List>
-      {scenario && (
-        <ScenarioDetailsModal
-          modal={scenarioDetailsModal}
-          setModal={setScenarioDetailsModal}
-          scenarioName={scenario.name}
+      <CreateScenarioModal modal={createScenarioModal} setModal={setCreateScenarioModal} serviceId={service.id} />
+      <UpdateScenarioModal modal={updateScenarioModal} setModal={setUpdateScenarioModal} scenarioId={scenario.id} />
+      <ScenarioDetailsModal modal={scenarioDetailsModal} setModal={setScenarioDetailsModal} scenarioId={scenario.id} />
+      <ScenarioSettingsProvider>
+        <UpdateScenarioSettingsModal
+          modal={scenarioSettingsModal}
+          setModal={setScenarioSettingsModal}
+          scenarioId={scenario.id}
         />
-      )}
-      {scenario && (
-        <ScenarioSettingsProvider>
-          <MethodsProvider>
-            <ScenarioSettingsModal
-              modal={scenarioSettingsModal}
-              setModal={setScenarioSettingsModal}
-              scenarioName={scenario.name}
-            />
-          </MethodsProvider>
-        </ScenarioSettingsProvider>
-      )}
-    </WidgetView>
+      </ScenarioSettingsProvider>
+    </SettingsView>
   );
 };
 

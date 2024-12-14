@@ -1,19 +1,16 @@
 import React, { FC, PropsWithChildren, useContext, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setAverageAnalytics, setAverageAnalyticsScenarioCompare } from '../../Redux/Analytics/AnalyticsSlice';
+import { setAverageAnalytics } from '../../Redux/Analytics/AnalyticsSlice';
 import { AverageAnalyticsHTTPClient } from '../../Services/Clients/Analytics/AverageAnalyticsHTTPClient';
 import { GetResultsAnalyticsQuery } from '../../Models/Analytics/ResultsAnalytics';
-import { GetAverageAnalyticsScenarioCompareQuery } from '../../Models/Analytics/AverageAnalytics';
 
 interface Loading {
   getAverageAnalytics: boolean;
-  getAverageAnalyticsScenarioCompare: boolean;
 }
 
 export type AverageAnalyticsContextProps = {
   loading: Loading;
   getAverageAnalytics: (query: GetResultsAnalyticsQuery) => Promise<void>;
-  getAverageAnalyticsScenarioCompare: (query: GetAverageAnalyticsScenarioCompareQuery) => Promise<void>;
 };
 
 const AverageAnalyticsContext = React.createContext<AverageAnalyticsContextProps | null>(null);
@@ -22,8 +19,7 @@ const AverageAnalyticsProvider: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();
   const averageAnalyticsHTTPClient = new AverageAnalyticsHTTPClient();
   const [loading, setLoading] = useState<Loading>({
-    getAverageAnalytics: false,
-    getAverageAnalyticsScenarioCompare: false
+    getAverageAnalytics: false
   });
 
   const getAverageAnalyticsAPI = async (query: GetResultsAnalyticsQuery) => {
@@ -33,19 +29,11 @@ const AverageAnalyticsProvider: FC<PropsWithChildren> = ({ children }) => {
     setLoading((loading) => ({ ...loading, getAverageAnalytics: false }));
   };
 
-  const getAverageAnalyticsScenarioCompareAPI = async (query: GetAverageAnalyticsScenarioCompareQuery) => {
-    setLoading((loading) => ({ ...loading, getAverageAnalyticsScenarioCompare: true }));
-    const response = await averageAnalyticsHTTPClient.getAverageAnalyticsScenarioCompare(query);
-    response && dispatch(setAverageAnalyticsScenarioCompare(response.compare));
-    setLoading((loading) => ({ ...loading, getAverageAnalyticsScenarioCompare: false }));
-  };
-
   return (
     <AverageAnalyticsContext.Provider
       value={{
         loading,
-        getAverageAnalytics: getAverageAnalyticsAPI,
-        getAverageAnalyticsScenarioCompare: getAverageAnalyticsScenarioCompareAPI
+        getAverageAnalytics: getAverageAnalyticsAPI
       }}>
       {children}
     </AverageAnalyticsContext.Provider>

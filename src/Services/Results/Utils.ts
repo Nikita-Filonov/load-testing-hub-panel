@@ -1,41 +1,37 @@
-import { LoadTestResult } from '../../Models/Results/LoadTestResults';
+import { LoadTestResult, ShortLoadTestResult } from '../../Models/Results/LoadTestResults';
+import dayjs from 'dayjs';
+import { SettingsManager } from '../Config';
+import { AppRoutes } from '../Constants/Routing';
+import { formatRouteTemplate } from '../Navigation/Utils';
+import { LoadTestResultsFilters } from '../../Components/Modals/Results/LoadTestResultsFiltersModal';
 
-export const getLoadTestResultTitle = (result: LoadTestResult): string => {
-  if (result.triggerCIProjectVersion) {
-    return `Load tests for ${result.service} ${result.triggerCIProjectVersion}`;
-  }
-
-  return `Load tests for ${result.service}`;
+export const getLoadTestResultTitle = (result: ShortLoadTestResult): string => {
+  return `#${result.id} Load tests for ${result.service.name}, ${result.scenario.name} scenario`;
 };
 
-export const getLoadTestResultCompareTitle = ({ percent, context }: { percent?: number; context: string }): string => {
-  if (percent === undefined) {
-    return 'No info';
-  }
+export const getLoadTestResultDates = (result: LoadTestResult): string => {
+  const startedAt = dayjs(result.startedAt).format(SettingsManager.apiDateTimeFormat);
+  const finishedAt = dayjs(result.finishedAt).format(SettingsManager.apiDateTimeFormat);
 
-  if (percent > 0) {
-    return `${percent}% better than ${context}`;
-  }
-
-  if (percent < 0) {
-    return `${percent}% worse than ${context}`;
-  }
-
-  return `No difference to ${context}`;
+  return `${startedAt} — ${finishedAt}`;
 };
 
-export const getLoadTestResultCompareColor = (percent?: number): 'error' | 'success' | 'warning' => {
-  if (percent === undefined) {
-    return 'warning';
-  }
+export const buildResultsURL = (serviceId: number): string => {
+  const route = formatRouteTemplate(AppRoutes.ServiceResults, { serviceId });
 
-  if (percent > 0) {
-    return 'success';
-  }
+  return `${SettingsManager.appUrl}${route}`;
+};
 
-  if (percent < 0) {
-    return 'error';
-  }
+export const buildLoadTestResultURL = (loadTestResultId: number, serviceId: number): string => {
+  const route = formatRouteTemplate(AppRoutes.ServiceResultDetails, { serviceId, loadTestResultId });
 
-  return 'warning';
+  return `${SettingsManager.appUrl}${route}`;
+};
+
+export const getDefaultLoadTestResultsFilters = (): LoadTestResultsFilters => {
+  return {
+    startedAt: null,
+    finishedAt: null,
+    triggerCIProjectVersion: null
+  };
 };

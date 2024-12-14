@@ -3,8 +3,6 @@ import { SettingsManager } from '../../Config';
 import {
   GetMethodDetailsQuery,
   GetMethodDetailsResponse,
-  GetMethodScenarioCompareQuery,
-  GetMethodScenarioCompareResponse,
   GetMethodsQuery,
   GetMethodsResponse,
   GetShortMethodsQuery,
@@ -28,13 +26,6 @@ export class MethodsHTTPClient extends HTTPClient {
 
   async getMethodDetails(query: GetMethodDetailsQuery): Promise<GetMethodDetailsResponse | null> {
     const response = await this.get({ url: '/methods/details', query });
-    return response.json;
-  }
-
-  async getMethodScenarioCompare(
-    query: GetMethodScenarioCompareQuery
-  ): Promise<GetMethodScenarioCompareResponse | null> {
-    const response = await this.get({ url: '/methods/scenario-compare', query });
     return response.json;
   }
 }

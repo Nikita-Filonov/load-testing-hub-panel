@@ -5,15 +5,15 @@ import ScenarioDetailsView from '../../../Views/Scenarios/ScenarioDetailsView';
 type ScenarioDetailsModalProps = {
   modal: boolean;
   setModal: (modal: boolean) => void;
-  scenarioName: string;
+  scenarioId: number;
 };
 
 export const ScenarioDetailsModal: FC<ScenarioDetailsModalProps> = (props) => {
-  const { modal, setModal, scenarioName } = props;
+  const { modal, setModal, scenarioId } = props;
 
   return (
-    <BaseModal title={'Scenario details'} modal={modal} setModal={setModal}>
-      <ScenarioDetailsView scenarioName={scenarioName} />
+    <BaseModal title={'Scenario details'} modal={modal} setModal={setModal} maxWidth={'md'}>
+      <ScenarioDetailsView scenarioId={scenarioId} />
     </BaseModal>
   );
 };

@@ -11,8 +11,8 @@ interface Loading {
 
 export type ServicesContextProps = {
   loading: Loading;
-  getScenarioSettings: (scenario: string) => Promise<void>;
-  updateScenarioSettings: (request: UpdateScenarioSettingsRequest) => Promise<boolean>;
+  getScenarioSettings: (scenarioId: number) => Promise<void>;
+  updateScenarioSettings: (scenarioId: number, request: UpdateScenarioSettingsRequest) => Promise<boolean>;
 };
 
 const ScenarioSettingsContext = React.createContext<ServicesContextProps | null>(null);
@@ -25,16 +25,16 @@ const ScenarioSettingsProvider: FC<PropsWithChildren> = ({ children }) => {
     updateScenarioSettings: false
   });
 
-  const getScenarioSettingsAPI = async (scenario: string) => {
+  const getScenarioSettingsAPI = async (scenarioId: number) => {
     setLoading({ ...loading, getScenarioSettings: true });
-    const response = await scenarioSettingsHTTPClient.getScenarioSettings(scenario);
+    const response = await scenarioSettingsHTTPClient.getScenarioSettings(scenarioId);
     response && dispatch(setScenarioSettings(response.settings));
     setLoading({ ...loading, getScenarioSettings: false });
   };
 
-  const updateScenarioSettingsAPI = async (request: UpdateScenarioSettingsRequest) => {
+  const updateScenarioSettingsAPI = async (scenarioId: number, request: UpdateScenarioSettingsRequest) => {
     setLoading({ ...loading, updateScenarioSettings: true });
-    const response = await scenarioSettingsHTTPClient.updateScenarioSettings(request);
+    const response = await scenarioSettingsHTTPClient.updateScenarioSettings(scenarioId, request);
     response && dispatch(setScenarioSettings(response.settings));
     setLoading({ ...loading, updateScenarioSettings: false });
     return Boolean(!response);

@@ -1,10 +1,9 @@
-import { Method, MethodDetails, MethodScenarioCompare, ShortMethod } from '../../../Models/Results/Methods';
+import { Method, MethodDetails, ShortMethod } from '../../../Models/Results/Methods';
 
 export type MethodsInitialState = {
   methods: Method[];
   shortMethods: ShortMethod[];
   methodDetails: MethodDetails;
-  methodScenarioCompare: MethodScenarioCompare;
 };
 
 export const INITIAL_METHODS: MethodsInitialState = {
@@ -12,7 +11,6 @@ export const INITIAL_METHODS: MethodsInitialState = {
   shortMethods: [],
   methodDetails: {
     method: '',
-    service: '',
     averageResponseTime: 0,
     averageNumberOfRequests: 0,
     averageRequestsPerSecond: 0,
@@ -20,10 +18,5 @@ export const INITIAL_METHODS: MethodsInitialState = {
     averageMinResponseTime: 0,
     averageNumberOfFailures: 0,
     averageFailuresPerSecond: 0
-  },
-  methodScenarioCompare: {
-    scenarioRequestsPerSecond: 0,
-    averageRequestsPerSecond: 0,
-    averageRequestsPerSecondCompare: 0
   }
 };

@@ -1,9 +1,16 @@
 import { BasePaper } from './BasePaper';
-import Typography from '@mui/material/Typography';
-import { FC, PropsWithChildren, ReactNode } from 'react';
+import { Grid2, IconButton, Paper, SxProps, Theme, Typography } from '@mui/material';
+import { FC, PropsWithChildren, ReactNode, useState } from 'react';
 import { LoadingView } from './LoadingView';
-import { Grid, Paper, SxProps, Theme } from '@mui/material';
 import Box from '@mui/material/Box';
+import AddIcon from '@mui/icons-material/Add';
+import CloseIcon from '@mui/icons-material/Close';
+
+type WidgetAction = {
+  icon?: ReactNode;
+  onClick?: () => void;
+  content?: ReactNode;
+};
 
 type WidgetViewProps = {
   sx?: SxProps<Theme>;
@@ -11,9 +18,12 @@ type WidgetViewProps = {
   title?: string | ReactNode;
   label?: ReactNode;
   height?: number;
+  actions?: WidgetAction[];
   loading?: boolean;
   children?: ReactNode;
   childrenSx?: SxProps<Theme>;
+  allowClose?: boolean;
+  defaultClose?: boolean;
 };
 
 type ContainerProps = {
@@ -34,17 +44,50 @@ const Container: FC<ContainerProps> = (props) => {
 };
 
 export const WidgetView: FC<WidgetViewProps> = (props) => {
-  const { sx, flat = false, title, label, height = 300, loading, children, childrenSx } = props;
+  const {
+    sx,
+    flat = false,
+    title,
+    label,
+    height = 300,
+    actions,
+    loading,
+    children,
+    childrenSx,
+    allowClose,
+    defaultClose = false
+  } = props;
+  const [widgetHidden, setWidgetHidden] = useState(defaultClose);
+
+  const onHide = () => setWidgetHidden(!widgetHidden);
 
   return (
     <Container sx={sx} flat={flat}>
-      <Grid container spacing={1} display={'flex'} alignItems={'center'}>
-        <Grid item>
+      <Grid2 container spacing={1} display={'flex'} alignItems={'center'}>
+        <Grid2>
           <Typography variant={'h6'}>{title}</Typography>
-        </Grid>
-        <Grid item>{label}</Grid>
-      </Grid>
-      {loading ? <LoadingView height={height} /> : <Box sx={childrenSx}>{children}</Box>}
+        </Grid2>
+        <Grid2>{label}</Grid2>
+        <Grid2 sx={{ ml: 'auto', display: 'flex', alignItems: 'flex-end' }}>
+          {actions?.map((action, index) =>
+            action.icon ? (
+              <IconButton size={'small'} key={index} sx={{ mr: 1 }} onClick={action.onClick}>
+                {action.icon}
+              </IconButton>
+            ) : (
+              <Box key={index} sx={{ mr: 1 }}>
+                {action.content}
+              </Box>
+            )
+          )}
+          {allowClose && (
+            <IconButton size={'small'} onClick={onHide}>
+              {widgetHidden ? <AddIcon fontSize={'small'} /> : <CloseIcon fontSize={'small'} />}
+            </IconButton>
+          )}
+        </Grid2>
+      </Grid2>
+      {widgetHidden ? null : loading ? <LoadingView height={height} /> : <Box sx={childrenSx}>{children}</Box>}
     </Container>
   );
 };

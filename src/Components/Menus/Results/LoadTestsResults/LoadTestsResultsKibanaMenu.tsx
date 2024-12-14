@@ -19,9 +19,9 @@ export const LoadTestsResultsKibanaMenu: FC<LoadTestsResultsKibanaMenuProps> = (
 
   const onClose = () => setMenu(null);
 
-  const onOpenKibanaDiscoverUrl = (service: string) => async () => {
+  const onOpenKibanaDiscoverUrl = (serviceId: number) => async () => {
     const response = await getKibanaDiscoverUrl({
-      service,
+      serviceId,
       startedAt: details.startedAt,
       finishedAt: details.finishedAt
     });
@@ -39,7 +39,7 @@ export const LoadTestsResultsKibanaMenu: FC<LoadTestsResultsKibanaMenuProps> = (
           key={index}
           icon={<CodeIcon />}
           label={`Open ${service.name} kibana discover`}
-          onClick={onOpenKibanaDiscoverUrl(service.name)}
+          onClick={onOpenKibanaDiscoverUrl(service.id)}
         />
       ))}
     </BaseMenu>

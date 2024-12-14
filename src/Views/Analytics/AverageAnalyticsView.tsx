@@ -22,8 +22,8 @@ const AverageAnalyticsView: FC<AverageAnalyticsViewProps> = (props) => {
   const { loading, getAverageAnalytics } = useAverageAnalytics();
 
   useEffect(() => {
-    service.name && getAverageAnalytics({ service: service.name, scenario: scenario.name, ...filters });
-  }, [service.name, scenario.name, filters]);
+    service.id && getAverageAnalytics({ serviceId: service.id, scenarioId: scenario.id, ...filters });
+  }, [service.id, scenario.id, filters]);
 
   return (
     <WidgetView sx={{ mt: 3 }} title={'Average numbers'} loading={loading.getAverageAnalytics}>

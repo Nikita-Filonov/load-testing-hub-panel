@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { ReduxState } from '../../Redux/ReduxState';
 import Box from '@mui/material/Box';
 import { EmptyView } from '../../Components/Views/EmptyView';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import { useMethods } from '../../Providers/Results/MethodsProvider';
 import { Service } from '../../Models/Services/Services';
 import { Method } from '../../Models/Results/Methods';
@@ -12,6 +12,7 @@ import { MethodsToolbarView } from './MethodsToolbarView';
 import { MethodsFilters } from '../../Components/Modals/Methods/MethodsFiltersModal';
 import { getDefaultAnalyticsEndDatetime, getDefaultAnalyticsStartDatetime } from '../../Services/Analytics/Utils';
 import { Scenario } from '../../Models/Services/Scenarios';
+import { SearchTextField } from '../../Components/TextFields/SearchTextField';
 
 type MethodsListViewProps = {
   methods: Method[];
@@ -22,6 +23,7 @@ type MethodsListViewProps = {
 const MethodsListView: FC<MethodsListViewProps> = (props) => {
   const { service, methods, scenario } = props;
   const { loading, getMethods } = useMethods();
+  const [search, setSearch] = useState('');
   const [filters, setFilters] = useState<MethodsFilters>({
     method: null,
     endDatetime: getDefaultAnalyticsEndDatetime(),
@@ -29,8 +31,13 @@ const MethodsListView: FC<MethodsListViewProps> = (props) => {
   });
 
   useEffect(() => {
-    service.name && getMethods({ service: service.name, scenario: scenario.name, ...filters });
-  }, [service.name, scenario.name, filters]);
+    service.id && getMethods({ serviceId: service.id, scenarioId: scenario.id, ...filters });
+  }, [service.id, scenario.id, filters]);
+
+  const filteredMethods = useMemo(
+    () => methods.filter((method) => method.method.toLowerCase().includes(search.toLowerCase())),
+    [search, methods]
+  );
 
   return (
     <Box>
@@ -42,8 +49,11 @@ const MethodsListView: FC<MethodsListViewProps> = (props) => {
           description={'Methods results will be aggregated after uploading load tests result'}
         />
       )}
+      {methods.length > 0 && !loading.getMethods && (
+        <SearchTextField label={'Search by method'} value={search} onChange={setSearch} />
+      )}
       <ListView loading={loading.getMethods}>
-        {methods.map((method, index) => (
+        {filteredMethods.map((method, index) => (
           <MethodView key={index} method={method} />
         ))}
       </ListView>

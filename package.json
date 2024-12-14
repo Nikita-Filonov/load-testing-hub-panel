@@ -1,16 +1,16 @@
 {
-  "name": "load-testing-hub-panel",
+  "name": "load-testing-metrics-panel",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@emotion/react": "^11.11.3",
-    "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.15.6",
-    "@mui/lab": "^5.0.0-alpha.173",
-    "@mui/material": "^5.16.5",
-    "@mui/x-charts": "^7.11.1",
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/icons-material": "^6.0.1",
+    "@mui/lab": "^6.0.0-beta.17",
+    "@mui/material": "^6.0.1",
+    "@mui/x-charts": "^7.15.0",
     "@mui/x-date-pickers": "^6.19.4",
-    "@mui/x-tree-view": "^7.11.1",
+    "@mui/x-tree-view": "^7.16.0",
     "@reduxjs/toolkit": "^2.1.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -21,6 +21,7 @@
     "@types/react-dom": "^18.3.0",
     "date-fns": "^3.3.1",
     "dayjs": "^1.11.10",
+    "qs": "^6.13.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-redux": "^9.1.0",
@@ -35,7 +36,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "linter": "npx eslint ./src --ext .js,.jsx,.ts,.tsx"
   },
   "eslintConfig": {
     "extends": [

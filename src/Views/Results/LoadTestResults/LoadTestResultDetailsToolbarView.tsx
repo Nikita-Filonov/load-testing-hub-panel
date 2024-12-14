@@ -1,57 +1,43 @@
 import { BaseToolbarView } from '../../../Components/Toolbar/BaseToolbarView';
-import { FC, useEffect } from 'react';
-import { LoadTestsResultsTriggersMenu } from '../../../Components/Menus/Results/LoadTestsResults/LoadTestsResultsTriggersMenu';
+import { FC, Fragment, useState } from 'react';
 import { LoadTestResultDetails } from '../../../Models/Results/LoadTestResults';
 import { connect } from 'react-redux';
+import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
 import { ReduxState } from '../../../Redux/ReduxState';
-import { LoadTestsResultsGrafanaMenu } from '../../../Components/Menus/Results/LoadTestsResults/LoadTestsResultsGrafanaMenu';
-import { useServices } from '../../../Providers/Services/ServicesProvider';
-import { IntegrationsGrafanaProvider } from '../../../Providers/Integrations/IntegrationsGrafanaProvider';
 import { LoadTestsResultsCompareMenu } from '../../../Components/Menus/Results/LoadTestsResults/LoadTestsResultsCompareMenu';
-import { Service } from '../../../Models/Services/Services';
-import { LoadTestsResultsKibanaMenu } from '../../../Components/Menus/Results/LoadTestsResults/LoadTestsResultsKibanaMenu';
-import { IntegrationsKibanaProvider } from '../../../Providers/Integrations/IntegrationsKibanaProvider';
+import SetLoadTestResultCommentModal from '../../../Components/Modals/Results/SetLoadTestResultCommentModal';
+import { LoadTestResultsProvider } from '../../../Providers/Results/LoadTestResultsProvider';
+import { useLoadTestResultDetailsToolbarActions } from '../../../Services/Results/Hooks';
 
 type LoadTestResultDetailsToolbarViewProps = {
   details: LoadTestResultDetails;
-  services: Service[];
 };
 
 const LoadTestResultDetailsToolbarView: FC<LoadTestResultDetailsToolbarViewProps> = (props) => {
-  const { details, services } = props;
-  const { getServices } = useServices();
+  const { details } = props;
+  const actions = useLoadTestResultDetailsToolbarActions();
+  const [loadTestResultCommentModal, setLoadTestResultCommentModal] = useState(false);
 
-  useEffect(() => {
-    getServices();
-  }, []);
+  const onLoadTestResultComment = () => setLoadTestResultCommentModal(true);
 
   return (
-    <BaseToolbarView
-      title={'Load tests result details'}
-      actions={[
-        { content: <LoadTestsResultsCompareMenu loadTestResultId={details.id} /> },
-        {
-          content: (
-            <IntegrationsKibanaProvider>
-              <LoadTestsResultsKibanaMenu details={details} services={services} />
-            </IntegrationsKibanaProvider>
-          )
-        },
-        {
-          content: (
-            <IntegrationsGrafanaProvider>
-              <LoadTestsResultsGrafanaMenu details={details} services={services} />
-            </IntegrationsGrafanaProvider>
-          )
-        },
-        { content: <LoadTestsResultsTriggersMenu details={details} /> }
-      ]}
-    />
+    <Fragment>
+      <BaseToolbarView
+        title={'Load tests result details'}
+        actions={[
+          { icon: <CommentOutlinedIcon />, onClick: onLoadTestResultComment },
+          { content: <LoadTestsResultsCompareMenu loadTestResultId={details.id} /> },
+          ...actions
+        ]}
+      />
+      <LoadTestResultsProvider>
+        <SetLoadTestResultCommentModal modal={loadTestResultCommentModal} setModal={setLoadTestResultCommentModal} />
+      </LoadTestResultsProvider>
+    </Fragment>
   );
 };
 
 const getState = (state: ReduxState) => ({
-  details: state.loadTestResults.loadTestResultDetails,
-  services: state.services.services
+  details: state.loadTestResults.loadTestResultDetails
 });
 export default connect(getState)(LoadTestResultDetailsToolbarView);

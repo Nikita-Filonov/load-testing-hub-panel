@@ -1,28 +1,19 @@
-import { useSearchParams } from 'react-router-dom';
-import { useMemo } from 'react';
+import { useParams } from 'react-router-dom';
+import { useEffect, useMemo } from 'react';
+import { AppRoutes } from '../Constants/Routing';
+import { useAppNavigation } from '../Navigation/Hooks';
 
-export const useServicesSearchParams = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+export const useServicesNavigation = () => {
+  const { serviceId: unsafeServiceId } = useParams<{ serviceId: string }>();
+  const { onNavigate } = useAppNavigation();
 
-  const serviceName = useMemo(() => searchParams.get('serviceName'), [searchParams]);
+  const serviceId = useMemo(() => Number(unsafeServiceId), [unsafeServiceId]);
 
-  const removeServiceName = () => {
-    searchParams.delete('serviceName');
-    setSearchParams((prev) => ({ ...prev, ...searchParams }));
-  };
+  useEffect(() => {
+    !serviceId && navigateServices();
+  }, [serviceId]);
 
-  return { serviceName, removeServiceName };
-};
+  const navigateServices = () => onNavigate(AppRoutes.Services);
 
-export const useScenariosSearchParams = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const scenarioName = useMemo(() => searchParams.get('scenarioName'), [searchParams]);
-
-  const removeScenarioName = () => {
-    searchParams.delete('scenarioName');
-    setSearchParams((prev) => ({ ...prev, ...searchParams }));
-  };
-
-  return { scenarioName, removeScenarioName };
+  return { serviceId, navigateServices };
 };

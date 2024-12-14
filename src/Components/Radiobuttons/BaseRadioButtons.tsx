@@ -26,7 +26,7 @@ export const BaseRadioButtons = <Value extends string>(props: BaseRadioButtonsPr
 
   return (
     <FormControl sx={sx} size="small" fullWidth disabled={disabled}>
-      <FormLabel>{label}</FormLabel>
+      <FormLabel sx={{ fontWeight: 'bold' }}>{label}</FormLabel>
       <RadioGroup value={value} onChange={onSelectValue}>
         {options.map((option, index) => (
           <FormControlLabel

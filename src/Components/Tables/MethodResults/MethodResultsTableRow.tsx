@@ -3,22 +3,20 @@ import { FC } from 'react';
 import { MethodResult } from '../../../Models/Results/MethodResults';
 import IconButton from '@mui/material/IconButton';
 import AnalyticsOutlinedIcon from '@mui/icons-material/AnalyticsOutlined';
-import { useAppNavigationService } from '../../../Services/HookServices/AppNavigationServiceHook';
-import { AppRoutes } from '../../../Services/Constants/Routing';
+import { useMethodsNavigation } from '../../../Services/Methods/Hooks';
 
 type MethodResultsTableRowProps = {
   result: MethodResult;
 };
 
 export const MethodResultsTableRow: FC<MethodResultsTableRowProps> = ({ result }) => {
-  const { onNavigate } = useAppNavigationService();
+  const { navigateMethodDetails } = useMethodsNavigation();
 
-  const onViewMethodAnalytics = () => {
-    onNavigate(AppRoutes.MethodsDetails, { search: `?method=${result.method}` });
-  };
+  const onViewMethodAnalytics = () => navigateMethodDetails(result.method);
 
   return (
     <BaseTableRow
+      hover
       cells={[
         {
           value: (
@@ -35,7 +33,8 @@ export const MethodResultsTableRow: FC<MethodResultsTableRowProps> = ({ result }
         { value: result.totalResponseTime },
         { value: result.requestsPerSecond },
         { value: result.failuresPerSecond },
-        { value: result.averageResponseTime }
+        { value: result.averageResponseTime },
+        { value: result.averageContentLength }
       ]}
     />
   );

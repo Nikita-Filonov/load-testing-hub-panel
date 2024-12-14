@@ -1,5 +1,6 @@
 import { LinePlot, MarkPlot } from '@mui/x-charts/LineChart';
 import {
+  ChartsAxisHighlight,
   ChartsGrid,
   ChartsLegend,
   ChartsTooltip,
@@ -24,6 +25,7 @@ export const BaseLineChart = <T,>({ xAxis, yAxis }: BaseLineChartProps<T>) => {
       <ChartsYAxis />
       <ChartsLegend />
       <ChartsTooltip />
+      <ChartsAxisHighlight x={'line'} />
     </ResponsiveChartContainer>
   );
 };

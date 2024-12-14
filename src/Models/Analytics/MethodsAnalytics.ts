@@ -1,6 +1,7 @@
-export interface GetMethodsAnalyticsQuery extends Record<string, string | null> {
+export interface GetMethodsAnalyticsQuery {
   method: string;
-  scenario: string | null;
+  serviceId: number;
+  scenarioId: number | null;
   startDatetime: string;
   endDatetime: string;
 }

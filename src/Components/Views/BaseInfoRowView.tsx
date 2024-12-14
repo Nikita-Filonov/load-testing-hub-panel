@@ -15,8 +15,9 @@ export type BaseInfoRowViewProps = {
 const Text = styled(Typography)(() => ({
   display: 'flex',
   alignItems: 'center',
-  whiteSpace: 'nowrap',
-  overflow: 'hidden'
+  overflow: 'hidden',
+  wordBreak: 'break-word',
+  overflowWrap: 'break-word'
 }));
 
 export const BaseInfoRowView: FC<BaseInfoRowViewProps> = (props) => {

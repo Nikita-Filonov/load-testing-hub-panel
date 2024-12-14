@@ -1,19 +1,45 @@
 import { HTTPClient } from '../HTTPClient';
 import { SettingsManager } from '../../Config';
-import { GetServiceResponse, GetServicesQuery, GetServicesResponse } from '../../../Models/Services/Services';
+import {
+  CreateServiceRequest,
+  GetServiceDetailsResponse,
+  GetServiceResponse,
+  GetServicesResponse,
+  UpdateServiceRequest
+} from '../../../Models/Services/Services';
 
 export class ServicesHTTPClient extends HTTPClient {
   constructor() {
     super({ baseUrl: SettingsManager.apiUrl });
   }
 
-  async getService(name: string): Promise<GetServiceResponse | null> {
-    const response = await this.get({ url: `/services/${name}` });
+  async getService(serviceId: number): Promise<GetServiceResponse | null> {
+    const response = await this.get({ url: `/services/${serviceId}` });
     return response.json;
   }
 
-  async getServices(query: GetServicesQuery): Promise<GetServicesResponse | null> {
-    const response = await this.get({ url: '/services', query });
+  async getServices(): Promise<GetServicesResponse | null> {
+    const response = await this.get({ url: '/services' });
+    return response.json;
+  }
+
+  async createService(request: CreateServiceRequest): Promise<GetServiceResponse | null> {
+    const response = await this.post({ url: '/services', body: request });
+    return response.json;
+  }
+
+  async updateService(serviceId: number, request: UpdateServiceRequest): Promise<GetServiceResponse | null> {
+    const response = await this.patch({ url: `/services/${serviceId}`, body: request });
+    return response.json;
+  }
+
+  async deleteService(serviceId: number) {
+    const response = await this.delete({ url: `/services/${serviceId}` });
+    return response.error;
+  }
+
+  async getServiceDetails(serviceId: number): Promise<GetServiceDetailsResponse | null> {
+    const response = await this.get({ url: `/services/details/${serviceId}` });
     return response.json;
   }
 }

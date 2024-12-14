@@ -1,13 +1,28 @@
 export enum AppRoutes {
+  Root = '/',
   NotFound = '*',
 
-  Home = '/home',
-  Methods = '/methods',
-  MethodsDetails = '/methods/details',
-  Results = '/results',
-  ResultDetails = '/results/:loadTestResultId',
-  ResultCompareWithScenario = '/results/:loadTestResultId/compare-with-scenario',
-  ResultCompareWithActualData = '/results/:loadTestResultId/compare-with-actual-data',
-  Dashboard = '/dashboard',
-  Scenarios = '/scenarios'
+  // Services
+  Services = '/services',
+  ServiceDetails = '/services/:serviceId',
+
+  // Service results
+  ServiceResults = '/services/:serviceId/results',
+  ServiceResultDetails = '/services/:serviceId/results/:loadTestResultId',
+  ServiceCompareResultWithResults = '/services/:serviceId/results/:loadTestResultId/compare-result-with-results',
+  ServiceCompareResultWithAverages = '/services/:serviceId/results/:loadTestResultId/compare-result-with-averages',
+  ServiceCompareResultWithScenario = '/services/:serviceId/results/:loadTestResultId/compare-result-with-scenario',
+
+  // Service methods
+  ServiceMethods = '/services/:serviceId/methods',
+  ServiceMethodDetails = '/services/:serviceId/methods/details',
+
+  // Service dashboard
+  ServiceDashboard = '/services/:serviceId/dashboard',
+
+  // Service scenarios
+  ServiceScenarios = '/services/:serviceId/scenarios',
+
+  // Service compares
+  ServiceCompares = '/services/:serviceId/compares'
 }

@@ -1,6 +1,5 @@
 export interface ShortMethod {
   method: string;
-  service: string;
 }
 
 export interface Method extends ShortMethod {
@@ -16,16 +15,10 @@ export interface MethodDetails extends Method {
   averageFailuresPerSecond: number;
 }
 
-export interface MethodScenarioCompare {
-  scenarioRequestsPerSecond: number;
-  averageRequestsPerSecond: number;
-  averageRequestsPerSecondCompare: number;
-}
-
-export interface GetMethodsQuery extends Record<string, string | null | undefined> {
+export interface GetMethodsQuery {
   method?: string | null;
-  service: string;
-  scenario: string | null;
+  serviceId: number;
+  scenarioId: number | null;
   endDatetime: string;
   startDatetime: string;
 }
@@ -34,9 +27,10 @@ export interface GetMethodsResponse {
   methods: Method[];
 }
 
-export interface GetMethodDetailsQuery extends Record<string, string | null | undefined> {
+export interface GetMethodDetailsQuery {
   method: string;
-  scenario: string | null;
+  serviceId: number;
+  scenarioId: number | null;
   endDatetime: string;
   startDatetime: string;
 }
@@ -45,19 +39,11 @@ export interface GetMethodDetailsResponse {
   details: MethodDetails;
 }
 
-export interface GetShortMethodsQuery extends Record<string, string | null> {
-  service: string;
-  scenario: string | null;
+export interface GetShortMethodsQuery {
+  serviceId: number;
+  scenarioId: number | null;
 }
 
 export interface GetShortMethodsResponse {
   methods: ShortMethod[];
-}
-
-export interface GetMethodScenarioCompareQuery extends GetMethodDetailsQuery {
-  scenario: string;
-}
-
-export interface GetMethodScenarioCompareResponse {
-  compare: MethodScenarioCompare;
 }

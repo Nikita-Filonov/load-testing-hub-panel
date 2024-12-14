@@ -1,38 +1,37 @@
 import { PaginationQuery, PaginationResponse } from '../Pagination';
+import { Service } from '../Services/Services';
+import { Scenario } from '../Services/Scenarios';
 
-export interface LoadTestResultCompare {
+export interface LoadTestResultSummaryCompare {
   previousId: number | null;
-  currentTotalRequestsPerSecond: number;
-  averageTotalRequestsPerSecond: number;
-  previousTotalRequestsPerSecond: number;
-  totalRequestsPerSecondCompareWithAverage: number;
-  totalRequestsPerSecondCompareWithPrevious: number;
+  compareWithAverage: number;
+  compareWithPrevious: number;
 }
 
-export interface LoadTestResultScenarioCompare {
-  currentRequestsPerSecond: number;
-  scenarioRequestsPerSecond: number;
-  requestsPerSecondCompare: number;
-}
-
-export interface LoadTestResult {
+export interface ShortLoadTestResult {
   id: number;
-  service: string;
+  service: Service;
+  scenario: Scenario;
+  triggerCIJobUrl: string | null;
+  triggerCIPipelineUrl: string | null;
+  triggerCIProjectVersion: string | null;
+  loadTestsCIJobUrl: string | null;
+  loadTestsCIPipelineUrl: string | null;
+}
+
+export interface LoadTestResult extends ShortLoadTestResult {
+  comment: string | null;
   startedAt: string;
   finishedAt: string;
   totalRequests: number;
   totalFailures: number;
   numberOfUsers: number;
-  triggerCIPipelineUrl: string | null;
-  triggerCIProjectTitle: string | null;
-  triggerCIProjectVersion: string | null;
-  loadTestsCIPipelineUrl: string | null;
   totalRequestsPerSecond: number;
-  compare: LoadTestResultCompare | null;
+
+  compare: LoadTestResultSummaryCompare | null;
 }
 
 export interface LoadTestResultDetails extends LoadTestResult {
-  scenario: string;
   totalFailuresPerSecond: number;
   averageResponseTime: number;
   maxResponseTime: number;
@@ -40,28 +39,25 @@ export interface LoadTestResultDetails extends LoadTestResult {
 }
 
 export interface GetLoadTestResultsQuery extends PaginationQuery {
-  service: string;
-  scenario: string | null;
+  serviceId: number;
   startedAt: string | null;
   finishedAt: string | null;
+  scenarioId: number | null;
   triggerCIProjectVersion: string | null;
 }
 
-export interface GetLoadTestResultDetailsQuery extends Record<string, string | number | null> {
-  scenario: string | null;
-  loadTestResultId: number;
-}
-
 export interface GetLoadTestResultsResponse extends PaginationResponse<LoadTestResult> {}
+
+export interface GetLoadTestResultDetailsQuery {
+  scenarioId: number | null;
+}
 
 export interface GetLoadTestResultDetailsResponse {
   details: LoadTestResultDetails;
 }
 
-export interface GetLoadTestResultScenarioCompareQuery extends Record<string, number> {
-  loadTestResultId: number;
-}
+export interface UpdateLoadTestResultQuery extends GetLoadTestResultDetailsQuery {}
 
-export interface GetLoadTestResultScenarioCompareResponse {
-  compare: LoadTestResultScenarioCompare;
+export interface UpdateLoadTestResultRequest {
+  comment: string | null;
 }

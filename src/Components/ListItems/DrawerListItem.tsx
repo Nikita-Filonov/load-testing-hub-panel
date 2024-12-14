@@ -1,40 +1,26 @@
-import { Tooltip, useTheme } from '@mui/material';
+import { ListItem } from '@mui/material';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import React, { FC } from 'react';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
 
 export type DrawerListItemProps = {
+  to: string;
   icon: React.ReactNode;
   title: string;
-  onClick?: () => void;
-  selected?: boolean;
 };
 
 export const DrawerListItem: FC<DrawerListItemProps> = (props) => {
-  const { icon, title, onClick, selected } = props;
-  const { palette } = useTheme();
+  const { to, icon, title } = props;
+  const location = useLocation();
 
   return (
-    <Tooltip title={title} arrow placement="right">
-      <ListItemButton
-        sx={{
-          minHeight: 48,
-          justifyContent: 'initial',
-          px: 2.5,
-          backgroundColor: selected ? palette.action.selected : 'unset'
-        }}
-        onClick={onClick}>
-        <ListItemIcon
-          sx={{
-            minWidth: 0,
-            mr: 3,
-            justifyContent: 'center'
-          }}>
-          {icon}
-        </ListItemIcon>
-        <ListItemText primary={title} sx={{ opacity: 1 }} />
+    <ListItem disableGutters>
+      <ListItemButton component={RouterLink} to={to} selected={location.pathname.startsWith(to)}>
+        {icon && <ListItemIcon>{icon}</ListItemIcon>}
+        <ListItemText primary={title} />
       </ListItemButton>
-    </Tooltip>
+    </ListItem>
   );
 };

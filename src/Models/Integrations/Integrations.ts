@@ -1,5 +1,5 @@
-export interface GetIntegrationURLQuery extends Record<string, string> {
-  service: string;
+export interface GetIntegrationURLQuery {
+  serviceId: number;
   startedAt: string;
   finishedAt: string;
 }

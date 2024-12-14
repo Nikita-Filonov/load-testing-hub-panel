@@ -19,9 +19,9 @@ export const LoadTestsResultsGrafanaMenu: FC<LoadTestsResultsGrafanaMenuProps> =
 
   const onClose = () => setMenu(null);
 
-  const onOpenGrafanaDashboardUrl = (service: string) => async () => {
+  const onOpenGrafanaDashboardUrl = (serviceId: number) => async () => {
     const response = await getGrafanaDashboardUrl({
-      service,
+      serviceId,
       startedAt: details.startedAt,
       finishedAt: details.finishedAt
     });
@@ -39,7 +39,7 @@ export const LoadTestsResultsGrafanaMenu: FC<LoadTestsResultsGrafanaMenuProps> =
           key={index}
           icon={<CodeIcon />}
           label={`Open ${service.name} grafana dashboard`}
-          onClick={onOpenGrafanaDashboardUrl(service.name)}
+          onClick={onOpenGrafanaDashboardUrl(service.id)}
         />
       ))}
     </BaseMenu>

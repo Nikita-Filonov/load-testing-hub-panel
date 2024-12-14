@@ -1,24 +1,13 @@
 import React, { FC, PropsWithChildren, useContext, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { MethodsHTTPClient } from '../../Services/Clients/Results/MethodsHTTPClient';
-import {
-  GetMethodDetailsQuery,
-  GetMethodScenarioCompareQuery,
-  GetMethodsQuery,
-  GetShortMethodsQuery
-} from '../../Models/Results/Methods';
-import {
-  setMethodDetails,
-  setMethods,
-  setMethodScenarioCompare,
-  setShortMethods
-} from '../../Redux/Results/Methods/MethodsSlice';
+import { GetMethodDetailsQuery, GetMethodsQuery, GetShortMethodsQuery } from '../../Models/Results/Methods';
+import { setMethodDetails, setMethods, setShortMethods } from '../../Redux/Results/Methods/MethodsSlice';
 
 interface Loading {
   getMethods: boolean;
   getShortMethods: boolean;
   getMethodDetails: boolean;
-  getMethodScenarioCompare: boolean;
 }
 
 export type MethodsContextProps = {
@@ -26,7 +15,6 @@ export type MethodsContextProps = {
   getMethods: (query: GetMethodsQuery) => Promise<void>;
   getShortMethods: (query: GetShortMethodsQuery) => Promise<void>;
   getMethodDetails: (query: GetMethodDetailsQuery) => Promise<void>;
-  getMethodScenarioCompare: (query: GetMethodScenarioCompareQuery) => Promise<void>;
 };
 
 const MethodsContext = React.createContext<MethodsContextProps | null>(null);
@@ -37,8 +25,7 @@ const MethodsProvider: FC<PropsWithChildren> = ({ children }) => {
   const [loading, setLoading] = useState<Loading>({
     getMethods: false,
     getShortMethods: false,
-    getMethodDetails: false,
-    getMethodScenarioCompare: false
+    getMethodDetails: false
   });
 
   const getMethodsAPI = async (query: GetMethodsQuery) => {
@@ -62,21 +49,13 @@ const MethodsProvider: FC<PropsWithChildren> = ({ children }) => {
     setLoading((loading) => ({ ...loading, getMethodDetails: false }));
   };
 
-  const getMethodScenarioCompareAPI = async (query: GetMethodScenarioCompareQuery) => {
-    setLoading((loading) => ({ ...loading, getMethodScenarioCompare: true }));
-    const response = await methodsHTTPClient.getMethodScenarioCompare(query);
-    response && dispatch(setMethodScenarioCompare(response.compare));
-    setLoading((loading) => ({ ...loading, getMethodScenarioCompare: false }));
-  };
-
   return (
     <MethodsContext.Provider
       value={{
         loading,
         getMethods: getMethodsAPI,
         getShortMethods: getShortMethodsAPI,
-        getMethodDetails: getMethodDetailsAPI,
-        getMethodScenarioCompare: getMethodScenarioCompareAPI
+        getMethodDetails: getMethodDetailsAPI
       }}>
       {children}
     </MethodsContext.Provider>

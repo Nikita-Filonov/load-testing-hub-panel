@@ -1,11 +1,10 @@
 import { RequestsPerSecondAnalytics } from '../../Models/Analytics/RequestsPerSecondAnalytics';
 import { NumberOfRequestsAnalytics } from '../../Models/Analytics/NumberOfRequestsAnalytics';
 import { ResponseTimesAnalytics } from '../../Models/Analytics/ResponseTimesAnalytics';
-import { AverageAnalytics, AverageAnalyticsScenarioCompare } from '../../Models/Analytics/AverageAnalytics';
+import { AverageAnalytics } from '../../Models/Analytics/AverageAnalytics';
 
 export type AnalyticsInitialState = {
   averageAnalytics: AverageAnalytics;
-  averageAnalyticsScenarioCompare: AverageAnalyticsScenarioCompare;
   methodsResponseTimesAnalytics: ResponseTimesAnalytics[];
   methodsNumberOfRequestsAnalytics: NumberOfRequestsAnalytics[];
   methodsRequestsPerSecondAnalytics: RequestsPerSecondAnalytics[];
@@ -24,11 +23,6 @@ export const INITIAL_ANALYTICS: AnalyticsInitialState = {
     averageResponseTime: 0,
     totalRequestsPerSecond: 0,
     totalFailuresPerSecond: 0
-  },
-  averageAnalyticsScenarioCompare: {
-    totalRequestsPerSecond: 0,
-    totalRequestsPerSecondCompare: 0,
-    scenarioTotalRequestsPerSecond: 0
   },
   methodsResponseTimesAnalytics: [],
   methodsNumberOfRequestsAnalytics: [],

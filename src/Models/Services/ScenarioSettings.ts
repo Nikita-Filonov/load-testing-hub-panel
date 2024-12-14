@@ -1,17 +1,40 @@
 export interface ScenarioMethodSettings {
   method: string;
+  responseTime: number;
+  contentLength: number;
+  minResponseTime: number;
+  maxResponseTime: number;
+  numberOfRequests: number;
+  numberOfFailures: number;
   requestsPerSecond: number;
+  failuresPerSecond: number;
 }
 
 export interface ScenarioSettings {
-  scenario: string;
+  scenarioId: number;
+  responseTime: number;
+  numberOfUsers: number;
+  minResponseTime: number;
+  maxResponseTime: number;
+  numberOfRequests: number;
+  numberOfFailures: number;
   requestsPerSecond: number;
+  failuresPerSecond: number;
 
   methodsSettings: ScenarioMethodSettings[];
 }
 
 export interface UpdateScenarioSettingsRequest {
-  settings: ScenarioSettings;
+  responseTime: number;
+  numberOfUsers: number;
+  minResponseTime: number;
+  maxResponseTime: number;
+  numberOfRequests: number;
+  numberOfFailures: number;
+  requestsPerSecond: number;
+  failuresPerSecond: number;
+
+  methodsSettings: ScenarioMethodSettings[];
 }
 
 export interface GetScenarioSettingsResponse {

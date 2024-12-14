@@ -23,7 +23,7 @@ export const EmptyView: FC<EmptyViewProps> = ({ title, description, containerSx 
       <Typography sx={{ mt: 2 }} variant={'h6'}>
         {title}
       </Typography>
-      <Typography>{description}</Typography>
+      <Typography sx={{ textAlign: 'center' }}>{description}</Typography>
     </Box>
   );
 };

@@ -1,5 +1,6 @@
 import { BarPlot } from '@mui/x-charts/BarChart';
 import {
+  ChartsAxisHighlight,
   ChartsGrid,
   ChartsLegend,
   ChartsTooltip,
@@ -23,6 +24,7 @@ export const BaseBarChart = <T,>({ xAxis, yAxis }: BaseLineChartProps<T>) => {
       <ChartsYAxis />
       <ChartsLegend />
       <ChartsTooltip />
+      <ChartsAxisHighlight x={'band'} />
     </ResponsiveChartContainer>
   );
 };

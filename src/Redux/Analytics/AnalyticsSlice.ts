@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RequestsPerSecondAnalytics } from '../../Models/Analytics/RequestsPerSecondAnalytics';
 import { NumberOfRequestsAnalytics } from '../../Models/Analytics/NumberOfRequestsAnalytics';
 import { ResponseTimesAnalytics } from '../../Models/Analytics/ResponseTimesAnalytics';
-import { AverageAnalytics, AverageAnalyticsScenarioCompare } from '../../Models/Analytics/AverageAnalytics';
+import { AverageAnalytics } from '../../Models/Analytics/AverageAnalytics';
 
 export const analyticsSlice = createSlice({
   name: 'analytics',
@@ -11,9 +11,6 @@ export const analyticsSlice = createSlice({
   reducers: {
     setAverageAnalytics: (state, action: PayloadAction<AverageAnalytics>) => {
       state.averageAnalytics = action.payload;
-    },
-    setAverageAnalyticsScenarioCompare: (state, action: PayloadAction<AverageAnalyticsScenarioCompare>) => {
-      state.averageAnalyticsScenarioCompare = action.payload;
     },
     setMethodsResponseTimesAnalytics: (state, action: PayloadAction<ResponseTimesAnalytics[]>) => {
       state.methodsResponseTimesAnalytics = action.payload;
@@ -32,13 +29,14 @@ export const analyticsSlice = createSlice({
     },
     setResultsRequestsPerSecondAnalytics: (state, action: PayloadAction<RequestsPerSecondAnalytics[]>) => {
       state.resultsRequestsPerSecondAnalytics = action.payload;
-    }
+    },
+    clearAnalyticsState: () => INITIAL_ANALYTICS
   }
 });
 
 export const {
+  clearAnalyticsState,
   setAverageAnalytics,
-  setAverageAnalyticsScenarioCompare,
   setMethodsResponseTimesAnalytics,
   setMethodsNumberOfRequestsAnalytics,
   setMethodsRequestsPerSecondAnalytics,

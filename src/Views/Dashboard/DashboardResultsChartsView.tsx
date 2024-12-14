@@ -16,7 +16,8 @@ import { getDefaultAnalyticsEndDatetime, getDefaultAnalyticsStartDatetime } from
 import AverageAnalyticsView from '../Analytics/AverageAnalyticsView';
 import { AverageAnalyticsProvider } from '../../Providers/Analytics/AverageAnalyticsProvider';
 import { Scenario } from '../../Models/Services/Scenarios';
-import AverageAnalyticsCompareChartView from '../Analytics/AverageAnalyticsCompareChartView';
+import CompareAveragesWithScenarioView from '../Compares/CompareAveragesWithScenario/CompareAveragesWithScenarioView';
+import { ComparesProvider } from '../../Providers/Compares/ComparesProvider';
 
 type DashboardResultsChartsViewProps = {
   service: Service;
@@ -36,21 +37,23 @@ const DashboardResultsChartsView: FC<DashboardResultsChartsViewProps> = (props) 
   });
 
   useEffect(() => {
-    const query: GetResultsAnalyticsQuery = { service: service.name, scenario: scenario.name, ...filters };
+    const query: GetResultsAnalyticsQuery = { serviceId: service.id, scenarioId: scenario.id, ...filters };
 
-    Promise.all([
+    Promise.any([
       getResponseTimesAnalytics(query),
       getNumberOfRequestsAnalytics(query),
       getRequestsPerSecondAnalytics(query)
     ]);
-  }, [filters, service.name, scenario.name]);
+  }, [filters, service.id, scenario.id]);
 
   return (
     <Fragment>
       <AnalyticsToolbarView title={'Total distribution'} filters={filters} setFilters={setFilters} />
       <AverageAnalyticsProvider>
         <AverageAnalyticsView filters={filters} />
-        <AverageAnalyticsCompareChartView filters={filters} />
+        <ComparesProvider>
+          <CompareAveragesWithScenarioView filters={filters} />
+        </ComparesProvider>
       </AverageAnalyticsProvider>
       <RequestsPerSecondAnalyticsView
         title={'Total requests per second'}

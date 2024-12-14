@@ -1,7 +1,7 @@
 import { MainLayout } from '../../Components/Layouts/MainLayouts';
 import { useParams } from 'react-router-dom';
 import { LoadTestResultsProvider } from '../../Providers/Results/LoadTestResultsProvider';
-import ResultsSummaryDetailsView from '../../Views/Results/LoadTestResults/LoadTestResultDetailsView';
+import LoadTestResultDetailsView from '../../Views/Results/LoadTestResults/LoadTestResultDetailsView';
 import MethodResultsTableView from '../../Views/Results/MethodResults/MethodResultsTableView';
 import { HistoryResultsProvider } from '../../Providers/Results/HistoryResultsProvider';
 import { MethodResultsProvider } from '../../Providers/Results/MethodResultsProvider';
@@ -10,6 +10,8 @@ import { RatioResultsProvider } from '../../Providers/Results/RatioResultsProvid
 import RatioResultsView from '../../Views/Results/RatioResults/RatioResultsView';
 import LoadTestResultDetailsToolbarView from '../../Views/Results/LoadTestResults/LoadTestResultDetailsToolbarView';
 import { ServicesProvider } from '../../Providers/Services/ServicesProvider';
+import { ExceptionResultsProvider } from '../../Providers/Results/ExceptionResultsProvider';
+import ExceptionResultsTableView from '../../Views/Results/ExceptionResults/ExceptionResultsTableView';
 
 type Params = {
   loadTestResultId: string;
@@ -27,13 +29,18 @@ const ResultDetailsPage = () => {
       )}
       {loadTestResultId && (
         <LoadTestResultsProvider>
-          <ResultsSummaryDetailsView loadTestResultId={Number(loadTestResultId)} />
+          <LoadTestResultDetailsView loadTestResultId={Number(loadTestResultId)} />
         </LoadTestResultsProvider>
       )}
       {loadTestResultId && (
         <MethodResultsProvider>
           <MethodResultsTableView loadTestResultId={Number(loadTestResultId)} />
         </MethodResultsProvider>
+      )}
+      {loadTestResultId && (
+        <ExceptionResultsProvider>
+          <ExceptionResultsTableView loadTestResultId={Number(loadTestResultId)} />
+        </ExceptionResultsProvider>
       )}
       {loadTestResultId && (
         <HistoryResultsProvider>

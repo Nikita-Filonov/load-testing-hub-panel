@@ -1,13 +1,13 @@
 import { lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { ProtectedRoute } from '../ProtectedRoute';
+import { ServicesDrawer } from '../../Components/Navigation/Services/ServicesDrawer';
 
 const ScenariosPage = lazy(() => import('../../Pages/Scenarios/ScenariosPage'));
 
 export const ScenariosRoutes = () => {
   return (
     <Routes>
-      <Route element={<ProtectedRoute isAllowed={true} />}>
+      <Route element={<ServicesDrawer />}>
         <Route index element={<ScenariosPage />} />
       </Route>
     </Routes>

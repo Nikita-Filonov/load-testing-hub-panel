@@ -9,21 +9,23 @@ import { useMethods } from '../../Providers/Results/MethodsProvider';
 import { BaseLabel } from '../../Components/Labels/BaseLabel';
 import { AnalyticsFilters } from '../../Components/Modals/Analytics/AnalyticsFiltersModal';
 import { Scenario } from '../../Models/Services/Scenarios';
+import { Service } from '../../Models/Services/Services';
 
 type MethodDetailsViewProps = {
   method: string;
   details: MethodDetails;
   filters: AnalyticsFilters;
+  service: Service;
   scenario: Scenario;
 };
 
 const MethodDetailsView: FC<MethodDetailsViewProps> = (props) => {
-  const { method, details, filters, scenario } = props;
+  const { method, details, filters, service, scenario } = props;
   const { loading, getMethodDetails } = useMethods();
 
   useEffect(() => {
-    method && getMethodDetails({ method, ...filters, scenario: scenario.name });
-  }, [method, filters, scenario.name]);
+    method && getMethodDetails({ method, ...filters, serviceId: service.id, scenarioId: scenario.id });
+  }, [method, filters, service.id, scenario.id]);
 
   return (
     <WidgetView
@@ -32,7 +34,6 @@ const MethodDetailsView: FC<MethodDetailsViewProps> = (props) => {
       loading={loading.getMethodDetails}
       label={<BaseLabel label={'GRPC'} color={'info'} />}>
       <WidgetInfoRowsView>
-        <BaseInfoRowView name={'Service'} value={details.service} />
         <BaseInfoRowView name={'Average response time'} value={details.averageResponseTime} />
         <BaseInfoRowView name={'Average requests/s'} value={details.averageRequestsPerSecond} />
         <BaseInfoRowView name={'Average number of requests'} value={details.averageNumberOfRequests} />
@@ -47,6 +48,7 @@ const MethodDetailsView: FC<MethodDetailsViewProps> = (props) => {
 
 const getState = (state: ReduxState) => ({
   details: state.methods.methodDetails,
+  service: state.services.service,
   scenario: state.scenarios.scenario
 });
 export default connect(getState)(MethodDetailsView);

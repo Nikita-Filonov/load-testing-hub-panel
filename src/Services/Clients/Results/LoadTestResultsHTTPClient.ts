@@ -3,10 +3,10 @@ import { SettingsManager } from '../../Config';
 import {
   GetLoadTestResultDetailsQuery,
   GetLoadTestResultDetailsResponse,
-  GetLoadTestResultScenarioCompareQuery,
-  GetLoadTestResultScenarioCompareResponse,
   GetLoadTestResultsQuery,
-  GetLoadTestResultsResponse
+  GetLoadTestResultsResponse,
+  UpdateLoadTestResultQuery,
+  UpdateLoadTestResultRequest
 } from '../../../Models/Results/LoadTestResults';
 
 export class LoadTestResultsHTTPClient extends HTTPClient {
@@ -20,16 +20,24 @@ export class LoadTestResultsHTTPClient extends HTTPClient {
   }
 
   async getLoadTestResultDetails(
+    loadTestResultId: number,
     query: GetLoadTestResultDetailsQuery
   ): Promise<GetLoadTestResultDetailsResponse | null> {
-    const response = await this.get({ url: '/load-test-results/details', query });
+    const response = await this.get({ url: `/load-test-results/details/${loadTestResultId}`, query });
     return response.json;
   }
 
-  async getLoadTestResultScenarioCompare(
-    query: GetLoadTestResultScenarioCompareQuery
-  ): Promise<GetLoadTestResultScenarioCompareResponse | null> {
-    const response = await this.get({ url: '/load-test-results/scenario-compare', query });
+  async updateLoadTestResult(
+    loadTestResultId: number,
+    query: UpdateLoadTestResultQuery,
+    request: UpdateLoadTestResultRequest
+  ) {
+    const response = await this.patch({ url: `/load-test-results/${loadTestResultId}`, body: request, query });
     return response.json;
+  }
+
+  async deleteLoadTestResult(loadTestResultId: number) {
+    const response = await this.delete({ url: `/load-test-results/${loadTestResultId}` });
+    return response.error;
   }
 }

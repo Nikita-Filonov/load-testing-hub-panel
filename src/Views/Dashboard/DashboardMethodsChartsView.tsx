@@ -24,8 +24,8 @@ const DashboardMethodsChartsView: FC<DashboardMethodsChartsViewProps> = ({ servi
   });
 
   useEffect(() => {
-    getMethods({ service: service.name, scenario: scenario.name, ...filters });
-  }, [service.name, filters]);
+    service.id && getMethods({ serviceId: service.id, scenarioId: scenario.id, ...filters });
+  }, [service.id, scenario.id, filters]);
 
   return (
     <Fragment>

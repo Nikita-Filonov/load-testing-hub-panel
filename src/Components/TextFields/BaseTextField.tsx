@@ -18,6 +18,8 @@ export type BaseTextFieldProps = {
   endAdornment?: ReactNode;
   actionTitle?: string;
   onAction?: () => void;
+  minRows?: number;
+  maxRows?: number;
 };
 
 export const BaseTextField: FC<BaseTextFieldProps> = (props) => {
@@ -37,7 +39,9 @@ export const BaseTextField: FC<BaseTextFieldProps> = (props) => {
     startAdornment,
     endAdornment,
     actionTitle,
-    onAction
+    onAction,
+    minRows,
+    maxRows
   } = props;
 
   return (
@@ -45,6 +49,8 @@ export const BaseTextField: FC<BaseTextFieldProps> = (props) => {
       <TextField
         rows={rows}
         multiline={multiline}
+        minRows={minRows}
+        maxRows={maxRows}
         value={value}
         placeholder={placeholder}
         disabled={disabled}

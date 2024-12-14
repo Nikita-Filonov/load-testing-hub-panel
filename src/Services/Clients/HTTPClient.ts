@@ -1,4 +1,4 @@
-import { getQuery, Query } from './Utils';
+import { getQueryString } from './Utils';
 
 interface HTTPClientProps {
   baseUrl?: string;
@@ -8,7 +8,8 @@ interface HTTPClientRequest extends RequestInit {
   url: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   body?: any;
-  query?: Query;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  query?: any;
   method: 'GET' | 'PUT' | 'POST' | 'PATCH' | 'DELETE';
 }
 
@@ -23,11 +24,14 @@ export interface HTTPClientPOSTRequest {
   url: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   body?: BodyInit | null | undefined | Record<string, any>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  query?: any;
 }
 
 export interface HTTPClientGetRequest {
   url: string;
-  query?: Query;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  query?: any;
 }
 
 export class HTTPClient {
@@ -37,72 +41,43 @@ export class HTTPClient {
     this.baseUrl = baseUrl;
   }
 
-  private async getUrl(url: string, query?: Query): Promise<string> {
-    let queryString = '';
-
-    if (query) {
-      queryString = await getQuery(query);
-    }
-
-    return `${this.baseUrl}${url}${queryString}`;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private getUrl(url: string, query?: any): string {
+    return `${this.baseUrl}${url}${getQueryString(query)}`;
   }
 
   private async makeRequest(props: HTTPClientRequest): Promise<HTTPClientResponse> {
-    const { url, query, ...other } = props;
+    const { url, query, body, ...other } = props;
 
     const config: RequestInit = {
+      body: body ? JSON.stringify(body) : undefined,
       headers: { 'Content-Type': 'application/json' },
       ...other
     };
 
-    if (config.body) {
-      config.body = JSON.stringify(config.body);
-    }
-
-    const requestUrl = await this.getUrl(url, query);
-    const response = await fetch(requestUrl, config);
-    const httpClientResponse: HTTPClientResponse = {
-      json: null,
-      error: !response.ok,
-      status: response.status
-    };
-
     try {
-      httpClientResponse.json = await response.json();
-    } catch {
-      httpClientResponse.json = null;
-    }
+      const response = await fetch(this.getUrl(url, query), config);
+      const json = await response.json().catch(() => null);
 
-    return httpClientResponse;
+      return { json, error: !response.ok, status: response.status };
+    } catch {
+      return { json: null, error: true, status: 500 };
+    }
   }
 
   async get(props: HTTPClientGetRequest): Promise<HTTPClientResponse> {
-    const { url, query } = props;
-
-    return await this.makeRequest({ url, query, method: 'GET' });
-  }
-
-  async put(props: HTTPClientPOSTRequest): Promise<HTTPClientResponse> {
-    const { url, body } = props;
-
-    return await this.makeRequest({ url, body, method: 'PUT' });
+    return await this.makeRequest({ ...props, method: 'GET' });
   }
 
   async post(props: HTTPClientPOSTRequest): Promise<HTTPClientResponse> {
-    const { url, body } = props;
-
-    return await this.makeRequest({ url, body, method: 'POST' });
+    return await this.makeRequest({ ...props, method: 'POST' });
   }
 
   async patch(props: HTTPClientPOSTRequest): Promise<HTTPClientResponse> {
-    const { url, body } = props;
-
-    return await this.makeRequest({ url, body, method: 'PATCH' });
+    return await this.makeRequest({ ...props, method: 'PATCH' });
   }
 
   async delete(props: HTTPClientPOSTRequest): Promise<HTTPClientResponse> {
-    const { url, body } = props;
-
-    return await this.makeRequest({ url, body, method: 'DELETE' });
+    return await this.makeRequest({ ...props, method: 'DELETE' });
   }
 }

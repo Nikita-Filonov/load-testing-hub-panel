@@ -1,15 +1,13 @@
 import { WidgetView } from '../../../Components/Views/WidgetView';
 import { WidgetInfoRowsView } from '../../../Components/Views/WidgetInfoRowsView';
 import { useLoadTestResults } from '../../../Providers/Results/LoadTestResultsProvider';
-import { FC, useEffect, useMemo } from 'react';
+import { FC, useEffect } from 'react';
 import { BaseInfoRowView } from '../../../Components/Views/BaseInfoRowView';
 import { connect } from 'react-redux';
 import { ReduxState } from '../../../Redux/ReduxState';
 import { LoadTestResultDetails } from '../../../Models/Results/LoadTestResults';
-import dayjs from 'dayjs';
-import { SettingsManager } from '../../../Services/Config';
-import { getLoadTestResultTitle } from '../../../Services/Results/Utils';
-import { LoadTestResultLabelsView } from './LoadTestResultLabelsView';
+import { getLoadTestResultDates, getLoadTestResultTitle } from '../../../Services/Results/Utils';
+import { LoadTestResultLabelsView } from '../../../Components/Labels/Results/LoadTestResults/LoadTestResultLabelsView';
 import { Scenario } from '../../../Models/Services/Scenarios';
 
 type LoadTestResultDetailsViewProps = {
@@ -23,18 +21,8 @@ const LoadTestResultDetailsView: FC<LoadTestResultDetailsViewProps> = (props) =>
   const { loading, getLoadTestResultDetails } = useLoadTestResults();
 
   useEffect(() => {
-    loadTestResultId && getLoadTestResultDetails({ loadTestResultId, scenario: scenario.name });
-  }, [loadTestResultId, scenario.name]);
-
-  const startedAt = useMemo(
-    () => dayjs(details.startedAt).format(SettingsManager.apiDateTimeFormat),
-    [details.startedAt]
-  );
-
-  const finishedAt = useMemo(
-    () => dayjs(details.finishedAt).format(SettingsManager.apiDateTimeFormat),
-    [details.finishedAt]
-  );
+    loadTestResultId && getLoadTestResultDetails(loadTestResultId, { scenarioId: scenario.id });
+  }, [loadTestResultId, scenario.id]);
 
   return (
     <WidgetView
@@ -43,7 +31,7 @@ const LoadTestResultDetailsView: FC<LoadTestResultDetailsViewProps> = (props) =>
       loading={loading.getLoadTestResultDetails}
       label={<LoadTestResultLabelsView result={details} />}>
       <WidgetInfoRowsView>
-        <BaseInfoRowView name={'Time range'} value={`${startedAt} — ${finishedAt}`} />
+        <BaseInfoRowView name={'Time range'} value={getLoadTestResultDates(details)} />
         <BaseInfoRowView name={'Number of users'} value={details.numberOfUsers} />
         <BaseInfoRowView name={'Total requests'} value={details.totalRequests} />
         <BaseInfoRowView name={'Total requests per second'} value={details.totalRequestsPerSecond} />
@@ -51,6 +39,8 @@ const LoadTestResultDetailsView: FC<LoadTestResultDetailsViewProps> = (props) =>
         <BaseInfoRowView name={'Total failures per second'} value={details.totalFailuresPerSecond} />
         <BaseInfoRowView name={'Max response time'} value={details.maxResponseTime} />
         <BaseInfoRowView name={'Min response time'} value={details.minResponseTime} />
+        <BaseInfoRowView name={'Average response time'} value={details.averageResponseTime} />
+        <BaseInfoRowView name={'Comment'} value={details.comment} />
       </WidgetInfoRowsView>
     </WidgetView>
   );

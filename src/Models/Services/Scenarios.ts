@@ -1,18 +1,26 @@
 import { RatioResult } from '../Results/RatioResults';
 
+export enum ScenarioTag {
+  Legacy = 'LEGACY',
+  Latest = 'LATEST',
+  Experiment = 'EXPERIMENT'
+}
+
 export interface Scenario {
+  id: number;
   name: string;
-  file: string;
+  tags: ScenarioTag[];
+  version: string;
 }
 
 export interface ScenarioDetails extends Scenario {
-  service: string;
+  file: string;
   ratioTotal: RatioResult[];
   ratioPerClass: RatioResult[];
 }
 
-export interface GetScenariosQuery extends Record<string, string> {
-  service: string;
+export interface GetScenariosQuery {
+  serviceId: number;
 }
 
 export interface GetScenarioResponse {
@@ -25,4 +33,17 @@ export interface GetScenariosResponse {
 
 export interface GetScenarioDetailsResponse {
   details: ScenarioDetails;
+}
+
+export interface UpdateScenarioRequest {
+  name: string;
+  file: string;
+  tags: ScenarioTag[];
+  version: string;
+  ratioTotal: RatioResult[];
+  ratioPerClass: RatioResult[];
+}
+
+export interface CreateScenarioRequest extends UpdateScenarioRequest {
+  serviceId: number;
 }

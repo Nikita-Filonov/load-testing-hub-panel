@@ -1,53 +1,61 @@
 import React, { FC, PropsWithChildren, useContext, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { ScenariosHTTPClient } from '../../Services/Clients/Services/ScenariosHTTPClient';
-import { GetScenariosQuery } from '../../Models/Services/Scenarios';
+import { CreateScenarioRequest, GetScenariosQuery, UpdateScenarioRequest } from '../../Models/Services/Scenarios';
 import {
+  createScenario,
+  deleteScenario,
   setScenario,
   setScenarioDetails,
   setScenarios,
-  setSettingsScenarios
+  updateScenario
 } from '../../Redux/Services/Scenarios/ScenariosSlice';
-import { useScenariosSearchParams } from '../../Services/Services/Hooks';
+import { useScenariosNavigation } from '../../Services/Scenarios/Hooks';
 
 interface Loading {
   getScenario: boolean;
   getScenarios: boolean;
-  getSettingsScenarios: boolean;
+  createScenario: boolean;
+  updateScenario: boolean;
+  deleteScenario: boolean;
   getScenarioDetails: boolean;
 }
 
 export type ServicesContextProps = {
   loading: Loading;
   getScenarios: (query: GetScenariosQuery) => Promise<void>;
-  getSettingsScenarios: (query: GetScenariosQuery) => Promise<void>;
-  getScenarioDetails: (name: string) => Promise<void>;
+  createScenario: (request: CreateScenarioRequest) => Promise<boolean>;
+  updateScenario: (scenarioId: number, request: UpdateScenarioRequest) => Promise<boolean>;
+  deleteScenario: (scenarioId: number) => Promise<boolean>;
+  getScenarioDetails: (scenarioId: number) => Promise<void>;
 };
 
 const ScenariosContext = React.createContext<ServicesContextProps | null>(null);
 
 const ScenariosProvider: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();
+  const { scenarioId, removeScenarioId } = useScenariosNavigation();
   const scenariosHTTPClient = new ScenariosHTTPClient();
-  const { scenarioName, removeScenarioName } = useScenariosSearchParams();
   const [loading, setLoading] = useState<Loading>({
     getScenario: false,
     getScenarios: false,
-    getSettingsScenarios: false,
+    createScenario: false,
+    updateScenario: false,
+    deleteScenario: false,
     getScenarioDetails: false
   });
 
   useEffect(() => {
-    scenarioName && getScenarioAPI(scenarioName);
-  }, [scenarioName]);
+    scenarioId && getScenarioAPI(scenarioId);
+  }, [scenarioId]);
 
-  const getScenarioAPI = async (name: string) => {
+  const getScenarioAPI = async (scenarioId: number) => {
     setLoading({ ...loading, getScenario: true });
-    const response = await scenariosHTTPClient.getScenario(name);
+    const response = await scenariosHTTPClient.getScenario(scenarioId);
 
     if (response) {
       dispatch(setScenario(response.scenario));
-      removeScenarioName();
+      removeScenarioId();
     }
 
     setLoading({ ...loading, getScenario: false });
@@ -60,16 +68,36 @@ const ScenariosProvider: FC<PropsWithChildren> = ({ children }) => {
     setLoading({ ...loading, getScenarios: false });
   };
 
-  const getSettingsScenariosAPI = async (query: GetScenariosQuery) => {
-    setLoading({ ...loading, getSettingsScenarios: true });
-    const response = await scenariosHTTPClient.getScenarios(query);
-    response && dispatch(setSettingsScenarios(response.scenarios));
-    setLoading({ ...loading, getSettingsScenarios: false });
+  const createScenarioAPI = async (request: CreateScenarioRequest) => {
+    setLoading({ ...loading, createScenario: true });
+    const response = await scenariosHTTPClient.createScenario(request);
+    response && dispatch(createScenario(response.details));
+    setLoading({ ...loading, createScenario: false });
+
+    return Boolean(!response);
   };
 
-  const getScenarioDetailsAPI = async (name: string) => {
+  const updateScenarioAPI = async (scenarioId: number, request: UpdateScenarioRequest) => {
+    setLoading({ ...loading, updateScenario: true });
+    const response = await scenariosHTTPClient.updateScenario(scenarioId, request);
+    response && dispatch(updateScenario(response.details));
+    setLoading({ ...loading, updateScenario: false });
+
+    return Boolean(!response);
+  };
+
+  const deleteScenarioAPI = async (scenarioId: number) => {
+    setLoading({ ...loading, deleteScenario: true });
+    const error = await scenariosHTTPClient.deleteScenario(scenarioId);
+    !error && dispatch(deleteScenario({ scenarioId }));
+    setLoading({ ...loading, deleteScenario: false });
+
+    return error;
+  };
+
+  const getScenarioDetailsAPI = async (scenarioId: number) => {
     setLoading({ ...loading, getScenarioDetails: true });
-    const response = await scenariosHTTPClient.getScenarioDetails(name);
+    const response = await scenariosHTTPClient.getScenarioDetails(scenarioId);
     response && dispatch(setScenarioDetails(response.details));
     setLoading({ ...loading, getScenarioDetails: false });
   };
@@ -79,7 +107,9 @@ const ScenariosProvider: FC<PropsWithChildren> = ({ children }) => {
       value={{
         loading,
         getScenarios: getScenariosAPI,
-        getSettingsScenarios: getSettingsScenariosAPI,
+        createScenario: createScenarioAPI,
+        updateScenario: updateScenarioAPI,
+        deleteScenario: deleteScenarioAPI,
         getScenarioDetails: getScenarioDetailsAPI
       }}>
       {children}

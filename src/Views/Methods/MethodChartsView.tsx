@@ -11,10 +11,12 @@ import { useMethodsAnalytics } from '../../Providers/Analytics/MethodsAnalyticsP
 import { GetMethodsAnalyticsQuery } from '../../Models/Analytics/MethodsAnalytics';
 import { AnalyticsFilters } from '../../Components/Modals/Analytics/AnalyticsFiltersModal';
 import { Scenario } from '../../Models/Services/Scenarios';
+import { Service } from '../../Models/Services/Services';
 
 type MethodChartsViewProps = {
   method: string;
   filters: AnalyticsFilters;
+  service: Service;
   scenario: Scenario;
   responseTimesAnalytics: ResponseTimesAnalytics[];
   numberOfRequestsAnalytics: NumberOfRequestsAnalytics[];
@@ -22,20 +24,27 @@ type MethodChartsViewProps = {
 };
 
 const MethodChartsView: FC<MethodChartsViewProps> = (props) => {
-  const { method, filters, scenario, responseTimesAnalytics, numberOfRequestsAnalytics, requestsPerSecondAnalytics } =
-    props;
+  const {
+    method,
+    filters,
+    service,
+    scenario,
+    responseTimesAnalytics,
+    numberOfRequestsAnalytics,
+    requestsPerSecondAnalytics
+  } = props;
   const { loading, getResponseTimesAnalytics, getNumberOfRequestsAnalytics, getRequestsPerSecondAnalytics } =
     useMethodsAnalytics();
 
   useEffect(() => {
-    const query: GetMethodsAnalyticsQuery = { method, ...filters, scenario: scenario.name };
+    const query: GetMethodsAnalyticsQuery = { method, ...filters, serviceId: service.id, scenarioId: scenario.id };
 
-    Promise.all([
+    Promise.any([
       getResponseTimesAnalytics(query),
       getNumberOfRequestsAnalytics(query),
       getRequestsPerSecondAnalytics(query)
     ]);
-  }, [filters, method, scenario.name]);
+  }, [filters, method, service.id, scenario.id]);
 
   return (
     <Fragment>
@@ -59,6 +68,7 @@ const MethodChartsView: FC<MethodChartsViewProps> = (props) => {
 };
 
 const getState = (state: ReduxState) => ({
+  service: state.services.service,
   scenario: state.scenarios.scenario,
   responseTimesAnalytics: state.analytics.methodsResponseTimesAnalytics,
   numberOfRequestsAnalytics: state.analytics.methodsNumberOfRequestsAnalytics,

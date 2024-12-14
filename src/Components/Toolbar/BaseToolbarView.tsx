@@ -1,13 +1,15 @@
 import { BasePaper } from '../Views/BasePaper';
 import Typography from '@mui/material/Typography';
-import { Badge, Box, SxProps, Theme } from '@mui/material';
+import { Badge, Box, CircularProgress, SxProps, Theme } from '@mui/material';
 import { FC, ReactNode } from 'react';
 import IconButton from '@mui/material/IconButton';
 
-type ToolbarAction = {
+export type ToolbarAction = {
   icon?: ReactNode;
   content?: ReactNode;
+  loading?: boolean;
   onClick?: () => void;
+  disabled?: boolean;
   badgeContent?: ReactNode;
 };
 
@@ -27,9 +29,13 @@ export const BaseToolbarView: FC<BaseToolbarViewProps> = (props) => {
         <Box sx={{ flexGrow: 1 }} />
         {actions.map((action, index) =>
           action.icon ? (
-            <IconButton key={index} sx={{ mr: actions.length === index + 1 ? 0 : 2 }} onClick={action.onClick}>
+            <IconButton
+              key={index}
+              sx={{ mr: actions.length === index + 1 ? 0 : 2 }}
+              onClick={action.onClick}
+              disabled={action.disabled}>
               <Badge badgeContent={action.badgeContent} color="primary">
-                {action.icon}
+                {action.loading ? <CircularProgress size={24} /> : action.icon}
               </Badge>
             </IconButton>
           ) : (

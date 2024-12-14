@@ -12,6 +12,7 @@ import { ListView } from '../../../Components/Views/ListView';
 import { LoadTestResultsToolbarView } from './LoadTestResultsToolbarView';
 import { LoadTestResultsFilters } from '../../../Components/Modals/Results/LoadTestResultsFiltersModal';
 import { Scenario } from '../../../Models/Services/Scenarios';
+import { getDefaultLoadTestResultsFilters } from '../../../Services/Results/Utils';
 
 type LoadTestResultsListViewProps = {
   service: Service;
@@ -27,15 +28,11 @@ const LoadTestResultsListView: FC<LoadTestResultsListViewProps> = (props) => {
   const { loading, getLoadTestResults } = useLoadTestResults();
   const [page, setPage] = useState(1);
   const [offset, setOffset] = useState(0);
-  const [filters, setFilters] = useState<LoadTestResultsFilters>({
-    startedAt: null,
-    finishedAt: null,
-    triggerCIProjectVersion: null
-  });
+  const [filters, setFilters] = useState<LoadTestResultsFilters>(getDefaultLoadTestResultsFilters());
 
   useEffect(() => {
-    getLoadTestResults({ service: service.name, scenario: scenario.name, limit, offset, ...filters });
-  }, [offset, service.name, scenario.name, filters]);
+    service.id && getLoadTestResults({ serviceId: service.id, scenarioId: scenario.id, limit, offset, ...filters });
+  }, [offset, service.id, scenario.id, filters]);
 
   return (
     <Box>
@@ -51,13 +48,15 @@ const LoadTestResultsListView: FC<LoadTestResultsListViewProps> = (props) => {
         {loadTestResults.map((result) => (
           <LoadTestResultView key={result.id} result={result} />
         ))}
-        <BasePagination
-          page={page}
-          total={loadTestResultsTotal}
-          limit={limit}
-          setPage={setPage}
-          setOffset={setOffset}
-        />
+        {loadTestResults.length > 0 && (
+          <BasePagination
+            page={page}
+            total={loadTestResultsTotal}
+            limit={limit}
+            setPage={setPage}
+            setOffset={setOffset}
+          />
+        )}
       </ListView>
     </Box>
   );

@@ -1,6 +1,6 @@
-export interface GetResultsAnalyticsQuery extends Record<string, string | null> {
-  service: string;
-  scenario: string | null;
+export interface GetResultsAnalyticsQuery {
+  serviceId: number;
+  scenarioId: number | null;
   startDatetime: string;
   endDatetime: string;
 }

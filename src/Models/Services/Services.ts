@@ -1,11 +1,18 @@
-export interface Service {
-  url: string;
-  name: string;
-  isInternal: boolean;
+export enum ServiceType {
+  Internal = 'INTERNAL',
+  Production = 'PRODUCTION'
 }
 
-export interface GetServicesQuery extends Record<string, boolean> {
-  withInternal: boolean;
+export interface Service {
+  id: number;
+  url: string;
+  name: string;
+  type: ServiceType;
+}
+
+export interface ServiceDetails extends Service {
+  cluster: string;
+  namespace: string;
 }
 
 export interface GetServicesResponse {
@@ -14,4 +21,18 @@ export interface GetServicesResponse {
 
 export interface GetServiceResponse {
   service: Service;
+}
+
+export interface CreateServiceRequest {
+  url: string;
+  name: string;
+  type: ServiceType;
+  cluster: string;
+  namespace: string;
+}
+
+export interface UpdateServiceRequest extends CreateServiceRequest {}
+
+export interface GetServiceDetailsResponse {
+  details: ServiceDetails;
 }

@@ -7,11 +7,12 @@ import { useState } from 'react';
 import { getDefaultAnalyticsEndDatetime, getDefaultAnalyticsStartDatetime } from '../../Services/Analytics/Utils';
 import { AnalyticsToolbarView } from '../../Views/Analytics/AnalyticsToolbarView';
 import { AnalyticsFilters } from '../../Components/Modals/Analytics/AnalyticsFiltersModal';
-import { useMethodDetailsSearchParams } from '../../Services/Results/Hooks';
-import MethodScenarioCompareChartView from '../../Views/Methods/MethodScenarioCompareChartView';
+import { useMethodDetailsNavigation } from '../../Services/Methods/Hooks';
+import CompareMethodWithScenarioView from '../../Views/Compares/CompareMethodWithScenario/CompareMethodWithScenarioView';
+import { ComparesProvider } from '../../Providers/Compares/ComparesProvider';
 
 const MethodDetailsPage = () => {
-  const { method } = useMethodDetailsSearchParams();
+  const { method } = useMethodDetailsNavigation();
   const [filters, setFilters] = useState<AnalyticsFilters>({
     endDatetime: getDefaultAnalyticsEndDatetime(),
     startDatetime: getDefaultAnalyticsStartDatetime()
@@ -23,7 +24,9 @@ const MethodDetailsPage = () => {
       {method && (
         <MethodsProvider>
           <MethodDetailsView method={method} filters={filters} />
-          <MethodScenarioCompareChartView method={method} filters={filters} />
+          <ComparesProvider>
+            <CompareMethodWithScenarioView method={method} filters={filters} />
+          </ComparesProvider>
         </MethodsProvider>
       )}
       {method && (

@@ -1,6 +1,6 @@
 import { INITIAL_METHODS } from './InitialState';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Method, MethodDetails, MethodScenarioCompare, ShortMethod } from '../../../Models/Results/Methods';
+import { Method, MethodDetails, ShortMethod } from '../../../Models/Results/Methods';
 
 export const methodsSlice = createSlice({
   name: 'methods',
@@ -15,12 +15,10 @@ export const methodsSlice = createSlice({
     setMethodDetails: (state, action: PayloadAction<MethodDetails>) => {
       state.methodDetails = action.payload;
     },
-    setMethodScenarioCompare: (state, action: PayloadAction<MethodScenarioCompare>) => {
-      state.methodScenarioCompare = action.payload;
-    }
+    clearMethodsState: () => INITIAL_METHODS
   }
 });
 
-export const { setMethods, setShortMethods, setMethodDetails, setMethodScenarioCompare } = methodsSlice.actions;
+export const { setMethods, setShortMethods, setMethodDetails, clearMethodsState } = methodsSlice.actions;
 
 export default methodsSlice.reducer;

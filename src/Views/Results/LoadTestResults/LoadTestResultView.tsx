@@ -1,90 +1,63 @@
 import { LoadTestResult } from '../../../Models/Results/LoadTestResults';
-import { FC, useMemo } from 'react';
-import { BaseCard } from '../../../Components/Cards/BaseCard';
-import { Grid, Typography } from '@mui/material';
-import { useAppNavigationService } from '../../../Services/HookServices/AppNavigationServiceHook';
-import { AppRoutes } from '../../../Services/Constants/Routing';
-import dayjs from 'dayjs';
-import { SettingsManager } from '../../../Services/Config';
-import { getLoadTestResultTitle } from '../../../Services/Results/Utils';
-import { LoadTestResultLabelsView } from './LoadTestResultLabelsView';
+import { FC } from 'react';
+import { Grid2, Typography } from '@mui/material';
+import { getLoadTestResultDates } from '../../../Services/Results/Utils';
 import { NumberOfRequestsProgress } from '../../../Components/Progress/Results/NumberOfRequestsProgress';
+import { LoadTestResultTitleLink } from '../../../Components/Links/Results/LoadTestResults/LoadTestResultTitleLink';
+import { LoadTestResultViewMenu } from '../../../Components/Menus/Results/LoadTestsResults/LoadTestResultViewMenu';
+import { BasePaper } from '../../../Components/Views/BasePaper';
+import { LoadTestResultLabelsView } from '../../../Components/Labels/Results/LoadTestResults/LoadTestResultLabelsView';
+import { LoadTestResultJobButton } from '../../../Components/Buttons/Results/LoadTestResults/LoadTestResultJobButton';
 
 type LoadTestResultViewProps = {
   result: LoadTestResult;
 };
 
 export const LoadTestResultView: FC<LoadTestResultViewProps> = ({ result }) => {
-  const { onNavigate } = useAppNavigationService();
-
-  const onViewDetails = () => {
-    onNavigate(AppRoutes.ResultDetails, { loadTestResultId: result.id });
-  };
-
-  const startedAt = useMemo(
-    () => dayjs(result.startedAt).format(SettingsManager.apiDateTimeFormat),
-    [result.startedAt]
-  );
-
-  const finishedAt = useMemo(
-    () => dayjs(result.finishedAt).format(SettingsManager.apiDateTimeFormat),
-    [result.finishedAt]
-  );
-
-  const onOpenTriggerPipeline = () => {
-    result.triggerCIPipelineUrl && window.open(result.triggerCIPipelineUrl, '_blank');
-  };
-
-  const onOpenLoadTestsPipeline = () => {
-    result.loadTestsCIPipelineUrl && window.open(result.loadTestsCIPipelineUrl, '_blank');
-  };
-
   return (
-    <BaseCard
-      actions={[
-        { title: 'View details', onClick: onViewDetails },
-        {
-          title: 'Open trigger pipeline',
-          onClick: onOpenTriggerPipeline,
-          disabled: !result.triggerCIPipelineUrl
-        },
-        {
-          title: 'Open load tests pipeline',
-          onClick: onOpenLoadTestsPipeline,
-          disabled: !result.loadTestsCIPipelineUrl
-        }
-      ]}>
-      <Grid container spacing={2}>
-        <Grid item xs={6}>
-          <Typography variant={'subtitle1'}>{getLoadTestResultTitle(result)}</Typography>
-        </Grid>
-        <Grid item xs={6} display={'flex'} justifyContent={'flex-end'} columnSpacing={2}>
-          <LoadTestResultLabelsView result={result} />
-        </Grid>
-        <Grid item xs={6}>
+    <BasePaper sx={{ mb: 3 }}>
+      <Grid2 container spacing={2}>
+        <Grid2 size={{ xs: 10 }} display={'flex'} alignItems={'center'}>
+          <LoadTestResultTitleLink result={result} />
+        </Grid2>
+        <Grid2 size={{ xs: 2 }} display={'flex'} alignItems={'center'} justifyContent={'flex-end'}>
+          <LoadTestResultViewMenu result={result} />
+        </Grid2>
+        <Grid2 size={{ xs: 6 }}>
           <Typography variant={'body2'}>
             <b>Total requests/s:</b> {result.totalRequestsPerSecond}
           </Typography>
-        </Grid>
-        <Grid item xs={6} display={'flex'} justifyContent={'flex-end'}>
+        </Grid2>
+        <Grid2 size={{ xs: 6 }} display={'flex'} justifyContent={'flex-end'}>
           <NumberOfRequestsProgress
             requests={result.totalRequests}
             failures={result.totalFailures}
             requestsTitle={'Total requests'}
             failuresTitle={'Total failures'}
           />
-        </Grid>
-        <Grid item xs={6}>
+        </Grid2>
+        <Grid2 size={{ xs: 6 }}>
           <Typography variant={'body2'}>
             <b>Number of users:</b> {result.numberOfUsers}
           </Typography>
-        </Grid>
-        <Grid item xs={6} display={'flex'} justifyContent={'flex-end'}>
-          <Typography variant={'caption'}>
-            {startedAt} — {finishedAt}
-          </Typography>
-        </Grid>
-      </Grid>
-    </BaseCard>
+        </Grid2>
+        <Grid2 size={{ xs: 6 }} display={'flex'} justifyContent={'flex-end'}>
+          <Typography variant={'caption'}>{getLoadTestResultDates(result)}</Typography>
+        </Grid2>
+        {result.comment && (
+          <Grid2 size={{ xs: 12 }} display={'flex'}>
+            <Typography variant={'body2'}>
+              <b>Comment:</b> {result.comment}
+            </Typography>
+          </Grid2>
+        )}
+        <Grid2 size={{ xs: 10 }} display={'flex'} alignItems={'center'}>
+          <LoadTestResultLabelsView result={result} />
+        </Grid2>
+        <Grid2 size={{ xs: 2 }} display={'flex'} alignItems={'center'} justifyContent={'flex-end'}>
+          <LoadTestResultJobButton result={result} />
+        </Grid2>
+      </Grid2>
+    </BasePaper>
   );
 };
