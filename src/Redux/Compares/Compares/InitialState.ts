@@ -20,6 +20,7 @@ export type ComparesInitialState = {
 
 const DEFAULT_BASE_COMPARE: BaseCompare = {
   compare: 0,
+  highlight: false,
   responseTime: { actual: 0, expected: 0, compare: 0 },
   minResponseTime: { actual: 0, expected: 0, compare: 0 },
   maxResponseTime: { actual: 0, expected: 0, compare: 0 },

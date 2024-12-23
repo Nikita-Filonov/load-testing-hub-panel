@@ -29,7 +29,7 @@ export const MethodResultCompareView: FC<MethodResultCompareViewProps> = (props)
   return (
     <WidgetView
       sx={{ mt: 3 }}
-      label={<CompareLabel compare={compare.compare} />}
+      label={<CompareLabel compare={compare} />}
       title={title}
       loading={loading}
       actions={[

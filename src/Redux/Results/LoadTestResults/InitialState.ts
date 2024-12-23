@@ -15,6 +15,7 @@ export const INITIAL_LOAD_TEST_RESULTS: LoadTestResultsInitialState = {
     id: 0,
     service: INITIAL_SERVICES.service,
     comment: null,
+    duration: 0,
     scenario: INITIAL_SCENARIOS.scenario,
     startedAt: '',
     finishedAt: '',

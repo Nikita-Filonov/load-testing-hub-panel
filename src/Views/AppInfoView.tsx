@@ -1,11 +1,11 @@
 import Box from '@mui/material/Box';
-import { LogoImage } from '../../Components/Images/LogoImage';
+import { LogoImage } from '../Components/Images/LogoImage';
 import { Typography } from '@mui/material';
-import { OwnerLink } from '../../Components/Links/OwnerLink';
-import { BackendRepoLink } from '../../Components/Links/BackendRepoLink';
-import { FrontedRepoLink } from '../../Components/Links/FrontedRepoLink';
+import { OwnerLink } from '../Components/Links/OwnerLink';
+import { BackendRepoLink } from '../Components/Links/BackendRepoLink';
+import { FrontedRepoLink } from '../Components/Links/FrontedRepoLink';
 
-export const WelcomeView = () => {
+export const AppInfoView = () => {
   return (
     <Box>
       <Box sx={{ alignItems: 'center', display: 'flex', flexDirection: 'column' }}>

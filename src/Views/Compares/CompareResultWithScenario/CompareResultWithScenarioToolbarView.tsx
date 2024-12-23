@@ -3,7 +3,10 @@ import { useLoadTestResultDetailsToolbarActions } from '../../../Services/Result
 import { connect } from 'react-redux';
 import { ReduxState } from '../../../Redux/ReduxState';
 import { CompareResultWithScenario } from '../../../Models/Compares/CompareResultWithScenario';
-import { FC } from 'react';
+import { FC, Fragment, useState } from 'react';
+import UpdateScenarioSettingsModal from '../../../Components/Modals/Scenarios/UpdateScenarioSettingsModal';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import { ScenarioSettingsProvider } from '../../../Providers/Services/ScenarioSettingsProvider';
 
 type CompareResultWithScenarioToolbarViewProps = {
   compare: CompareResultWithScenario;
@@ -11,8 +14,25 @@ type CompareResultWithScenarioToolbarViewProps = {
 
 const CompareResultWithScenarioToolbarView: FC<CompareResultWithScenarioToolbarViewProps> = ({ compare }) => {
   const actions = useLoadTestResultDetailsToolbarActions();
+  const [scenarioSettingsModal, setScenarioSettingsModal] = useState(false);
 
-  return <BaseToolbarView title={`Comparison with scenario ${compare.scenario.name}`} actions={actions} />;
+  const onScenarioSettings = () => setScenarioSettingsModal(true);
+
+  return (
+    <Fragment>
+      <BaseToolbarView
+        title={`Comparison with scenario ${compare.scenario.name}`}
+        actions={[...actions, { icon: <SettingsOutlinedIcon />, onClick: onScenarioSettings }]}
+      />
+      <ScenarioSettingsProvider>
+        <UpdateScenarioSettingsModal
+          modal={scenarioSettingsModal}
+          setModal={setScenarioSettingsModal}
+          scenarioId={compare.scenario.id}
+        />
+      </ScenarioSettingsProvider>
+    </Fragment>
+  );
 };
 
 const getState = (state: ReduxState) => ({ compare: state.compares.compareResultWithScenario });

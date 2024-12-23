@@ -1,13 +1,14 @@
 import { LoadTestResult } from '../../../Models/Results/LoadTestResults';
 import { FC } from 'react';
 import { Grid2, Typography } from '@mui/material';
-import { getLoadTestResultDates } from '../../../Services/Results/Utils';
+import { getLoadTestResultDates, getLoadTestResultDuration } from '../../../Services/Results/Utils';
 import { NumberOfRequestsProgress } from '../../../Components/Progress/Results/NumberOfRequestsProgress';
 import { LoadTestResultTitleLink } from '../../../Components/Links/Results/LoadTestResults/LoadTestResultTitleLink';
 import { LoadTestResultViewMenu } from '../../../Components/Menus/Results/LoadTestsResults/LoadTestResultViewMenu';
 import { BasePaper } from '../../../Components/Views/BasePaper';
 import { LoadTestResultLabelsView } from '../../../Components/Labels/Results/LoadTestResults/LoadTestResultLabelsView';
 import { LoadTestResultJobButton } from '../../../Components/Buttons/Results/LoadTestResults/LoadTestResultJobButton';
+import { MetricName } from '../../../Services/Constants/Metrics';
 
 type LoadTestResultViewProps = {
   result: LoadTestResult;
@@ -25,7 +26,7 @@ export const LoadTestResultView: FC<LoadTestResultViewProps> = ({ result }) => {
         </Grid2>
         <Grid2 size={{ xs: 6 }}>
           <Typography variant={'body2'}>
-            <b>Total requests/s:</b> {result.totalRequestsPerSecond}
+            <b>Total requests per second:</b> {result.totalRequestsPerSecond}
           </Typography>
         </Grid2>
         <Grid2 size={{ xs: 6 }} display={'flex'} justifyContent={'flex-end'}>
@@ -38,11 +39,13 @@ export const LoadTestResultView: FC<LoadTestResultViewProps> = ({ result }) => {
         </Grid2>
         <Grid2 size={{ xs: 6 }}>
           <Typography variant={'body2'}>
-            <b>Number of users:</b> {result.numberOfUsers}
+            <b>{MetricName.NumberOfUsers}:</b> {result.numberOfUsers}
           </Typography>
         </Grid2>
         <Grid2 size={{ xs: 6 }} display={'flex'} justifyContent={'flex-end'}>
-          <Typography variant={'caption'}>{getLoadTestResultDates(result)}</Typography>
+          <Typography variant={'caption'}>
+            {getLoadTestResultDates(result)}, {getLoadTestResultDuration(result)}
+          </Typography>
         </Grid2>
         {result.comment && (
           <Grid2 size={{ xs: 12 }} display={'flex'}>

@@ -7,6 +7,8 @@ import { FC, useEffect } from 'react';
 import { CompareResultWithScenario } from '../../../Models/Compares/CompareResultWithScenario';
 import { BoxView } from '../../../Components/Views/BoxView';
 import { CompareWidgetType } from '../../../Models/Compares/CompareTableSettings';
+import ScenarioDetailsView from '../../Scenarios/ScenarioDetailsView';
+import { ScenariosProvider } from '../../../Providers/Services/ScenariosProvider';
 
 type CompareResultWithScenarioViewProps = {
   compare: CompareResultWithScenario;
@@ -23,6 +25,9 @@ const CompareResultWithScenarioView: FC<CompareResultWithScenarioViewProps> = (p
 
   return (
     <BoxView loading={loading.getCompareResultWithScenario} containerSx={{ mt: 0 }}>
+      <ScenariosProvider>
+        <ScenarioDetailsView widget scenarioId={compare.scenario.id} />
+      </ScenariosProvider>
       <LoadTestResultCompareView
         compare={compare.loadTestResultCompare}
         widgetType={CompareWidgetType.CompareResultWithScenario}

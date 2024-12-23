@@ -47,13 +47,24 @@ const DEFAULT_COMPARE_WIDGET_SETTINGS: CompareWidgetSettings = {
 export const INITIAL_COMPARE_SETTINGS: CompareSettingsInitialState = {
   compareSettings: {
     serviceId: 0,
-    responseTimeWeight: 0,
-    minResponseTimeWeight: 0,
-    maxResponseTimeWeight: 0,
-    numberOfRequestsWeight: 0,
-    numberOfFailuresWeight: 0,
-    requestsPerSecondWeight: 0,
-    failuresPerSecondWeight: 0
+    weights: {
+      responseTime: 0,
+      minResponseTime: 0,
+      maxResponseTime: 0,
+      numberOfRequests: 0,
+      numberOfFailures: 0,
+      requestsPerSecond: 0,
+      failuresPerSecond: 0
+    },
+    highlightThreshold: {
+      compareWithAverage: 0,
+      compareWithPrevious: 0,
+      compareResultWithResults: 0,
+      compareResultWithAverages: 0,
+      compareResultWithScenario: 0,
+      compareMethodWithScenario: 0,
+      compareAveragesWithScenario: 0
+    }
   },
   compareWidgetsSettings: {
     [CompareWidgetType.CompareResultWithResults]: DEFAULT_COMPARE_WIDGET_SETTINGS,

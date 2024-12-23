@@ -15,6 +15,10 @@ export interface ServiceDetails extends Service {
   namespace: string;
 }
 
+export interface GetServicesQuery {
+  types: ServiceType[];
+}
+
 export interface GetServicesResponse {
   services: Service[];
 }

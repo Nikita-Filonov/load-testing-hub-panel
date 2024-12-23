@@ -2,8 +2,8 @@ import { FC, useEffect, useState } from 'react';
 import { GetMethodsQuery } from '../../../Models/Results/Methods';
 import { BaseTextField } from '../../TextFields/BaseTextField';
 import { FiltersModal } from '../FiltersModal';
-import { getDefaultAnalyticsEndDatetime, getDefaultAnalyticsStartDatetime } from '../../../Services/Analytics/Utils';
 import { BaseDateTimePicker } from '../../Pickers/BaseDateTimePicker';
+import { getDefaultMethodsFilters } from '../../../Services/Methods/Utils';
 
 export interface MethodsFilters extends Pick<GetMethodsQuery, 'method' | 'endDatetime' | 'startDatetime'> {}
 
@@ -37,11 +37,7 @@ export const MethodsFiltersModal: FC<MethodsFiltersModalProps> = (props) => {
 
   const onResetFilters = () => {
     onClose();
-    setExternalFilters({
-      method: null,
-      endDatetime: getDefaultAnalyticsEndDatetime(),
-      startDatetime: getDefaultAnalyticsStartDatetime()
-    });
+    setExternalFilters(getDefaultMethodsFilters());
   };
 
   return (

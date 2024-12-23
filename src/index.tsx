@@ -15,10 +15,10 @@ import { ServicesRoutes } from './Navigation/Services/ServicesRoutes';
 import { DashboardRoutes } from './Navigation/Dashboard/DashboardRoutes';
 import { MethodsRoutes } from './Navigation/Methods/MethodsRoutes';
 import { ScenariosRoutes } from './Navigation/Scenarios/ScenariosRoutes';
-import { ComparesRoutes } from './Navigation/Compares/ComparesRoutes';
 import { ServicesRedirect } from './Navigation/Services/ServicesRedirect';
 import { ServicesRoutesLoader } from './Navigation/Services/ServicesRoutesLoader';
 import { ServicesProvider } from './Providers/Services/ServicesProvider';
+import { SettingsRoutes } from './Navigation/Settings/SettingsRoutes';
 
 const IndexRoute = () => {
   return (
@@ -36,7 +36,7 @@ const IndexRoute = () => {
           <Route path={AppRoutes.ServiceDetails} element={<ServicesRedirect />} />
           <Route path={`${AppRoutes.ServiceResults}/*`} element={<ResultsRoutes />} />
           <Route path={`${AppRoutes.ServiceMethods}/*`} element={<MethodsRoutes />} />
-          <Route path={`${AppRoutes.ServiceCompares}/*`} element={<ComparesRoutes />} />
+          <Route path={`${AppRoutes.ServiceSettings}/*`} element={<SettingsRoutes />} />
           <Route path={`${AppRoutes.ServiceScenarios}/*`} element={<ScenariosRoutes />} />
           <Route path={`${AppRoutes.ServiceDashboard}/*`} element={<DashboardRoutes />} />
         </Route>

@@ -10,9 +10,9 @@ import { ListView } from '../../Components/Views/ListView';
 import { MethodView } from './MethodView';
 import { MethodsToolbarView } from './MethodsToolbarView';
 import { MethodsFilters } from '../../Components/Modals/Methods/MethodsFiltersModal';
-import { getDefaultAnalyticsEndDatetime, getDefaultAnalyticsStartDatetime } from '../../Services/Analytics/Utils';
 import { Scenario } from '../../Models/Services/Scenarios';
 import { SearchTextField } from '../../Components/TextFields/SearchTextField';
+import { getDefaultMethodsFilters } from '../../Services/Methods/Utils';
 
 type MethodsListViewProps = {
   methods: Method[];
@@ -24,11 +24,7 @@ const MethodsListView: FC<MethodsListViewProps> = (props) => {
   const { service, methods, scenario } = props;
   const { loading, getMethods } = useMethods();
   const [search, setSearch] = useState('');
-  const [filters, setFilters] = useState<MethodsFilters>({
-    method: null,
-    endDatetime: getDefaultAnalyticsEndDatetime(),
-    startDatetime: getDefaultAnalyticsStartDatetime()
-  });
+  const [filters, setFilters] = useState<MethodsFilters>(getDefaultMethodsFilters());
 
   useEffect(() => {
     service.id && getMethods({ serviceId: service.id, scenarioId: scenario.id, ...filters });
@@ -50,7 +46,7 @@ const MethodsListView: FC<MethodsListViewProps> = (props) => {
         />
       )}
       {methods.length > 0 && !loading.getMethods && (
-        <SearchTextField label={'Search by method'} value={search} onChange={setSearch} />
+        <SearchTextField value={search} onChange={setSearch} placeholder={'Search by method'} />
       )}
       <ListView loading={loading.getMethods}>
         {filteredMethods.map((method, index) => (

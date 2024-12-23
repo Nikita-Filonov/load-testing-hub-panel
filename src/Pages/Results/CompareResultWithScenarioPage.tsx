@@ -1,7 +1,7 @@
 import { MainLayout } from '../../Components/Layouts/MainLayouts';
 import { useParams } from 'react-router-dom';
 import { LoadTestResultsProvider } from '../../Providers/Results/LoadTestResultsProvider';
-import ResultsSummaryDetailsView from '../../Views/Results/LoadTestResults/LoadTestResultDetailsView';
+import LoadTestResultDetailsView from '../../Views/Results/LoadTestResults/LoadTestResultDetailsView';
 import { ComparesProvider } from '../../Providers/Compares/ComparesProvider';
 import { ServicesProvider } from '../../Providers/Services/ServicesProvider';
 import CompareResultWithScenarioToolbarView from '../../Views/Compares/CompareResultWithScenario/CompareResultWithScenarioToolbarView';
@@ -21,7 +21,7 @@ const CompareResultWithScenarioPage = () => {
       </ServicesProvider>
       {loadTestResultId && (
         <LoadTestResultsProvider>
-          <ResultsSummaryDetailsView loadTestResultId={Number(loadTestResultId)} />
+          <LoadTestResultDetailsView loadTestResultId={Number(loadTestResultId)} />
         </LoadTestResultsProvider>
       )}
       {loadTestResultId && (

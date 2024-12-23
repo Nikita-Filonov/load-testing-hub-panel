@@ -12,6 +12,7 @@ import { useAppNavigation } from '../Navigation/Hooks';
 import { useServicesNavigation } from '../Services/Hooks';
 import { buildLoadTestResultURL, buildResultsURL } from './Utils';
 import { formatRouteTemplate } from '../Navigation/Utils';
+import { ServiceType } from '../../Models/Services/Services';
 
 export const useLoadTestResultsNavigation = () => {
   const { onNavigate } = useAppNavigation();
@@ -61,7 +62,7 @@ export const useLoadTestResultDetailsToolbarActions = () => {
   const services = useSelector((state: ReduxState) => state.services.services);
 
   useEffect(() => {
-    getServices();
+    getServices({ types: [ServiceType.Internal, ServiceType.Production] });
   }, []);
 
   return [

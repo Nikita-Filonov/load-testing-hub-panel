@@ -1,24 +1,32 @@
 import { BaseLabelsView } from '../../BaseLabelsView';
-import { LoadTestResult } from '../../../../Models/Results/LoadTestResults';
+import { LoadTestResult, LoadTestResultCompare } from '../../../../Models/Results/LoadTestResults';
 import { FC } from 'react';
 import { BaseLabelProps } from '../../BaseLabel';
 import { getCompareColor, getCompareTitle } from '../../../../Services/Compare/Utils';
 import { MAP_SCENARIO_TAG_TO_COLOR } from '../../Scenarios/ScenarioTagsLabel';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 
 type LoadTestResultLabelsViewProps = {
   result: LoadTestResult;
 };
 
+const getLoadTestResultCompareLabelProps = (props: {
+  compare?: LoadTestResultCompare;
+  context: string;
+}): BaseLabelProps => {
+  const { compare, context } = props;
+
+  return {
+    icon: compare?.highlight ? <ErrorOutlineIcon fontSize={'small'} /> : undefined,
+    label: getCompareTitle({ percent: compare?.compare, context }),
+    color: compare?.highlight ? 'error' : getCompareColor(compare?.compare)
+  };
+};
+
 export const LoadTestResultLabelsView: FC<LoadTestResultLabelsViewProps> = ({ result }) => {
   const labels: BaseLabelProps[] = [
-    {
-      label: getCompareTitle({ percent: result.compare?.compareWithAverage, context: 'average' }),
-      color: getCompareColor(result.compare?.compareWithAverage)
-    },
-    {
-      label: getCompareTitle({ percent: result.compare?.compareWithPrevious, context: 'previous' }),
-      color: getCompareColor(result.compare?.compareWithPrevious)
-    },
+    getLoadTestResultCompareLabelProps({ compare: result.compare?.compareWithAverage, context: 'average' }),
+    getLoadTestResultCompareLabelProps({ compare: result.compare?.compareWithPrevious, context: 'previous' }),
     { label: `Scenario: ${result.scenario.version}`, color: 'info' },
     ...result.scenario.tags.map((tag) => ({ label: tag, color: MAP_SCENARIO_TAG_TO_COLOR[tag] }))
   ];

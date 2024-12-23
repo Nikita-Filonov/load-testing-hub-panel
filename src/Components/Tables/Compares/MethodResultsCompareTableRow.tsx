@@ -11,14 +11,5 @@ type MethodResultsCompareTableRowProps = {
 export const MethodResultsCompareTableRow: FC<MethodResultsCompareTableRowProps> = (props) => {
   const { compare, numberOfRows } = props;
 
-  return (
-    <BaseTableRow
-      cells={[
-        {
-          value: <MethodCell method={compare.method} compare={compare.compare} />,
-          rowSpan: numberOfRows + 1
-        }
-      ]}
-    />
-  );
+  return <BaseTableRow cells={[{ value: <MethodCell compare={compare} />, rowSpan: numberOfRows + 1 }]} />;
 };

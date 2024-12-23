@@ -4,16 +4,18 @@ import { FC } from 'react';
 import { BaseTextField, BaseTextFieldProps } from './BaseTextField';
 
 type SearchTextFieldProps = {
+  label?: string;
   loading?: boolean;
-} & Omit<BaseTextFieldProps, 'endAdornment'>;
+} & Omit<BaseTextFieldProps, 'label' | 'endAdornment'>;
 
 export const SearchTextField: FC<SearchTextFieldProps> = (props) => {
-  const { value, onChange, loading, ...other } = props;
+  const { value, label, onChange, loading, ...other } = props;
 
   const onClear = () => onChange('');
 
   return (
     <BaseTextField
+      label={label || 'Search'}
       value={value}
       onChange={onChange}
       {...other}

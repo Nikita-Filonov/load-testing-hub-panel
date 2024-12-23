@@ -30,7 +30,7 @@ export const LoadTestResultCompareView: FC<BaseCompareViewProps> = (props) => {
     <WidgetView
       sx={{ mt: 3 }}
       title={title || 'Comparison of average values'}
-      label={<CompareLabel compare={compare.compare} />}
+      label={<CompareLabel compare={compare} />}
       loading={loading}
       actions={[
         {

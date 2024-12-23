@@ -70,7 +70,7 @@ const ScenariosListView: FC<ScenariosSettingsViewProps> = (props) => {
         />
       )}
       {scenarios.length > 0 && !loading.getScenarios && (
-        <SearchTextField sx={{ mb: 2, mt: 0 }} label={'Search by name'} value={search} onChange={setSearch} />
+        <SearchTextField sx={{ mb: 2, mt: 0 }} value={search} onChange={setSearch} placeholder={'Search by name'} />
       )}
       <List dense>
         {filteredScenarios.map((item, index) => (

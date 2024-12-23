@@ -1,4 +1,4 @@
-import { CreateServiceRequest, Service, ServiceType } from '../../Models/Services/Services';
+import { CreateServiceRequest, GetServicesQuery, Service, ServiceType } from '../../Models/Services/Services';
 
 export const getDefaultCreateServiceRequest = (): CreateServiceRequest => {
   return {
@@ -11,3 +11,5 @@ export const getDefaultCreateServiceRequest = (): CreateServiceRequest => {
 };
 
 export const getServiceTitle = (service: Service): string => `#${service.id} ${service.name}`;
+
+export const getDefaultServicesFilters = (): GetServicesQuery => ({ types: [ServiceType.Production] });

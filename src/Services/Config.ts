@@ -5,6 +5,8 @@ export interface Config {
   apiDateFormat: string;
   apiTimeFormat: string;
 
+  durationFormat: string;
+
   pickerDateFormat: string;
   pickerTimeFormat: string;
 }
@@ -16,6 +18,8 @@ export class SettingsManager {
 
     apiDateFormat: '',
     apiTimeFormat: '',
+
+    durationFormat: '',
 
     pickerDateFormat: '',
     pickerTimeFormat: ''
@@ -32,6 +36,8 @@ export class SettingsManager {
 
       apiDateFormat: process.env.REACT_APP_API_DATE_FORMAT || '',
       apiTimeFormat: process.env.REACT_APP_API_TIME_FORMAT || '',
+
+      durationFormat: process.env.REACT_APP_DURATION_FORMAT || '',
 
       pickerDateFormat: process.env.REACT_APP_PICKER_DATE_FORMAT || '',
       pickerTimeFormat: process.env.REACT_APP_PICKER_TIME_FORMAT || ''
@@ -60,6 +66,10 @@ export class SettingsManager {
 
   static get apiTimeFormat(): string {
     return this.config.apiTimeFormat;
+  }
+
+  static get durationFormat(): string {
+    return this.config.durationFormat;
   }
 
   static get apiDateTimeFormat(): string {

@@ -1,16 +1,20 @@
-import { CompareSettings, UpdateCompareSettingsRequest } from '../../Models/Compares/CompareSettings';
+import { CompareSettingsWeights } from '../../Models/Compares/CompareSettings';
 import { CompareTableRowSettings } from '../../Models/Compares/CompareTableSettings';
 import { BaseCompare } from '../../Models/Compares/Compares';
 
-export const sumCompareSettingsMetrics = (settings: CompareSettings | UpdateCompareSettingsRequest): number => {
+export const sumCompareSettingsWeights = (weights?: CompareSettingsWeights): number => {
+  if (!weights) {
+    return 0;
+  }
+
   return [
-    settings.responseTimeWeight,
-    settings.minResponseTimeWeight,
-    settings.maxResponseTimeWeight,
-    settings.numberOfRequestsWeight,
-    settings.numberOfFailuresWeight,
-    settings.requestsPerSecondWeight,
-    settings.failuresPerSecondWeight
+    weights.responseTime,
+    weights.minResponseTime,
+    weights.maxResponseTime,
+    weights.numberOfRequests,
+    weights.numberOfFailures,
+    weights.requestsPerSecond,
+    weights.failuresPerSecond
   ].reduce((sum, value) => sum + value, 0);
 };
 

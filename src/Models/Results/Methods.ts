@@ -10,6 +10,7 @@ export interface Method extends ShortMethod {
 }
 
 export interface MethodDetails extends Method {
+  averageContentLength: number;
   averageMaxResponseTime: number;
   averageMinResponseTime: number;
   averageFailuresPerSecond: number;

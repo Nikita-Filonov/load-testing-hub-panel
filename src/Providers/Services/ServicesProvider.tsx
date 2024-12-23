@@ -8,7 +8,7 @@ import {
   setServices,
   updateService
 } from '../../Redux/Services/Services/ServicesSlice';
-import { CreateServiceRequest, UpdateServiceRequest } from '../../Models/Services/Services';
+import { CreateServiceRequest, GetServicesQuery, UpdateServiceRequest } from '../../Models/Services/Services';
 import { useDispatch } from 'react-redux';
 
 interface Loading {
@@ -23,7 +23,7 @@ interface Loading {
 export type ServicesContextProps = {
   loading: Loading;
   getService: (serviceId: number) => Promise<boolean>;
-  getServices: () => Promise<void>;
+  getServices: (query: GetServicesQuery) => Promise<void>;
   createService: (request: CreateServiceRequest) => Promise<boolean>;
   updateService: (serviceId: number, request: UpdateServiceRequest) => Promise<boolean>;
   deleteService: (serviceId: number) => Promise<boolean>;
@@ -53,9 +53,9 @@ const ServicesProvider: FC<PropsWithChildren> = ({ children }) => {
     return Boolean(!response);
   };
 
-  const getServicesAPI = async () => {
+  const getServicesAPI = async (query: GetServicesQuery) => {
     setLoading({ ...loading, getServices: true });
-    const response = await servicesHTTPClient.getServices();
+    const response = await servicesHTTPClient.getServices(query);
     response && dispatch(setServices(response.services));
     setLoading({ ...loading, getServices: false });
   };
@@ -63,7 +63,7 @@ const ServicesProvider: FC<PropsWithChildren> = ({ children }) => {
   const createServiceAPI = async (request: CreateServiceRequest) => {
     setLoading({ ...loading, createService: true });
     const response = await servicesHTTPClient.createService(request);
-    response && dispatch(createService(response.service));
+    response && dispatch(createService(response.details));
     setLoading({ ...loading, createService: false });
 
     return Boolean(!response);
@@ -72,7 +72,7 @@ const ServicesProvider: FC<PropsWithChildren> = ({ children }) => {
   const updateServiceAPI = async (serviceId: number, request: UpdateServiceRequest) => {
     setLoading({ ...loading, updateService: true });
     const response = await servicesHTTPClient.updateService(serviceId, request);
-    response && dispatch(updateService(response.service));
+    response && dispatch(updateService(response.details));
     setLoading({ ...loading, updateService: false });
 
     return Boolean(!response);

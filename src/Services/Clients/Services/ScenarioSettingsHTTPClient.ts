@@ -16,7 +16,7 @@ export class ScenarioSettingsHTTPClient extends HTTPClient {
     scenarioId: number,
     request: UpdateScenarioSettingsRequest
   ): Promise<GetScenarioSettingsResponse | null> {
-    const response = await this.post({ url: `/scenario-settings/${scenarioId}`, body: request });
+    const response = await this.patch({ url: `/scenario-settings/${scenarioId}`, body: request });
     return response.json;
   }
 }

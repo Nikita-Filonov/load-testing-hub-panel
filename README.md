@@ -2,6 +2,38 @@
 
 If you have any questions, you can ask [@Nikita Filonov](https://t.me/sound_right)
 
+## Table of content
+
+- [Project setup](#project-setup)
+- [Services](#services)
+    - [Services list](#services-list)
+    - [Services filters](#services-filters)
+    - [Create service](#create-service)
+    - [Service details](#service-details)
+- [Dashboard](#dashboard)
+    - [Average numbers](#average-numbers)
+    - [Charts](#charts)
+- [Results](#results)
+    - [Results list](#results-list)
+    - [Result details](#result-details)
+    - [Comparison](#comparison)
+- [Methods](#methods)
+    - [Methods list](#methods-list)
+    - [Method details](#method-details)
+- [Scenarios](#scenarios)
+    - [Scenarios list](#scenarios-list)
+    - [Create scenario](#create-scenario)
+    - [Scenario details](#scenario-details)
+    - [Scenario settings](#scenario-settings)
+- [Compares](#compares)
+    - [Comparison settings](#comparison-settings)
+- [Settings](#settings)
+    - [App settings](#app-settings)
+    - [General settings](#general-settings)
+    - [Compare weights settings](#compare-weights-settings)
+    - [Compare highlight threshold settings](#compare-highlight-threshold-settings)
+- [App info](#app-info)
+
 ## Project setup
 
 ```shell
@@ -15,6 +47,10 @@ yarn start
 
 ![Empty services](examples/services/empty_list.png "Empty services")
 ![Services list](examples/services/list.png "Services list")
+
+### Services filters
+
+![Services filters](examples/services/filters.png "Services filters")
 
 ### Create service
 
@@ -44,7 +80,7 @@ yarn start
 ![List first page](examples/results/list_first_page.png "List first page")
 ![List second page](examples/results/list_second_page.png "List second page")
 
-### Details
+### Result details
 
 ![Details](examples/results/details.png "Details")
 ![Details ratio](examples/results/details_ratio.png "Details ratio")
@@ -69,7 +105,7 @@ yarn start
 ![Empty methods](examples/methods/list_empty.png "Empty methods")
 ![Methods list](examples/methods/list.png "Methods list")
 
-### Details
+### Method details
 
 ![Details](examples/methods/details.png "Details")
 ![Details charts](examples/methods/details_charts.png "Details charts")
@@ -85,11 +121,11 @@ yarn start
 
 ![Create scenario](examples/scenarios/create.png "Create scenario")
 
-### Details
+### Scenario details
 
 ![Details](examples/scenarios/details.png "Details")
 
-### Settings
+### Scenario settings
 
 ![Settings](examples/scenarios/settings.png "Settings")
 ![Settings methods](examples/scenarios/settings_methods.png "Settings methods")
@@ -102,8 +138,22 @@ yarn start
 
 ## Settings
 
-![Settings](examples/settings.png "Settings")
+### App settings
 
-## Welcome
+![App settings](examples/settings/app.png "App settings")
 
-![Welcome](examples/welcome.png "Welcome")
+### General settings
+
+![General settings](examples/settings/general.png "General settings")
+
+### Compare weights settings
+
+![Compare weights settings](examples/settings/compare_weights.png "Compare weights settings")
+
+### Compare highlight threshold settings
+
+![Compare highlight threshold settings](examples/settings/compare_highlight_threshold.png "Compare highlight threshold settings")
+
+## App info
+
+![App info](examples/app_info.png "App info")

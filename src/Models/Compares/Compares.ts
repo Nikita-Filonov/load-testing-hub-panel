@@ -6,6 +6,7 @@ export interface CompareMetric {
 
 export interface BaseCompare {
   compare: number;
+  highlight: boolean;
   responseTime: CompareMetric;
   minResponseTime: CompareMetric;
   maxResponseTime: CompareMetric;

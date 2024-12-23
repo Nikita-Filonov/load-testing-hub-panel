@@ -24,5 +24,8 @@ export enum AppRoutes {
   ServiceScenarios = '/services/:serviceId/scenarios',
 
   // Service compares
-  ServiceCompares = '/services/:serviceId/compares'
+  ServiceSettings = '/services/:serviceId/settings',
+  ServiceSettingsGeneral = '/services/:serviceId/settings/general',
+  ServiceSettingsCompareWeights = '/services/:serviceId/settings/compare-weights',
+  ServiceSettingsCompareHighlightThreshold = '/services/:serviceId/settings/compare-highlight-threshold'
 }

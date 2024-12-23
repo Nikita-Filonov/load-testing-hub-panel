@@ -1,6 +1,6 @@
 import { BaseModal } from '../BaseModal';
 import { FC, Fragment, ReactNode } from 'react';
-import { ThemeModeSettingsView } from '../../../Views/Settings/LocalSettings/ThemeModeSettingsView';
+import { ThemeModeSettingsView } from '../../../Views/Settings/ThemeModeSettingsView';
 import ScenarioSelectionListView from '../../../Views/Scenarios/ScenarioSelectionListView';
 
 export enum AppSettingsFeature {

@@ -1,22 +1,32 @@
+export interface CompareSettingsWeights {
+  responseTime: number;
+  minResponseTime: number;
+  maxResponseTime: number;
+  numberOfRequests: number;
+  numberOfFailures: number;
+  requestsPerSecond: number;
+  failuresPerSecond: number;
+}
+
+export interface CompareSettingsHighlightThreshold {
+  compareWithAverage: number;
+  compareWithPrevious: number;
+  compareResultWithResults: number;
+  compareResultWithAverages: number;
+  compareResultWithScenario: number;
+  compareMethodWithScenario: number;
+  compareAveragesWithScenario: number;
+}
+
 export interface CompareSettings {
   serviceId: number;
-  responseTimeWeight: number;
-  minResponseTimeWeight: number;
-  maxResponseTimeWeight: number;
-  numberOfRequestsWeight: number;
-  numberOfFailuresWeight: number;
-  requestsPerSecondWeight: number;
-  failuresPerSecondWeight: number;
+  weights: CompareSettingsWeights;
+  highlightThreshold: CompareSettingsHighlightThreshold;
 }
 
 export interface UpdateCompareSettingsRequest {
-  responseTimeWeight: number;
-  minResponseTimeWeight: number;
-  maxResponseTimeWeight: number;
-  numberOfRequestsWeight: number;
-  numberOfFailuresWeight: number;
-  requestsPerSecondWeight: number;
-  failuresPerSecondWeight: number;
+  weights?: CompareSettingsWeights;
+  highlightThreshold?: CompareSettingsHighlightThreshold;
 }
 
 export interface GetCompareSettingsResponse {

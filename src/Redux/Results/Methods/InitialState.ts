@@ -12,11 +12,12 @@ export const INITIAL_METHODS: MethodsInitialState = {
   methodDetails: {
     method: '',
     averageResponseTime: 0,
-    averageNumberOfRequests: 0,
-    averageRequestsPerSecond: 0,
+    averageContentLength: 0,
     averageMaxResponseTime: 0,
     averageMinResponseTime: 0,
+    averageNumberOfRequests: 0,
     averageNumberOfFailures: 0,
+    averageRequestsPerSecond: 0,
     averageFailuresPerSecond: 0
   }
 };

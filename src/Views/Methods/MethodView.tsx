@@ -6,6 +6,7 @@ import { NumberOfRequestsProgress } from '../../Components/Progress/Results/Numb
 import { MethodTitleLink } from '../../Components/Links/Methods/MethodTitleLink';
 import { BasePaper } from '../../Components/Views/BasePaper';
 import { MethodViewMenuItem } from '../../Components/Menus/Methods/MethodViewMenuItem';
+import { MetricName } from '../../Services/Constants/Metrics';
 
 type MethodViewProps = {
   method: Method;
@@ -23,7 +24,7 @@ export const MethodView: FC<MethodViewProps> = ({ method }) => {
         </Grid2>
         <Grid2 size={{ xs: 6 }}>
           <Typography variant={'body2'}>
-            <b>Average requests/s:</b> {method.averageRequestsPerSecond}
+            <b>Average requests per second:</b> {method.averageRequestsPerSecond}
           </Typography>
         </Grid2>
         <Grid2 size={{ xs: 6 }} display={'flex'} justifyContent={'flex-end'}>
@@ -36,7 +37,7 @@ export const MethodView: FC<MethodViewProps> = ({ method }) => {
         </Grid2>
         <Grid2 size={{ xs: 12 }}>
           <Typography variant={'body2'}>
-            <b>Average response time:</b> {method.averageResponseTime}
+            <b>{MetricName.AverageResponseTime}:</b> {method.averageResponseTime}
           </Typography>
         </Grid2>
         <Grid2 size={{ xs: 12 }}>

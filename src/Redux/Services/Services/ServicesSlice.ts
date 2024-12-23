@@ -1,6 +1,6 @@
 import { INITIAL_SERVICES, ServicesInitialState } from './InitialState';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Service, ServiceDetails, ServiceType } from '../../../Models/Services/Services';
+import { Service, ServiceDetails } from '../../../Models/Services/Services';
 import { PersistConfig } from 'redux-persist/es/types';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer } from 'redux-persist';
@@ -19,15 +19,16 @@ export const servicesSlice = createSlice({
     setServices: (state, action: PayloadAction<Service[]>) => {
       state.services = action.payload;
     },
-    createService: (state, action: PayloadAction<Service>) => {
+    createService: (state, action: PayloadAction<ServiceDetails>) => {
       state.services = [...state.services, action.payload];
     },
-    updateService: (state, action: PayloadAction<Service>) => {
+    updateService: (state, action: PayloadAction<ServiceDetails>) => {
       const newService = action.payload;
       state.services = state.services.map((service: Service) => (service.id === newService.id ? newService : service));
 
       if (state.service.id === newService.id) {
-        state.service = newService.type === ServiceType.Internal ? INITIAL_SERVICES.service : newService;
+        state.service = newService;
+        state.serviceDetails = newService;
       }
     },
     deleteService: (state, action: PayloadAction<DeleteService>) => {

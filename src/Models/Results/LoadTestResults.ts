@@ -1,11 +1,14 @@
 import { PaginationQuery, PaginationResponse } from '../Pagination';
 import { Service } from '../Services/Services';
 import { Scenario } from '../Services/Scenarios';
+import { BaseCompare } from '../Compares/Compares';
+
+export interface LoadTestResultCompare extends Pick<BaseCompare, 'compare' | 'highlight'> {}
 
 export interface LoadTestResultSummaryCompare {
   previousId: number | null;
-  compareWithAverage: number;
-  compareWithPrevious: number;
+  compareWithAverage: LoadTestResultCompare;
+  compareWithPrevious: LoadTestResultCompare;
 }
 
 export interface ShortLoadTestResult {
@@ -21,6 +24,7 @@ export interface ShortLoadTestResult {
 
 export interface LoadTestResult extends ShortLoadTestResult {
   comment: string | null;
+  duration: number;
   startedAt: string;
   finishedAt: string;
   totalRequests: number;

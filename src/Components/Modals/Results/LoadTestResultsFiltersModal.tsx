@@ -3,6 +3,7 @@ import { FC, useEffect, useState } from 'react';
 import { GetLoadTestResultsQuery } from '../../../Models/Results/LoadTestResults';
 import { BaseTextField } from '../../TextFields/BaseTextField';
 import { FiltersModal } from '../FiltersModal';
+import { getDefaultLoadTestResultsFilters } from '../../../Services/Results/Utils';
 
 export interface LoadTestResultsFilters
   extends Pick<GetLoadTestResultsQuery, 'startedAt' | 'finishedAt' | 'triggerCIProjectVersion'> {}
@@ -39,11 +40,7 @@ export const LoadTestResultsFiltersModal: FC<LoadTestResultsFiltersModalProps> =
 
   const onResetFilters = () => {
     onClose();
-    setExternalFilters({
-      startedAt: null,
-      finishedAt: null,
-      triggerCIProjectVersion: null
-    });
+    setExternalFilters(getDefaultLoadTestResultsFilters());
   };
 
   return (

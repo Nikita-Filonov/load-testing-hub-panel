@@ -30,7 +30,14 @@ export const ROUTE_PATH_DEFINITIONS: RoutePathDefinition[] = [
       },
       { title: 'Dashboard', path: AppRoutes.ServiceDashboard },
       { title: 'Scenarios', path: AppRoutes.ServiceScenarios },
-      { title: 'Compares', path: AppRoutes.ServiceCompares }
+      {
+        title: 'Settings',
+        path: AppRoutes.ServiceSettings,
+        children: [
+          { title: 'Compare weights', path: AppRoutes.ServiceSettingsCompareWeights },
+          { title: 'Compare highlight threshold', path: AppRoutes.ServiceSettingsCompareHighlightThreshold }
+        ]
+      }
     ]
   }
 ];
