@@ -8,7 +8,7 @@ import {
   setServices,
   updateService
 } from '../../Redux/Services/Services/ServicesSlice';
-import { CreateServiceRequest, GetServicesQuery, UpdateServiceRequest } from '../../Models/Services/Services';
+import { CreateServiceRequest, GetServiceDetailsResponse, UpdateServiceRequest } from '../../Models/Services/Services';
 import { useDispatch } from 'react-redux';
 
 interface Loading {
@@ -23,11 +23,11 @@ interface Loading {
 export type ServicesContextProps = {
   loading: Loading;
   getService: (serviceId: number) => Promise<boolean>;
-  getServices: (query: GetServicesQuery) => Promise<void>;
+  getServices: () => Promise<void>;
   createService: (request: CreateServiceRequest) => Promise<boolean>;
   updateService: (serviceId: number, request: UpdateServiceRequest) => Promise<boolean>;
   deleteService: (serviceId: number) => Promise<boolean>;
-  getServiceDetails: (serviceId: number) => Promise<void>;
+  getServiceDetails: (serviceId: number) => Promise<GetServiceDetailsResponse | null>;
 };
 
 const ServicesContext = React.createContext<ServicesContextProps | null>(null);
@@ -53,9 +53,9 @@ const ServicesProvider: FC<PropsWithChildren> = ({ children }) => {
     return Boolean(!response);
   };
 
-  const getServicesAPI = async (query: GetServicesQuery) => {
+  const getServicesAPI = async () => {
     setLoading({ ...loading, getServices: true });
-    const response = await servicesHTTPClient.getServices(query);
+    const response = await servicesHTTPClient.getServices();
     response && dispatch(setServices(response.services));
     setLoading({ ...loading, getServices: false });
   };
@@ -92,6 +92,8 @@ const ServicesProvider: FC<PropsWithChildren> = ({ children }) => {
     const response = await servicesHTTPClient.getServiceDetails(serviceId);
     response && dispatch(setServiceDetails(response.details));
     setLoading({ ...loading, getServiceDetails: false });
+
+    return response;
   };
 
   return (

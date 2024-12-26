@@ -7,5 +7,5 @@ type CopyIDMenuItemProps = {
 };
 
 export const CopyIDMenuItem: FC<CopyIDMenuItemProps> = ({ onCopy }) => {
-  return <BaseMenuItem icon={<ContentCopyIcon />} label={'Copy identifier'} onClick={onCopy} />;
+  return <BaseMenuItem icon={<ContentCopyIcon />} title={'Copy identifier'} onClick={onCopy} />;
 };

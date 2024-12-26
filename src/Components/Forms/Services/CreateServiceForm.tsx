@@ -2,7 +2,6 @@ import Box from '@mui/material/Box';
 import { CreateServiceRequest } from '../../../Models/Services/Services';
 import { FC } from 'react';
 import { BaseTextField } from '../../TextFields/BaseTextField';
-import { ServiceTypeSelect } from '../../Selects/Services/ServiceTypeSelect';
 
 type CreateServiceFormProps = {
   request: CreateServiceRequest;
@@ -22,7 +21,6 @@ export const CreateServiceForm: FC<CreateServiceFormProps> = (props) => {
     <Box>
       <BaseTextField sx={{ mt: 0 }} value={request.url} onChange={onRequest('url')} label={'URL'} />
       <BaseTextField value={request.name} onChange={onRequest('name')} label={'Name'} />
-      <ServiceTypeSelect type={request.type} onSelectType={onRequest('type')} />
       <BaseTextField value={request.cluster} onChange={onRequest('cluster')} label={'Cluster'} />
       <BaseTextField value={request.namespace} onChange={onRequest('namespace')} label={'Namespace'} />
     </Box>

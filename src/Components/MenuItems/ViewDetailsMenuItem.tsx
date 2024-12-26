@@ -7,5 +7,5 @@ type ViewDetailsMenuItemProps = {
 };
 
 export const ViewDetailsMenuItem: FC<ViewDetailsMenuItemProps> = ({ onDetails }) => {
-  return <BaseMenuItem icon={<ArticleOutlinedIcon />} label={'View details'} onClick={onDetails} />;
+  return <BaseMenuItem icon={<ArticleOutlinedIcon />} title={'View details'} onClick={onDetails} />;
 };

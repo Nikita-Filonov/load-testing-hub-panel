@@ -9,12 +9,14 @@ import { formatRouteTemplate } from '../../../Services/Navigation/Utils';
 import { NavigationDrawer } from '../NavigationDrawer';
 import { DrawerListItem } from '../../ListItems/DrawerListItem';
 import { ServicesNavbar } from './ServicesNavbar';
+import HubOutlinedIcon from '@mui/icons-material/HubOutlined';
 
 const ITEMS = [
   { title: 'Dashboard', icon: <SpaceDashboardOutlinedIcon />, route: AppRoutes.ServiceDashboard },
   { title: 'Results', icon: <FormatListBulletedIcon />, route: AppRoutes.ServiceResults },
   { title: 'Methods', icon: <WebhookIcon />, route: AppRoutes.ServiceMethods },
   { title: 'Scenarios', icon: <HandymanOutlinedIcon />, route: AppRoutes.ServiceScenarios },
+  { title: 'Integrations', icon: <HubOutlinedIcon />, route: AppRoutes.ServiceIntegrations },
   { title: 'Settings', icon: <SettingsOutlinedIcon />, route: AppRoutes.ServiceSettings }
 ];
 

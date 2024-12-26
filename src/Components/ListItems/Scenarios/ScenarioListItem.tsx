@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { BaseListItem } from '../BaseListItem';
 import { Scenario } from '../../../Models/Services/Scenarios';
 import ChecklistIcon from '@mui/icons-material/Checklist';
-import { ScenarioSettingsListItemMenu } from '../../Menus/Scenarios/ScenarioSettingsListItemMenu';
+import { ScenarioListItemMenu } from '../../Menus/Scenarios/ScenarioListItemMenu';
 import { ScenarioTagsLabel } from '../../Labels/Scenarios/ScenarioTagsLabel';
 import { getScenarioTitle } from '../../../Services/Scenarios/Utils';
 
@@ -22,7 +22,7 @@ export const ScenarioListItem: FC<ScenarioListItemProps> = (props) => {
     <BaseListItem
       icon={<ChecklistIcon fontSize={'small'} />}
       menu={
-        <ScenarioSettingsListItemMenu
+        <ScenarioListItemMenu
           scenario={scenario}
           onUpdateScenario={onUpdateScenario}
           onScenarioDetails={onScenarioDetails}

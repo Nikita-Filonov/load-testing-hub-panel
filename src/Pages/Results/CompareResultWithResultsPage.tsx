@@ -5,13 +5,13 @@ import LoadTestResultDetailsView from '../../Views/Results/LoadTestResults/LoadT
 import CompareResultWithResultsView from '../../Views/Compares/CompareResultWithResults/CompareResultWithResultsView';
 import { CompareResultWithResultsToolbarView } from '../../Views/Compares/CompareResultWithResults/CompareResultWithResultsToolbarView';
 import { ComparesProvider } from '../../Providers/Compares/ComparesProvider';
-import { ServicesProvider } from '../../Providers/Services/ServicesProvider';
 import CompareHistoryResultsView from '../../Views/Compares/CompareHistoryResults/CompareHistoryResultsView';
 import { FC, useEffect, useState } from 'react';
 import { LoadTestResultDetails } from '../../Models/Results/LoadTestResults';
 import { connect } from 'react-redux';
 import { ReduxState } from '../../Redux/ReduxState';
 import { Scenario } from '../../Models/Services/Scenarios';
+import { IntegrationsProvider } from '../../Providers/Integrations/IntegrationsProvider';
 
 type Params = {
   loadTestResultId: string;
@@ -36,12 +36,12 @@ const CompareResultWithResultsPage: FC<CompareResultWithResultsPageProps> = ({ d
 
   return (
     <MainLayout>
-      <ServicesProvider>
+      <IntegrationsProvider>
         <CompareResultWithResultsToolbarView
           compareWithLoadTestResults={compareWithLoadTestResults}
           setCompareWithLoadTestResults={setCompareWithLoadTestResults}
         />
-      </ServicesProvider>
+      </IntegrationsProvider>
       {loadTestResultId && (
         <LoadTestResultsProvider>
           <LoadTestResultDetailsView loadTestResultId={Number(loadTestResultId)} />

@@ -10,14 +10,14 @@ import { CopyIDMenuItem } from '../../MenuItems/CopyIDMenuItem';
 import { DeleteMenuItem } from '../../MenuItems/DeleteMenuItem';
 import { DeleteScenarioModal } from '../../Modals/Scenarios/DeleteScenarioModal';
 
-type ScenarioSettingsListItemMenuProps = {
+type ScenarioListItemMenuProps = {
   scenario: Scenario;
   onUpdateScenario: (scenario: Scenario) => void;
   onScenarioDetails: (scenario: Scenario) => void;
   onScenarioSettings: (scenario: Scenario) => void;
 };
 
-export const ScenarioSettingsListItemMenu: FC<ScenarioSettingsListItemMenuProps> = (props) => {
+export const ScenarioListItemMenu: FC<ScenarioListItemMenuProps> = (props) => {
   const { scenario, onUpdateScenario, onScenarioDetails, onScenarioSettings } = props;
   const [menu, setMenu] = useState<null | HTMLElement>(null);
   const [deleteScenarioModal, setDeleteScenarioModal] = useState(false);
@@ -54,7 +54,7 @@ export const ScenarioSettingsListItemMenu: FC<ScenarioSettingsListItemMenuProps>
       <BaseMenu menu={menu} setMenu={setMenu} icon={<MoreVertIcon />}>
         <ViewDetailsMenuItem onDetails={onDetails} />
         <CopyIDMenuItem onCopy={onCopy} />
-        <BaseMenuItem icon={<SettingsOutlinedIcon />} label={'Settings'} onClick={onSettings} />
+        <BaseMenuItem icon={<SettingsOutlinedIcon />} title={'Settings'} onClick={onSettings} />
         <EditMenuItem onEdit={onEdit} />
         <DeleteMenuItem onDelete={onDelete} />
       </BaseMenu>

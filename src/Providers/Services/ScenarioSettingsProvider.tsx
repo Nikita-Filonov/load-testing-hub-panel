@@ -9,13 +9,13 @@ interface Loading {
   updateScenarioSettings: boolean;
 }
 
-export type ServicesContextProps = {
+export type ScenarioSettingsContextProps = {
   loading: Loading;
   getScenarioSettings: (scenarioId: number) => Promise<void>;
   updateScenarioSettings: (scenarioId: number, request: UpdateScenarioSettingsRequest) => Promise<boolean>;
 };
 
-const ScenarioSettingsContext = React.createContext<ServicesContextProps | null>(null);
+const ScenarioSettingsContext = React.createContext<ScenarioSettingsContextProps | null>(null);
 
 const ScenarioSettingsProvider: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();

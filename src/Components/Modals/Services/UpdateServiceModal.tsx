@@ -20,14 +20,7 @@ const UpdateServiceModal: FC<UpdateServiceModalProps> = (props) => {
   const [request, setRequest] = useState<UpdateServiceRequest>(getDefaultCreateServiceRequest());
 
   useEffect(() => {
-    modal &&
-      setRequest({
-        url: details.url,
-        name: details.name,
-        type: details.type,
-        cluster: details.cluster,
-        namespace: details.namespace
-      });
+    modal && setRequest(details);
   }, [modal, details]);
 
   useEffect(() => {

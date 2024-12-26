@@ -1,29 +1,32 @@
 import { FC, useState } from 'react';
 import { BaseMenu } from '../../BaseMenu';
 import { BaseMenuItem } from '../../BaseMenuItem';
-import { LoadTestResultDetails } from '../../../../Models/Results/LoadTestResults';
-import { Service } from '../../../../Models/Services/Services';
-import CodeIcon from '@mui/icons-material/Code';
 import InsightsIcon from '@mui/icons-material/Insights';
-import { useIntegrationsKibana } from '../../../../Providers/Integrations/IntegrationsKibanaProvider';
+import { Integration } from '../../../../Models/Integrations/Integrations';
+import { useIntegrations } from '../../../../Providers/Integrations/IntegrationsProvider';
+import { connect } from 'react-redux';
+import { ReduxState } from '../../../../Redux/ReduxState';
+import { Service } from '../../../../Models/Services/Services';
+import { IntegrationEnvironmentTypeLabel } from '../../../Labels/Integrations/IntegrationEnvironmentTypeLabel';
 
 type LoadTestsResultsKibanaMenuProps = {
-  details: LoadTestResultDetails;
-  services: Service[];
+  service: Service;
+  integrations: Integration[];
+  loadTestResultId: number;
 };
 
-export const LoadTestsResultsKibanaMenu: FC<LoadTestsResultsKibanaMenuProps> = (props) => {
-  const { details, services } = props;
-  const { getKibanaDiscoverUrl } = useIntegrationsKibana();
+const LoadTestsResultsKibanaMenu: FC<LoadTestsResultsKibanaMenuProps> = (props) => {
+  const { service, integrations, loadTestResultId } = props;
+  const { loading, buildKibanaDiscoverURL } = useIntegrations();
   const [menu, setMenu] = useState<null | HTMLElement>(null);
 
   const onClose = () => setMenu(null);
 
-  const onOpenKibanaDiscoverUrl = (serviceId: number) => async () => {
-    const response = await getKibanaDiscoverUrl({
-      serviceId,
-      startedAt: details.startedAt,
-      finishedAt: details.finishedAt
+  const onOpenKibanaDiscoverUrl = (integrationId: number) => async () => {
+    const response = await buildKibanaDiscoverURL({
+      serviceId: service.id,
+      integrationId,
+      loadTestResultId
     });
     if (response) {
       window.open(response.discoverUrl, '_blank');
@@ -33,15 +36,27 @@ export const LoadTestsResultsKibanaMenu: FC<LoadTestsResultsKibanaMenuProps> = (
   };
 
   return (
-    <BaseMenu menu={menu} setMenu={setMenu} icon={<InsightsIcon />}>
-      {services.map((service, index) => (
+    <BaseMenu
+      menu={menu}
+      setMenu={setMenu}
+      icon={<InsightsIcon />}
+      loading={loading.buildKibanaDiscoverURL}
+      disabled={integrations.length === 0 && !loading.buildKibanaDiscoverURL}>
+      {integrations.map((integration, index) => (
         <BaseMenuItem
           key={index}
-          icon={<CodeIcon />}
-          label={`Open ${service.name} kibana discover`}
-          onClick={onOpenKibanaDiscoverUrl(service.id)}
+          icon={<InsightsIcon />}
+          title={`Open ${integration.name} kibana discover`}
+          label={<IntegrationEnvironmentTypeLabel type={integration.environmentType} />}
+          onClick={onOpenKibanaDiscoverUrl(integration.id)}
         />
       ))}
     </BaseMenu>
   );
 };
+
+const getState = (state: ReduxState) => ({
+  service: state.services.service,
+  integrations: state.integrations.integrations
+});
+export default connect(getState)(LoadTestsResultsKibanaMenu);

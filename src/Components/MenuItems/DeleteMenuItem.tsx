@@ -7,5 +7,5 @@ type DeleteMenuItemProps = {
 };
 
 export const DeleteMenuItem: FC<DeleteMenuItemProps> = ({ onDelete }) => {
-  return <BaseMenuItem icon={<DeleteOutlinedIcon />} label={'Delete'} onClick={onDelete} />;
+  return <BaseMenuItem icon={<DeleteOutlinedIcon />} title={'Delete'} onClick={onDelete} />;
 };

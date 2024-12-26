@@ -9,9 +9,9 @@ import { HistoryResultsChartsView } from '../../Views/Results/HistoryResults/His
 import { RatioResultsProvider } from '../../Providers/Results/RatioResultsProvider';
 import RatioResultsView from '../../Views/Results/RatioResults/RatioResultsView';
 import LoadTestResultDetailsToolbarView from '../../Views/Results/LoadTestResults/LoadTestResultDetailsToolbarView';
-import { ServicesProvider } from '../../Providers/Services/ServicesProvider';
 import { ExceptionResultsProvider } from '../../Providers/Results/ExceptionResultsProvider';
 import ExceptionResultsTableView from '../../Views/Results/ExceptionResults/ExceptionResultsTableView';
+import { IntegrationsProvider } from '../../Providers/Integrations/IntegrationsProvider';
 
 type Params = {
   loadTestResultId: string;
@@ -23,9 +23,9 @@ const ResultDetailsPage = () => {
   return (
     <MainLayout>
       {loadTestResultId && (
-        <ServicesProvider>
+        <IntegrationsProvider>
           <LoadTestResultDetailsToolbarView />
-        </ServicesProvider>
+        </IntegrationsProvider>
       )}
       {loadTestResultId && (
         <LoadTestResultsProvider>

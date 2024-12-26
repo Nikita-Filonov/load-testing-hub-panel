@@ -1,4 +1,4 @@
-import { Service, ServiceDetails, ServiceType } from '../../../Models/Services/Services';
+import { Service, ServiceDetails } from '../../../Models/Services/Services';
 
 export type ServicesInitialState = {
   service: Service;
@@ -9,8 +9,7 @@ export type ServicesInitialState = {
 const DEFAULT_SERVICE: Service = {
   id: 0,
   url: '',
-  name: '',
-  type: ServiceType.Production
+  name: ''
 };
 
 export const INITIAL_SERVICES: ServicesInitialState = {

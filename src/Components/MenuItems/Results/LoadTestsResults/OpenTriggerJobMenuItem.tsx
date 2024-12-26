@@ -19,7 +19,7 @@ export const OpenTriggerJobMenuItem: FC<OpenTriggerJobMenuItemProps> = (props) =
   return (
     <BaseMenuItem
       icon={<BuildCircleOutlinedIcon />}
-      label={'Open trigger job'}
+      title={'Open trigger job'}
       onClick={onOpenTriggerPipeline}
       disabled={!result.triggerCIJobUrl}
     />

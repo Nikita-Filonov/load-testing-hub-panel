@@ -20,15 +20,7 @@ const UpdateScenarioModal: FC<UpdateScenarioModalProps> = (props) => {
   const [request, setRequest] = useState<UpdateScenarioRequest>(getDefaultUpdateScenarioRequest());
 
   useEffect(() => {
-    modal &&
-      setRequest({
-        name: details.name,
-        file: details.file,
-        tags: details.tags,
-        version: details.version,
-        ratioTotal: details.ratioTotal,
-        ratioPerClass: details.ratioPerClass
-      });
+    modal && setRequest(details);
   }, [modal, details]);
 
   useEffect(() => {

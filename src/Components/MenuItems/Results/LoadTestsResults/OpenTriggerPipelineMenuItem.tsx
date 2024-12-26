@@ -19,7 +19,7 @@ export const OpenTriggerPipelineMenuItem: FC<OpenTriggerPipelineMenuItemProps> =
   return (
     <BaseMenuItem
       icon={<CloudSyncOutlinedIcon />}
-      label={'Open trigger pipeline'}
+      title={'Open trigger pipeline'}
       onClick={onOpenTriggerPipeline}
       disabled={!result.triggerCIPipelineUrl}
     />

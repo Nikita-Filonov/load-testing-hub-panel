@@ -1,5 +1,5 @@
 import { LoadingButton } from '@mui/lab';
-import { Badge, IconButton, SxProps, Theme } from '@mui/material';
+import { Badge, CircularProgress, IconButton, SxProps, Theme } from '@mui/material';
 import Menu from '@mui/material/Menu';
 import React, { FC } from 'react';
 
@@ -44,9 +44,13 @@ export const BaseMenu: FC<BaseMenuProps> = (props) => {
     <React.Fragment>
       {icon ? (
         <IconButton size={buttonSize} onClick={onOpen} sx={buttonSx} disabled={disabled}>
-          <Badge badgeContent={badgeContent} color="primary">
-            {icon}
-          </Badge>
+          {loading ? (
+            <CircularProgress size={24} />
+          ) : (
+            <Badge badgeContent={badgeContent} color="primary">
+              {icon}
+            </Badge>
+          )}
         </IconButton>
       ) : (
         <LoadingButton

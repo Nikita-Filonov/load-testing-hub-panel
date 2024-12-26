@@ -4,7 +4,6 @@ import {
   CreateServiceRequest,
   GetServiceDetailsResponse,
   GetServiceResponse,
-  GetServicesQuery,
   GetServicesResponse,
   UpdateServiceRequest
 } from '../../../Models/Services/Services';
@@ -19,8 +18,8 @@ export class ServicesHTTPClient extends HTTPClient {
     return response.json;
   }
 
-  async getServices(query: GetServicesQuery): Promise<GetServicesResponse | null> {
-    const response = await this.get({ url: '/services', query });
+  async getServices(): Promise<GetServicesResponse | null> {
+    const response = await this.get({ url: '/services' });
     return response.json;
   }
 

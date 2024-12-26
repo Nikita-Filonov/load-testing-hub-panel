@@ -5,6 +5,7 @@ import { persistStore } from 'redux-persist';
 import analyticsReducer from './Analytics/AnalyticsSlice';
 import servicesReducer from './Services/Services/ServicesSlice';
 import methodReducer from './Results/Methods/MethodsSlice';
+import integrationsReducer from './Integrations/IntegrationsSlice';
 import methodResultsReducer from './Results/MethodResults/MethodResultsSlice';
 import loadTestResultsReducer from './Results/LoadTestResults/LoadTestResultsSlice';
 import historyResultsReducer from './Results/HistoryResults/HistoryResultsSlice';
@@ -21,6 +22,7 @@ export const store = configureStore({
     compares: comparesReducer,
     scenarios: scenariosReducer,
     analytics: analyticsReducer,
+    integrations: integrationsReducer,
     ratioResults: ratioResultsReducer,
     methodResults: methodResultsReducer,
     historyResults: historyResultsReducer,

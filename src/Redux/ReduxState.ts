@@ -10,6 +10,7 @@ import { ScenariosInitialState } from './Services/Scenarios/InitialState';
 import { ExceptionResultsInitialState } from './Results/ExceptionResults/InitialState';
 import { ComparesInitialState } from './Compares/Compares/InitialState';
 import { CompareSettingsInitialState } from './Compares/CompareSettings/InitialState';
+import { IntegrationsInitialState } from './Integrations/InitialState';
 
 export interface ReduxState {
   core: CoreInitialState;
@@ -18,6 +19,7 @@ export interface ReduxState {
   compares: ComparesInitialState;
   scenarios: ScenariosInitialState;
   analytics: AnalyticsInitialState;
+  integrations: IntegrationsInitialState;
   ratioResults: RatioResultsInitialState;
   methodResults: MethodResultsInitialState;
   historyResults: HistoryResultsInitialState;

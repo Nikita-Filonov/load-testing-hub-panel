@@ -30,6 +30,7 @@ export const ROUTE_PATH_DEFINITIONS: RoutePathDefinition[] = [
       },
       { title: 'Dashboard', path: AppRoutes.ServiceDashboard },
       { title: 'Scenarios', path: AppRoutes.ServiceScenarios },
+      { title: 'Integrations', path: AppRoutes.ServiceIntegrations },
       {
         title: 'Settings',
         path: AppRoutes.ServiceSettings,

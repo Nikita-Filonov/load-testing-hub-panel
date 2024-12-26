@@ -23,7 +23,10 @@ export enum AppRoutes {
   // Service scenarios
   ServiceScenarios = '/services/:serviceId/scenarios',
 
-  // Service compares
+  // Service integrations
+  ServiceIntegrations = '/services/:serviceId/integrations',
+
+  // Service settings
   ServiceSettings = '/services/:serviceId/settings',
   ServiceSettingsGeneral = '/services/:serviceId/settings/general',
   ServiceSettingsCompareWeights = '/services/:serviceId/settings/compare-weights',

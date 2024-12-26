@@ -1,22 +1,12 @@
-export enum ServiceType {
-  Internal = 'INTERNAL',
-  Production = 'PRODUCTION'
-}
-
 export interface Service {
   id: number;
   url: string;
   name: string;
-  type: ServiceType;
 }
 
 export interface ServiceDetails extends Service {
   cluster: string;
   namespace: string;
-}
-
-export interface GetServicesQuery {
-  types: ServiceType[];
 }
 
 export interface GetServicesResponse {
@@ -30,7 +20,6 @@ export interface GetServiceResponse {
 export interface CreateServiceRequest {
   url: string;
   name: string;
-  type: ServiceType;
   cluster: string;
   namespace: string;
 }

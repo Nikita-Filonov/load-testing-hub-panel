@@ -55,7 +55,7 @@ export const ServiceListItemMenu: FC<ServiceListItemMenuProps> = (props) => {
       <BaseMenu menu={menu} setMenu={setMenu} icon={<MoreVertIcon />}>
         <ViewDetailsMenuItem onDetails={onDetails} />
         <CopyIDMenuItem onCopy={onCopyIdentifier} />
-        <BaseMenuItem icon={<ContentCopyIcon />} label={'Copy results URL'} onClick={onCopyResultsURL} />
+        <BaseMenuItem icon={<ContentCopyIcon />} title={'Copy results URL'} onClick={onCopyResultsURL} />
         <EditMenuItem onEdit={onEdit} />
         <DeleteMenuItem onDelete={onDelete} />
       </BaseMenu>

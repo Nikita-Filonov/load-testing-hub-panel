@@ -19,7 +19,7 @@ export const OpenLoadTestsPipelineMenuItem: FC<OpenLoadTestsPipelineMenuItemProp
   return (
     <BaseMenuItem
       icon={<CloudSyncOutlinedIcon />}
-      label={'Open load tests pipeline'}
+      title={'Open load tests pipeline'}
       onClick={onOpenLoadTestsPipeline}
       disabled={!result.loadTestsCIPipelineUrl}
     />

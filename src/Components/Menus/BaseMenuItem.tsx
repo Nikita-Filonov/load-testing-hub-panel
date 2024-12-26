@@ -1,18 +1,20 @@
 import { ListItemIcon, ListItemText, MenuItem } from '@mui/material';
-import React, { FC } from 'react';
+import React, { FC, ReactNode } from 'react';
 
 type BaseMenuItemProps = {
   icon?: React.ReactNode;
-  label: string;
+  title: string;
+  label?: ReactNode;
   onClick?: () => void | Promise<void>;
   disabled?: boolean;
 };
 
-export const BaseMenuItem: FC<BaseMenuItemProps> = ({ icon, label, onClick, disabled }) => {
+export const BaseMenuItem: FC<BaseMenuItemProps> = ({ icon, title, label, onClick, disabled }) => {
   return (
     <MenuItem onClick={onClick} disabled={disabled}>
       {icon && <ListItemIcon>{icon}</ListItemIcon>}
-      <ListItemText>{label}</ListItemText>
+      <ListItemText>{title}</ListItemText>
+      {label}
     </MenuItem>
   );
 };

@@ -1,18 +1,15 @@
-import { useServices } from '../../Providers/Services/ServicesProvider';
 import { useSelector } from 'react-redux';
 import { ReduxState } from '../../Redux/ReduxState';
 import { useEffect } from 'react';
-import { IntegrationsKibanaProvider } from '../../Providers/Integrations/IntegrationsKibanaProvider';
-import { LoadTestsResultsKibanaMenu } from '../../Components/Menus/Results/LoadTestsResults/LoadTestsResultsKibanaMenu';
-import { IntegrationsGrafanaProvider } from '../../Providers/Integrations/IntegrationsGrafanaProvider';
-import { LoadTestsResultsGrafanaMenu } from '../../Components/Menus/Results/LoadTestsResults/LoadTestsResultsGrafanaMenu';
+import LoadTestsResultsKibanaMenu from '../../Components/Menus/Results/LoadTestsResults/LoadTestsResultsKibanaMenu';
+import LoadTestsResultsGrafanaMenu from '../../Components/Menus/Results/LoadTestsResults/LoadTestsResultsGrafanaMenu';
 import { LoadTestsResultsTriggersMenu } from '../../Components/Menus/Results/LoadTestsResults/LoadTestsResultsTriggersMenu';
 import { AppRoutes } from '../Constants/Routing';
 import { useAppNavigation } from '../Navigation/Hooks';
 import { useServicesNavigation } from '../Services/Hooks';
 import { buildLoadTestResultURL, buildResultsURL } from './Utils';
 import { formatRouteTemplate } from '../Navigation/Utils';
-import { ServiceType } from '../../Models/Services/Services';
+import { useIntegrations } from '../../Providers/Integrations/IntegrationsProvider';
 
 export const useLoadTestResultsNavigation = () => {
   const { onNavigate } = useAppNavigation();
@@ -57,29 +54,17 @@ export const useLoadTestResultsNavigation = () => {
 };
 
 export const useLoadTestResultDetailsToolbarActions = () => {
-  const { getServices } = useServices();
+  const { getIntegrations } = useIntegrations();
+  const service = useSelector((state: ReduxState) => state.services.service);
   const details = useSelector((state: ReduxState) => state.loadTestResults.loadTestResultDetails);
-  const services = useSelector((state: ReduxState) => state.services.services);
 
   useEffect(() => {
-    getServices({ types: [ServiceType.Internal, ServiceType.Production] });
-  }, []);
+    service.id && getIntegrations({ serviceId: service.id });
+  }, [service.id]);
 
   return [
-    {
-      content: (
-        <IntegrationsKibanaProvider>
-          <LoadTestsResultsKibanaMenu details={details} services={services} />
-        </IntegrationsKibanaProvider>
-      )
-    },
-    {
-      content: (
-        <IntegrationsGrafanaProvider>
-          <LoadTestsResultsGrafanaMenu details={details} services={services} />
-        </IntegrationsGrafanaProvider>
-      )
-    },
+    { content: <LoadTestsResultsKibanaMenu loadTestResultId={details.id} /> },
+    { content: <LoadTestsResultsGrafanaMenu loadTestResultId={details.id} /> },
     { content: <LoadTestsResultsTriggersMenu details={details} /> }
   ];
 };

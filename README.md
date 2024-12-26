@@ -7,7 +7,6 @@ If you have any questions, you can ask [@Nikita Filonov](https://t.me/sound_righ
 - [Project setup](#project-setup)
 - [Services](#services)
     - [Services list](#services-list)
-    - [Services filters](#services-filters)
     - [Create service](#create-service)
     - [Service details](#service-details)
 - [Dashboard](#dashboard)
@@ -25,8 +24,11 @@ If you have any questions, you can ask [@Nikita Filonov](https://t.me/sound_righ
     - [Create scenario](#create-scenario)
     - [Scenario details](#scenario-details)
     - [Scenario settings](#scenario-settings)
-- [Compares](#compares)
-    - [Comparison settings](#comparison-settings)
+- [Integrations](#integrations)
+    - [Integrations list](#integrations-list)
+    - [Create integration](#create-integration)
+    - [Update integration](#update-integration)
+    - [Integration details](#integration-details)
 - [Settings](#settings)
     - [App settings](#app-settings)
     - [General settings](#general-settings)
@@ -47,10 +49,6 @@ yarn start
 
 ![Empty services](examples/services/empty_list.png "Empty services")
 ![Services list](examples/services/list.png "Services list")
-
-### Services filters
-
-![Services filters](examples/services/filters.png "Services filters")
 
 ### Create service
 
@@ -130,11 +128,24 @@ yarn start
 ![Settings](examples/scenarios/settings.png "Settings")
 ![Settings methods](examples/scenarios/settings_methods.png "Settings methods")
 
-## Compares
+## Integrations
 
-### Comparison settings
+### Integrations list
 
-![Comparison settings](examples/compares/settings.png "Comparison settings")
+![Empty integrations](examples/integrations/empty_list.png "Empty integrations")
+![Integrations list](examples/integrations/list.png "Integrations list")
+
+### Create integration
+
+![Create integration](examples/integrations/create.png "Create integration")
+
+### Update integration
+
+![Update integration](examples/integrations/update.png "Update integration")
+
+### Integration details
+
+![Integration details](examples/integrations/details.png "Integration details")
 
 ## Settings
 

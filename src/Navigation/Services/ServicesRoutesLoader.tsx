@@ -9,7 +9,7 @@ import { clearScenariosState } from '../../Redux/Services/Scenarios/ScenariosSli
 import { clearMethodsState } from '../../Redux/Results/Methods/MethodsSlice';
 import { clearAnalyticsState } from '../../Redux/Analytics/AnalyticsSlice';
 import { clearLoadTestResultsState } from '../../Redux/Results/LoadTestResults/LoadTestResultsSlice';
-import { ServiceType } from '../../Models/Services/Services';
+import { clearIntegrationsState } from '../../Redux/Integrations/IntegrationsSlice';
 
 export const ServicesRoutesLoader = () => {
   const dispatch = useDispatch();
@@ -26,14 +26,11 @@ export const ServicesRoutesLoader = () => {
     service.id !== serviceId && clearState();
   }, [service.id, serviceId]);
 
-  useEffect(() => {
-    service.type === ServiceType.Internal && navigateServices();
-  }, [service.type]);
-
   const clearState = () => {
     dispatch(clearMethodsState());
     dispatch(clearAnalyticsState());
     dispatch(clearScenariosState());
+    dispatch(clearIntegrationsState());
     dispatch(clearLoadTestResultsState());
   };
 

@@ -7,5 +7,5 @@ type EditMenuItemProps = {
 };
 
 export const EditMenuItem: FC<EditMenuItemProps> = ({ onEdit }) => {
-  return <BaseMenuItem icon={<EditOutlinedIcon />} label={'Edit'} onClick={onEdit} />;
+  return <BaseMenuItem icon={<EditOutlinedIcon />} title={'Edit'} onClick={onEdit} />;
 };

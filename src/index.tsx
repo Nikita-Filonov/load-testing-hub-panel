@@ -19,6 +19,7 @@ import { ServicesRedirect } from './Navigation/Services/ServicesRedirect';
 import { ServicesRoutesLoader } from './Navigation/Services/ServicesRoutesLoader';
 import { ServicesProvider } from './Providers/Services/ServicesProvider';
 import { SettingsRoutes } from './Navigation/Settings/SettingsRoutes';
+import { IntegrationsRoutes } from './Navigation/Integrations/IntegrationsRoutes';
 
 const IndexRoute = () => {
   return (
@@ -39,6 +40,7 @@ const IndexRoute = () => {
           <Route path={`${AppRoutes.ServiceSettings}/*`} element={<SettingsRoutes />} />
           <Route path={`${AppRoutes.ServiceScenarios}/*`} element={<ScenariosRoutes />} />
           <Route path={`${AppRoutes.ServiceDashboard}/*`} element={<DashboardRoutes />} />
+          <Route path={`${AppRoutes.ServiceIntegrations}/*`} element={<IntegrationsRoutes />} />
         </Route>
         <Route path={AppRoutes.NotFound} element={<NotFound />} />
       </Routes>

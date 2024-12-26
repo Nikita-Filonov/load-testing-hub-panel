@@ -19,7 +19,7 @@ export const OpenLoadTestJobMenuItem: FC<OpenLoadTestJobMenuItemProps> = (props)
   return (
     <BaseMenuItem
       icon={<BuildCircleOutlinedIcon />}
-      label={'Open load tests job'}
+      title={'Open load tests job'}
       onClick={onOpenLoadTestsJob}
       disabled={!result.loadTestsCIJobUrl}
     />

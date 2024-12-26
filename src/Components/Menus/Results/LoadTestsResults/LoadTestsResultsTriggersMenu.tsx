@@ -32,7 +32,7 @@ export const LoadTestsResultsTriggersMenu: FC<LoadTestsResultsTriggersMenuProps>
     <BaseMenu menu={menu} setMenu={setMenu} icon={<AddLinkIcon />}>
       <BaseMenuItem
         icon={<UndoIcon />}
-        label={'View previous result'}
+        title={'View previous result'}
         onClick={onViewPreviousResult}
         disabled={!details.compare?.previousId}
       />

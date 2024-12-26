@@ -34,17 +34,17 @@ export const LoadTestsResultsCompareMenu: FC<LoadTestsResultsGrafanaMenuProps> =
     <BaseMenu menu={menu} setMenu={setMenu} icon={<CompareArrowsIcon />}>
       <BaseMenuItem
         icon={<CompareArrowsIcon />}
-        label={'Show comparison with results'}
+        title={'Show comparison with results'}
         onClick={onCompareWithResults}
       />
       <BaseMenuItem
         icon={<CompareArrowsIcon />}
-        label={'Show comparison with averages'}
+        title={'Show comparison with averages'}
         onClick={onCompareWithAverages}
       />
       <BaseMenuItem
         icon={<CompareArrowsIcon />}
-        label={'Show comparison with scenario'}
+        title={'Show comparison with scenario'}
         onClick={onCompareWithScenario}
       />
     </BaseMenu>
