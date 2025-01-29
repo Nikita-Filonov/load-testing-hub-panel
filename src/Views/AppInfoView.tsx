@@ -10,7 +10,7 @@ export const AppInfoView = () => {
     <Box>
       <Box sx={{ alignItems: 'center', display: 'flex', flexDirection: 'column' }}>
         <LogoImage width={150} height={150} />
-        <Typography variant={'h5'}>Welcome to Load testing metrics!</Typography>
+        <Typography variant={'h5'}>Welcome to Load testing hub!</Typography>
       </Box>
 
       <li style={{ marginTop: 40 }}>

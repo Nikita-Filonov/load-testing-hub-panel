@@ -15,7 +15,7 @@ export const NavigationNavbar: FC<NavigationNavbarProps> = ({ actions }) => {
       <Toolbar>
         <LogoImage width={32} height={32} />
         <Typography variant="h6" noWrap component="div" sx={{ ml: 2, mr: 3 }}>
-          Load testing metrics
+          Load testing hub
         </Typography>
         <NavigationBreadcrumbs />
         <Box sx={{ flexGrow: 1 }} />
