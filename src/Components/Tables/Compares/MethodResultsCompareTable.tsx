@@ -6,14 +6,17 @@ import { MethodResultsCompareTableRow } from './MethodResultsCompareTableRow';
 import { MethodResultsCompareTableHeader } from './MethodResultsCompareTableHeader';
 import { CompareTableSettings } from '../../../Models/Compares/CompareTableSettings';
 import { filterEnabledCompareTableRowSettings, sortCompareTableRowSettings } from '../../../Services/Compares/Utils';
+import { useTableSorting } from '../../../Services/Tables/Sorting';
 
 type MethodResultsCompareTableProps = {
   compares: MethodResultCompare[];
   settings: CompareTableSettings<MethodResultCompare>;
+  onCompareMethodResultsHistory?: (compare: MethodResultCompare) => void;
 };
 
 export const MethodResultsCompareTable: FC<MethodResultsCompareTableProps> = (props) => {
-  const { compares, settings } = props;
+  const { compares, settings, onCompareMethodResultsHistory } = props;
+  const { sortedItems, orderBy, setOrderBy, orderDirection, setOrderDirection } = useTableSorting({ items: compares });
 
   const rows = useMemo(
     () => [...settings.rows].sort(sortCompareTableRowSettings).filter(filterEnabledCompareTableRowSettings),
@@ -21,10 +24,25 @@ export const MethodResultsCompareTable: FC<MethodResultsCompareTableProps> = (pr
   );
 
   return (
-    <BaseTable loading={false} header={<MethodResultsCompareTableHeader />} containerSx={{ mt: 3 }}>
-      {compares.map((compare, index) => (
+    <BaseTable
+      loading={false}
+      header={
+        <MethodResultsCompareTableHeader
+          orderBy={orderBy}
+          setOrderBy={setOrderBy}
+          orderDirection={orderDirection}
+          setOrderDirection={setOrderDirection}
+          allowCompareMethodResultsHistory={Boolean(onCompareMethodResultsHistory)}
+        />
+      }
+      containerSx={{ mt: 3 }}>
+      {sortedItems.map((compare, index) => (
         <Fragment key={index}>
-          <MethodResultsCompareTableRow compare={compare} numberOfRows={rows.length} />
+          <MethodResultsCompareTableRow
+            compare={compare}
+            numberOfRows={rows.length}
+            onCompareMethodResultsHistory={onCompareMethodResultsHistory}
+          />
           {rows.map((row) => (
             <CompareMetricTableRow key={row.index} metric={row.metricName} compare={compare[row.metricValue]} />
           ))}

@@ -1,5 +1,5 @@
 import { Button } from '@mui/material';
-import { AppRoutes } from '../Services/Constants/Routing';
+import { AppRoutes } from '../Services/Navigation/Routing';
 import { MainLayout } from '../Components/Layouts/MainLayouts';
 import Typography from '@mui/material/Typography';
 import { useAppNavigation } from '../Services/Navigation/Hooks';

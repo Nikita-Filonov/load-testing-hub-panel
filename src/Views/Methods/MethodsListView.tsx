@@ -3,9 +3,9 @@ import { ReduxState } from '../../Redux/ReduxState';
 import Box from '@mui/material/Box';
 import { EmptyView } from '../../Components/Views/EmptyView';
 import { FC, useEffect, useMemo, useState } from 'react';
-import { useMethods } from '../../Providers/Results/MethodsProvider';
+import { useMethods } from '../../Providers/Methods/MethodsProvider';
 import { Service } from '../../Models/Services/Services';
-import { Method } from '../../Models/Results/Methods';
+import { Method } from '../../Models/Methods/Methods';
 import { ListView } from '../../Components/Views/ListView';
 import { MethodView } from './MethodView';
 import { MethodsToolbarView } from './MethodsToolbarView';
@@ -27,7 +27,9 @@ const MethodsListView: FC<MethodsListViewProps> = (props) => {
   const [filters, setFilters] = useState<MethodsFilters>(getDefaultMethodsFilters());
 
   useEffect(() => {
-    service.id && getMethods({ serviceId: service.id, scenarioId: scenario.id, ...filters });
+    if (service.id) {
+      getMethods({ serviceId: service.id, scenarioId: scenario.id, ...filters });
+    }
   }, [service.id, scenario.id, filters]);
 
   const filteredMethods = useMemo(

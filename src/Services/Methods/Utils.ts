@@ -1,9 +1,11 @@
 import { SettingsManager } from '../Config';
-import { AppRoutes } from '../Constants/Routing';
+import { AppRoutes } from '../Navigation/Routing';
 import { getQueryString } from '../Clients/Utils';
 import { formatRouteTemplate } from '../Navigation/Utils';
 import { MethodsFilters } from '../../Components/Modals/Methods/MethodsFiltersModal';
 import { getDefaultAnalyticsEndDatetime, getDefaultAnalyticsStartDatetime } from '../Analytics/Utils';
+
+export const getMethodLabel = (method: string): string => method.split('/').at(-1) || method;
 
 export const buildMethodURL = (method: string, serviceId: number): string => {
   const route = formatRouteTemplate(AppRoutes.ServiceMethodDetails, { serviceId });

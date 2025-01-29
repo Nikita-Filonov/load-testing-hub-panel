@@ -17,6 +17,8 @@ export interface ScenarioDetails extends Scenario {
   file: string;
   ratioTotal: RatioResult[];
   ratioPerClass: RatioResult[];
+  numberOfUsers: number;
+  runtimeDuration: string;
 }
 
 export interface GetScenariosQuery {
@@ -42,6 +44,8 @@ export interface UpdateScenarioRequest {
   version: string;
   ratioTotal: RatioResult[];
   ratioPerClass: RatioResult[];
+  numberOfUsers: number;
+  runtimeDuration: string;
 }
 
 export interface CreateScenarioRequest extends UpdateScenarioRequest {

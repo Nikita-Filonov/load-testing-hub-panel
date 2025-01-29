@@ -11,22 +11,24 @@ type BoxAction = {
 
 type BoxViewProps = {
   title?: string;
+  label?: ReactNode;
   actions?: BoxAction[];
   loading?: boolean;
   containerSx?: SxProps<Theme>;
 } & PropsWithChildren;
 
 export const BoxView: FC<BoxViewProps> = (props) => {
-  const { title, actions, loading, children, containerSx } = props;
+  const { title, label, actions, loading, children, containerSx } = props;
 
   return (
     <Box sx={{ mt: 3, ...containerSx }}>
-      <Grid2 container display={'flex'}>
+      <Grid2 container spacing={1} display={'flex'} alignItems={'center'}>
         {title && (
           <Grid2>
             <Typography fontWeight={'bold'}>{title}</Typography>
           </Grid2>
         )}
+        {label && <Grid2>{label}</Grid2>}
         <Grid2 sx={{ ml: 'auto', display: 'flex', alignItems: 'flex-end' }}>
           {actions?.map((action, index) => (
             <IconButton

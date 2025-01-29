@@ -1,5 +1,5 @@
 import { MethodResultCompare } from './Compares';
-import { GetMethodDetailsQuery } from '../Results/Methods';
+import { GetMethodDetailsQuery } from '../Methods/Methods';
 
 export interface GetCompareMethodWithScenarioQuery extends GetMethodDetailsQuery {
   scenarioId: number;

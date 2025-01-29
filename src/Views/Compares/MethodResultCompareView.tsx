@@ -8,8 +8,10 @@ import { ReduxState } from '../../Redux/ReduxState';
 import { CompareTableSettings, CompareWidgetType } from '../../Models/Compares/CompareTableSettings';
 import { setCompareWidgetSettings } from '../../Redux/Compares/CompareSettings/CompareSettingsSlice';
 import { CompareViewSettingsMenu } from '../../Components/Menus/Compares/CompareViewSettingsMenu';
+import { SxProps, Theme } from '@mui/material';
 
 type MethodResultCompareViewProps = {
+  sx?: SxProps<Theme>;
   title: string;
   loading: boolean;
   compare: MethodResultCompare;
@@ -17,7 +19,7 @@ type MethodResultCompareViewProps = {
 };
 
 export const MethodResultCompareView: FC<MethodResultCompareViewProps> = (props) => {
-  const { title, loading, compare, widgetType } = props;
+  const { sx, title, loading, compare, widgetType } = props;
   const dispatch = useDispatch();
 
   const settings = useSelector((state: ReduxState) => state.compareSettings.compareWidgetsSettings[widgetType]);
@@ -28,7 +30,7 @@ export const MethodResultCompareView: FC<MethodResultCompareViewProps> = (props)
 
   return (
     <WidgetView
-      sx={{ mt: 3 }}
+      sx={sx}
       label={<CompareLabel compare={compare} />}
       title={title}
       loading={loading}

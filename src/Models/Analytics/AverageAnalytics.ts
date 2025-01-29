@@ -1,13 +1,7 @@
-export interface AverageAnalytics {
-  totalRequests: number;
-  totalFailures: number;
-  numberOfUsers: number;
-  maxResponseTime: number;
-  minResponseTime: number;
-  averageResponseTime: number;
-  totalRequestsPerSecond: number;
-  totalFailuresPerSecond: number;
-}
+import { Metrics } from '../Metrics/Base';
+import { NumberOfUsers } from '../Metrics/NumberOfUsers';
+
+export interface AverageAnalytics extends Metrics, NumberOfUsers {}
 
 export interface GetAverageAnalyticsResponse {
   analytics: AverageAnalytics;

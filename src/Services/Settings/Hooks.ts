@@ -1,4 +1,4 @@
-import { AppRoutes } from '../Constants/Routing';
+import { AppRoutes } from '../Navigation/Routing';
 import { formatRouteTemplate } from '../Navigation/Utils';
 import { useServicesNavigation } from '../Services/Hooks';
 

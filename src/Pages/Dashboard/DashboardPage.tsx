@@ -1,18 +1,18 @@
 import { MainLayout } from '../../Components/Layouts/MainLayouts';
-import DashboardResultsChartsView from '../../Views/Dashboard/DashboardResultsChartsView';
+import DashboardResultsView from '../../Views/Dashboard/DashboardResultsView';
 import { ResultsAnalyticsProvider } from '../../Providers/Analytics/ResultsAnalyticsProvider';
-import { MethodsProvider } from '../../Providers/Results/MethodsProvider';
-import DashboardMethodsChartsView from '../../Views/Dashboard/DashboardMethodsChartsView';
+import { DashboardMethodsView } from '../../Views/Dashboard/MethodsAnalytics/DashboardMethodsView';
+import { MethodsAnalyticsProvider } from '../../Providers/Analytics/MethodsAnalyticsProvider';
 
 const DashboardPage = () => {
   return (
     <MainLayout>
       <ResultsAnalyticsProvider>
-        <DashboardResultsChartsView />
+        <DashboardResultsView />
       </ResultsAnalyticsProvider>
-      <MethodsProvider>
-        <DashboardMethodsChartsView />
-      </MethodsProvider>
+      <MethodsAnalyticsProvider>
+        <DashboardMethodsView />
+      </MethodsAnalyticsProvider>
     </MainLayout>
   );
 };

@@ -15,8 +15,10 @@ export const DeleteServiceModal: FC<DeleteServiceModalProps> = (props) => {
   const onClose = () => setModal(false);
 
   const onDelete = async () => {
-    const error = await deleteService(serviceId);
-    !error && onClose();
+    const result = await deleteService(serviceId);
+    if (!result.error) {
+      onClose();
+    }
   };
 
   return (

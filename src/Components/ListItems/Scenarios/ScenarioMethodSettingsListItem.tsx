@@ -3,7 +3,7 @@ import { BaseListItem } from '../BaseListItem';
 import WebhookIcon from '@mui/icons-material/Webhook';
 import { ScenarioMethodSettings } from '../../../Models/Services/ScenarioSettings';
 import { ScenarioMethodSettingsListItemMenu } from '../../Menus/Scenarios/ScenarioMethodSettingsListItemMenu';
-import { getMethodLabel } from '../../../Services/Charts/Utils';
+import { getMethodLabel } from '../../../Services/Methods/Utils';
 
 type ScenarioMethodSettingsListItemProps = {
   settings: ScenarioMethodSettings;

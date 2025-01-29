@@ -1,8 +1,10 @@
-import React, { FC, PropsWithChildren, useContext, useState } from 'react';
+import React, { FC, PropsWithChildren, useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import { ScenarioSettingsHTTPClient } from '../../Services/Clients/Services/ScenarioSettingsHTTPClient';
-import { UpdateScenarioSettingsRequest } from '../../Models/Services/ScenarioSettings';
-import { setScenarioSettings } from '../../Redux/Services/Scenarios/ScenariosSlice';
+import { GetScenarioSettingsResponse, UpdateScenarioSettingsRequest } from '../../Models/Services/ScenarioSettings';
+import { setScenarioSettings } from '../../Redux/Services/Scenarios/Slice';
+import { APIResponse } from '../../Services/Clients/Models';
+import { useAPIResponseHandler } from '../../Services/Clients/Hooks';
 
 interface Loading {
   getScenarioSettings: boolean;
@@ -11,33 +13,40 @@ interface Loading {
 
 export type ScenarioSettingsContextProps = {
   loading: Loading;
-  getScenarioSettings: (scenarioId: number) => Promise<void>;
-  updateScenarioSettings: (scenarioId: number, request: UpdateScenarioSettingsRequest) => Promise<boolean>;
+  getScenarioSettings: (scenarioId: number) => Promise<APIResponse<GetScenarioSettingsResponse>>;
+  updateScenarioSettings: (
+    scenarioId: number,
+    request: UpdateScenarioSettingsRequest
+  ) => Promise<APIResponse<GetScenarioSettingsResponse>>;
 };
 
 const ScenarioSettingsContext = React.createContext<ScenarioSettingsContextProps | null>(null);
 
 const ScenarioSettingsProvider: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();
-  const scenarioSettingsHTTPClient = new ScenarioSettingsHTTPClient();
-  const [loading, setLoading] = useState<Loading>({
-    getScenarioSettings: false,
-    updateScenarioSettings: false
+  const { loading, handleAPIResponse } = useAPIResponseHandler({
+    provider: ScenarioSettingsProvider.name,
+    defaultLoading: {
+      getScenarioSettings: false,
+      updateScenarioSettings: false
+    }
   });
+  const scenarioSettingsHTTPClient = new ScenarioSettingsHTTPClient();
 
   const getScenarioSettingsAPI = async (scenarioId: number) => {
-    setLoading({ ...loading, getScenarioSettings: true });
-    const response = await scenarioSettingsHTTPClient.getScenarioSettings(scenarioId);
-    response && dispatch(setScenarioSettings(response.settings));
-    setLoading({ ...loading, getScenarioSettings: false });
+    return await handleAPIResponse({
+      key: 'getScenarioSettings',
+      call: scenarioSettingsHTTPClient.getScenarioSettings(scenarioId),
+      handler: (response) => dispatch(setScenarioSettings(response.settings))
+    });
   };
 
   const updateScenarioSettingsAPI = async (scenarioId: number, request: UpdateScenarioSettingsRequest) => {
-    setLoading({ ...loading, updateScenarioSettings: true });
-    const response = await scenarioSettingsHTTPClient.updateScenarioSettings(scenarioId, request);
-    response && dispatch(setScenarioSettings(response.settings));
-    setLoading({ ...loading, updateScenarioSettings: false });
-    return Boolean(!response);
+    return await handleAPIResponse({
+      key: 'updateScenarioSettings',
+      call: scenarioSettingsHTTPClient.updateScenarioSettings(scenarioId, request),
+      handler: (response) => dispatch(setScenarioSettings(response.settings))
+    });
   };
 
   return (

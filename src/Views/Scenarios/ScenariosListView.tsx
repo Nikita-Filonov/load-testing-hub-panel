@@ -33,7 +33,9 @@ const ScenariosListView: FC<ScenariosSettingsViewProps> = (props) => {
   const [scenarioSettingsModal, setScenarioSettingsModal] = useState(false);
 
   useEffect(() => {
-    service.id && getScenarios({ serviceId: service.id });
+    if (service.id) {
+      getScenarios({ serviceId: service.id });
+    }
   }, [service.id]);
 
   const filteredScenarios = useMemo(

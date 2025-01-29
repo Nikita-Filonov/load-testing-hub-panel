@@ -7,7 +7,7 @@ import { ReduxState } from '../../Redux/ReduxState';
 import { ScenarioDetails } from '../../Models/Services/Scenarios';
 import { RatioResultsTreeView } from '../../Components/TreeView/Results/RatioResults/RatioResultsTreeView';
 import { BoxView } from '../../Components/Views/BoxView';
-import { ScenarioTagsLabel } from '../../Components/Labels/Scenarios/ScenarioTagsLabel';
+import { ScenarioTagsLabelsView } from '../../Components/Labels/Scenarios/ScenarioTagsLabelsView';
 import { ScenarioVersionLabel } from '../../Components/Labels/Scenarios/ScenarioVersionLabel';
 import { WidgetView } from '../../Components/Views/WidgetView';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
@@ -62,7 +62,9 @@ const ScenarioDetailsView: FC<ScenarioDetailsViewProps> = ({ widget, details, sc
   const { loading, getScenarioDetails } = useScenarios();
 
   useEffect(() => {
-    scenarioId && getScenarioDetails(scenarioId);
+    if (scenarioId) {
+      getScenarioDetails(scenarioId);
+    }
   }, [scenarioId]);
 
   return (
@@ -71,8 +73,10 @@ const ScenarioDetailsView: FC<ScenarioDetailsViewProps> = ({ widget, details, sc
         <BaseInfoRowView name={'ID'} value={details.id} />
         <BaseInfoRowView name={'Name'} value={details.name} />
         <BaseInfoRowView name={'File'} value={details.file} />
-        <BaseInfoRowView name={'Tags'} component={<ScenarioTagsLabel tags={details.tags} />} />
+        <BaseInfoRowView name={'Tags'} component={<ScenarioTagsLabelsView tags={details.tags} />} />
         <BaseInfoRowView name={'Version'} component={<ScenarioVersionLabel version={details.version} />} />
+        <BaseInfoRowView name={'Number of users'} value={details.numberOfUsers} />
+        <BaseInfoRowView name={'Runtime duration'} value={details.runtimeDuration} />
       </WidgetInfoRowsView>
       {details.ratioTotal.length > 0 && <RatioResultsTreeView title={'Total ratio'} results={details.ratioTotal} />}
       {details.ratioPerClass.length > 0 && (

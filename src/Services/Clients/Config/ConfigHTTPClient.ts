@@ -1,9 +1,9 @@
 import { HTTPClient } from '../HTTPClient';
 import { Config } from '../../Config';
+import { APIResponse } from '../Models';
 
 export class ConfigHTTPClient extends HTTPClient {
-  async getConfig(): Promise<Config | null> {
-    const response = await this.get({ url: '/config' });
-    return response.error ? null : response.json;
+  async getConfig(): Promise<APIResponse<Config>> {
+    return await this.get({ url: '/config' });
   }
 }

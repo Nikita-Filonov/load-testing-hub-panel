@@ -8,6 +8,7 @@ import { CopyIDMenuItem } from '../../MenuItems/CopyIDMenuItem';
 import { DeleteMenuItem } from '../../MenuItems/DeleteMenuItem';
 import { DeleteServiceModal } from '../../Modals/Services/DeleteServiceModal';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import LinkIcon from '@mui/icons-material/Link';
 import { BaseMenuItem } from '../BaseMenuItem';
 import { useLoadTestResultsNavigation } from '../../../Services/Results/Hooks';
 
@@ -50,12 +51,18 @@ export const ServiceListItemMenu: FC<ServiceListItemMenuProps> = (props) => {
     await navigator.clipboard.writeText(getResultsURL(service.id));
   };
 
+  const onOpenServiceURL = () => {
+    onClose();
+    window.open(service.url, '_blank');
+  };
+
   return (
     <Fragment>
       <BaseMenu menu={menu} setMenu={setMenu} icon={<MoreVertIcon />}>
         <ViewDetailsMenuItem onDetails={onDetails} />
         <CopyIDMenuItem onCopy={onCopyIdentifier} />
         <BaseMenuItem icon={<ContentCopyIcon />} title={'Copy results URL'} onClick={onCopyResultsURL} />
+        <BaseMenuItem icon={<LinkIcon />} title={'Open service URL'} onClick={onOpenServiceURL} />
         <EditMenuItem onEdit={onEdit} />
         <DeleteMenuItem onDelete={onDelete} />
       </BaseMenu>

@@ -1,8 +1,14 @@
-import React, { FC, PropsWithChildren, useContext, useState } from 'react';
+import React, { FC, PropsWithChildren, useContext } from 'react';
 import { useDispatch } from 'react-redux';
-import { UpdateCompareSettingsRequest } from '../../Models/Compares/CompareSettings';
+import { GetCompareSettingsResponse, UpdateCompareSettingsRequest } from '../../Models/Compares/CompareSettings';
 import { CompareSettingsHTTPClient } from '../../Services/Clients/Compares/CompareSettingsHTTPClient';
 import { setCompareSettings } from '../../Redux/Compares/CompareSettings/CompareSettingsSlice';
+import { APIResponse } from '../../Services/Clients/Models';
+import { useAPIResponseHandler } from '../../Services/Clients/Hooks';
+
+export enum CompareSettingsErrorKey {
+  UpdateCompareSettings = 'CompareSettingsProvider/updateCompareSettings'
+}
 
 interface Loading {
   getCompareSettings: boolean;
@@ -11,32 +17,40 @@ interface Loading {
 
 export type CompareSettingsContextProps = {
   loading: Loading;
-  getCompareSettings: (serviceId: number) => Promise<void>;
-  updateCompareSettings: (serviceId: number, request: UpdateCompareSettingsRequest) => Promise<void>;
+  getCompareSettings: (serviceId: number) => Promise<APIResponse<GetCompareSettingsResponse>>;
+  updateCompareSettings: (
+    serviceId: number,
+    request: UpdateCompareSettingsRequest
+  ) => Promise<APIResponse<GetCompareSettingsResponse>>;
 };
 
 const CompareSettingsContext = React.createContext<CompareSettingsContextProps | null>(null);
 
 const CompareSettingsProvider: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();
-  const compareSettingsHTTPClient = new CompareSettingsHTTPClient();
-  const [loading, setLoading] = useState<Loading>({
-    getCompareSettings: false,
-    updateCompareSettings: false
+  const { loading, handleAPIResponse } = useAPIResponseHandler({
+    provider: CompareSettingsProvider.name,
+    defaultLoading: {
+      getCompareSettings: false,
+      updateCompareSettings: false
+    }
   });
+  const compareSettingsHTTPClient = new CompareSettingsHTTPClient();
 
   const getCompareSettingsAPI = async (serviceId: number) => {
-    setLoading((loading) => ({ ...loading, getCompareSettings: true }));
-    const response = await compareSettingsHTTPClient.getCompareSettings(serviceId);
-    response && dispatch(setCompareSettings(response.settings));
-    setLoading((loading) => ({ ...loading, getCompareSettings: false }));
+    return await handleAPIResponse({
+      key: 'getCompareSettings',
+      call: compareSettingsHTTPClient.getCompareSettings(serviceId),
+      handler: (response) => dispatch(setCompareSettings(response.settings))
+    });
   };
 
   const updateCompareSettingsAPI = async (serviceId: number, request: UpdateCompareSettingsRequest) => {
-    setLoading((loading) => ({ ...loading, updateCompareSettings: true }));
-    const response = await compareSettingsHTTPClient.updateCompareSettings(serviceId, request);
-    response && dispatch(setCompareSettings(response.settings));
-    setLoading((loading) => ({ ...loading, updateCompareSettings: false }));
+    return await handleAPIResponse({
+      key: 'updateCompareSettings',
+      call: compareSettingsHTTPClient.updateCompareSettings(serviceId, request),
+      handler: (response) => dispatch(setCompareSettings(response.settings))
+    });
   };
 
   return (

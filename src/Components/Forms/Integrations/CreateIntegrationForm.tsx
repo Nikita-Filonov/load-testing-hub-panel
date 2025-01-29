@@ -2,19 +2,21 @@ import { CreateIntegrationRequest, UpdateIntegrationRequest } from '../../../Mod
 import Box from '@mui/material/Box';
 import { BaseTextField } from '../../TextFields/BaseTextField';
 import { IntegrationEnvironmentTypeSelect } from '../../Selects/Integrations/IntegrationEnvironmentTypeSelect';
-import { Button } from '@mui/material';
-import AutoFillServiceModal from '../../Modals/Services/AutoFillServiceModal';
-import { useState } from 'react';
-import { ServiceDetails } from '../../../Models/Services/Services';
+import { IntegrationSystemTypeSelect } from '../../Selects/Integrations/IntegrationSystemTypeSelect';
+import { CreateIntegrationFormAlert } from '../../Alerts/Integrations/CreateIntegrationFormAlert';
+import { BaseNumberTextField } from '../../TextFields/BaseNumberTextField';
+import { ValidationError } from '../../../Services/Clients/Models';
+import { useMemo } from 'react';
+import { getValidationError } from '../../../Services/Clients/Utils';
 
-type CreateIntegrationFormProps<T extends UpdateIntegrationRequest> = {
+type Props<T extends UpdateIntegrationRequest> = {
   request: T;
   setRequest: (request: T) => void;
+  validationErrors: ValidationError[];
 };
 
-export const CreateIntegrationForm = <T extends UpdateIntegrationRequest>(props: CreateIntegrationFormProps<T>) => {
-  const { request, setRequest } = props;
-  const [autoFillServiceModal, setAutoFillServiceModal] = useState(false);
+export const CreateIntegrationForm = <T extends UpdateIntegrationRequest>(props: Props<T>) => {
+  const { request, setRequest, validationErrors } = props;
 
   const onRequest =
     <T,>(key: keyof CreateIntegrationRequest) =>
@@ -22,25 +24,39 @@ export const CreateIntegrationForm = <T extends UpdateIntegrationRequest>(props:
       setRequest({ ...request, [key]: value });
     };
 
-  const onAutoFillService = () => setAutoFillServiceModal(true);
-
-  const onAutoFillServiceCallback = (details: ServiceDetails) => {
-    setRequest({ ...request, name: details.name, cluster: details.cluster, namespace: details.namespace });
-  };
+  const errors = useMemo(
+    () => ({
+      name: getValidationError({ location: 'body.name', validationErrors }),
+      urlTemplate: getValidationError({ location: 'body.urlTemplate', validationErrors })
+    }),
+    [validationErrors]
+  );
 
   return (
     <Box>
-      <BaseTextField sx={{ mt: 0 }} value={request.name} onChange={onRequest('name')} label={'Name'} />
-      <BaseTextField value={request.cluster} onChange={onRequest('cluster')} label={'Cluster'} />
-      <BaseTextField value={request.namespace} onChange={onRequest('namespace')} label={'Namespace'} />
+      <CreateIntegrationFormAlert />
+      <BaseTextField
+        value={request.name}
+        onChange={onRequest('name')}
+        label={'Name'}
+        error={Boolean(errors.name)}
+        helperText={errors.name?.msg}
+      />
+      <BaseNumberTextField value={request.orderIndex} onChange={onRequest('orderIndex')} label={'Order index'} />
+      <IntegrationSystemTypeSelect type={request.systemType} onSelectType={onRequest('systemType')} />
       <IntegrationEnvironmentTypeSelect type={request.environmentType} onSelectType={onRequest('environmentType')} />
-      <Button sx={{ mt: 3 }} size={'small'} variant={'outlined'} onClick={onAutoFillService}>
-        Autofill
-      </Button>
-      <AutoFillServiceModal
-        modal={autoFillServiceModal}
-        setModal={setAutoFillServiceModal}
-        onCallback={onAutoFillServiceCallback}
+      <BaseTextField
+        multiline
+        rows={7}
+        value={request.urlTemplate}
+        onChange={onRequest('urlTemplate')}
+        label={'URL template'}
+        error={Boolean(errors.urlTemplate)}
+        helperText={
+          errors.urlTemplate
+            ? errors.urlTemplate.msg
+            : 'Provide a URL template to dynamically build URLs for opening integrations'
+        }
       />
     </Box>
   );

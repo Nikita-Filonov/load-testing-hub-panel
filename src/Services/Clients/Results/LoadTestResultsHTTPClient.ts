@@ -8,36 +8,33 @@ import {
   UpdateLoadTestResultQuery,
   UpdateLoadTestResultRequest
 } from '../../../Models/Results/LoadTestResults';
+import { APIResponse } from '../Models';
 
 export class LoadTestResultsHTTPClient extends HTTPClient {
   constructor() {
     super({ baseUrl: SettingsManager.apiUrl });
   }
 
-  async getLoadTestResults(query: GetLoadTestResultsQuery): Promise<GetLoadTestResultsResponse | null> {
-    const response = await this.get({ url: '/load-test-results', query });
-    return response.json;
+  async getLoadTestResults(query: GetLoadTestResultsQuery): Promise<APIResponse<GetLoadTestResultsResponse>> {
+    return await this.get({ url: '/load-test-results', query });
   }
 
   async getLoadTestResultDetails(
     loadTestResultId: number,
     query: GetLoadTestResultDetailsQuery
-  ): Promise<GetLoadTestResultDetailsResponse | null> {
-    const response = await this.get({ url: `/load-test-results/details/${loadTestResultId}`, query });
-    return response.json;
+  ): Promise<APIResponse<GetLoadTestResultDetailsResponse>> {
+    return await this.get({ url: `/load-test-results/details/${loadTestResultId}`, query });
   }
 
   async updateLoadTestResult(
     loadTestResultId: number,
     query: UpdateLoadTestResultQuery,
     request: UpdateLoadTestResultRequest
-  ) {
-    const response = await this.patch({ url: `/load-test-results/${loadTestResultId}`, body: request, query });
-    return response.json;
+  ): Promise<APIResponse<GetLoadTestResultDetailsResponse>> {
+    return await this.patch({ url: `/load-test-results/${loadTestResultId}`, body: request, query });
   }
 
   async deleteLoadTestResult(loadTestResultId: number) {
-    const response = await this.delete({ url: `/load-test-results/${loadTestResultId}` });
-    return response.error;
+    return await this.delete({ url: `/load-test-results/${loadTestResultId}` });
   }
 }

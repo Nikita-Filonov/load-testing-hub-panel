@@ -13,6 +13,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { ServiceDetailsModal } from '../../Components/Modals/Services/ServiceDetailsModal';
 import { SearchTextField } from '../../Components/TextFields/SearchTextField';
 import { ListView } from '../../Components/Views/ListView';
+import { useLoadTestResultsNavigation } from '../../Services/Results/Hooks';
 
 type ServicesSettingsViewProps = {
   services: Service[];
@@ -21,6 +22,7 @@ type ServicesSettingsViewProps = {
 const ServicesListView: FC<ServicesSettingsViewProps> = (props) => {
   const { services } = props;
   const { loading, getServices } = useServices();
+  const { navigateResults } = useLoadTestResultsNavigation();
   const [service, setService] = useState<Service>(INITIAL_SERVICES.service);
   const [search, setSearch] = useState('');
   const [updateServiceModal, setUpdateServiceModal] = useState(false);
@@ -35,6 +37,8 @@ const ServicesListView: FC<ServicesSettingsViewProps> = (props) => {
     () => services.filter((service) => service.name.toLowerCase().includes(search.toLowerCase())),
     [search, services]
   );
+
+  const onViewService = (service: Service) => navigateResults(service.id);
 
   const onUpdateService = (service: Service) => {
     setService(service);
@@ -64,6 +68,7 @@ const ServicesListView: FC<ServicesSettingsViewProps> = (props) => {
           <ServiceListItem
             key={index}
             service={item}
+            onViewService={onViewService}
             onUpdateService={onUpdateService}
             onServiceDetails={onServiceDetails}
           />

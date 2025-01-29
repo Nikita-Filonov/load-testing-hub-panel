@@ -1,43 +1,16 @@
-import { BaseToolbarView } from '../../../Components/Toolbar/BaseToolbarView';
-import { FC, Fragment, useState } from 'react';
-import { LoadTestResultDetails } from '../../../Models/Results/LoadTestResults';
-import { connect } from 'react-redux';
-import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
-import { ReduxState } from '../../../Redux/ReduxState';
+import { FC } from 'react';
 import { LoadTestsResultsCompareMenu } from '../../../Components/Menus/Results/LoadTestsResults/LoadTestsResultsCompareMenu';
-import SetLoadTestResultCommentModal from '../../../Components/Modals/Results/SetLoadTestResultCommentModal';
-import { LoadTestResultsProvider } from '../../../Providers/Results/LoadTestResultsProvider';
-import { useLoadTestResultDetailsToolbarActions } from '../../../Services/Results/Hooks';
+import BaseLoadTestResultDetailsToolbarView from './BaseLoadTestResultDetailsToolbarView';
 
 type LoadTestResultDetailsToolbarViewProps = {
-  details: LoadTestResultDetails;
+  loadTestResultId: number;
 };
 
-const LoadTestResultDetailsToolbarView: FC<LoadTestResultDetailsToolbarViewProps> = (props) => {
-  const { details } = props;
-  const actions = useLoadTestResultDetailsToolbarActions();
-  const [loadTestResultCommentModal, setLoadTestResultCommentModal] = useState(false);
-
-  const onLoadTestResultComment = () => setLoadTestResultCommentModal(true);
-
+export const LoadTestResultDetailsToolbarView: FC<LoadTestResultDetailsToolbarViewProps> = ({ loadTestResultId }) => {
   return (
-    <Fragment>
-      <BaseToolbarView
-        title={'Load tests result details'}
-        actions={[
-          { icon: <CommentOutlinedIcon />, onClick: onLoadTestResultComment },
-          { content: <LoadTestsResultsCompareMenu loadTestResultId={details.id} /> },
-          ...actions
-        ]}
-      />
-      <LoadTestResultsProvider>
-        <SetLoadTestResultCommentModal modal={loadTestResultCommentModal} setModal={setLoadTestResultCommentModal} />
-      </LoadTestResultsProvider>
-    </Fragment>
+    <BaseLoadTestResultDetailsToolbarView
+      title={'Load tests result details'}
+      actions={[{ content: <LoadTestsResultsCompareMenu loadTestResultId={loadTestResultId} /> }]}
+    />
   );
 };
-
-const getState = (state: ReduxState) => ({
-  details: state.loadTestResults.loadTestResultDetails
-});
-export default connect(getState)(LoadTestResultDetailsToolbarView);

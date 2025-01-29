@@ -1,4 +1,4 @@
-import React, { FC, PropsWithChildren, useContext, useState } from 'react';
+import React, { FC, PropsWithChildren, useContext } from 'react';
 import { ServicesHTTPClient } from '../../Services/Clients/Services/ServicesHTTPClient';
 import {
   createService,
@@ -7,9 +7,22 @@ import {
   setServiceDetails,
   setServices,
   updateService
-} from '../../Redux/Services/Services/ServicesSlice';
-import { CreateServiceRequest, GetServiceDetailsResponse, UpdateServiceRequest } from '../../Models/Services/Services';
+} from '../../Redux/Services/Services/Slice';
+import {
+  CreateServiceRequest,
+  GetServiceDetailsResponse,
+  GetServiceResponse,
+  GetServicesResponse,
+  UpdateServiceRequest
+} from '../../Models/Services/Services';
 import { useDispatch } from 'react-redux';
+import { APIResponse } from '../../Services/Clients/Models';
+import { useAPIResponseHandler } from '../../Services/Clients/Hooks';
+
+export enum ServicesErrorKey {
+  CreateService = 'ServicesProvider/createService',
+  UpdateService = 'ServicesProvider/updateService'
+}
 
 interface Loading {
   getService: boolean;
@@ -22,78 +35,77 @@ interface Loading {
 
 export type ServicesContextProps = {
   loading: Loading;
-  getService: (serviceId: number) => Promise<boolean>;
-  getServices: () => Promise<void>;
-  createService: (request: CreateServiceRequest) => Promise<boolean>;
-  updateService: (serviceId: number, request: UpdateServiceRequest) => Promise<boolean>;
-  deleteService: (serviceId: number) => Promise<boolean>;
-  getServiceDetails: (serviceId: number) => Promise<GetServiceDetailsResponse | null>;
+  getService: (serviceId: number) => Promise<APIResponse<GetServiceResponse>>;
+  getServices: () => Promise<APIResponse<GetServicesResponse>>;
+  createService: (request: CreateServiceRequest) => Promise<APIResponse<GetServiceDetailsResponse>>;
+  updateService: (serviceId: number, request: UpdateServiceRequest) => Promise<APIResponse<GetServiceDetailsResponse>>;
+  deleteService: (serviceId: number) => Promise<APIResponse>;
+  getServiceDetails: (serviceId: number) => Promise<APIResponse<GetServiceDetailsResponse>>;
 };
 
 const ServicesContext = React.createContext<ServicesContextProps | null>(null);
 
 const ServicesProvider: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();
-  const servicesHTTPClient = new ServicesHTTPClient();
-  const [loading, setLoading] = useState<Loading>({
-    getService: false,
-    getServices: false,
-    createService: false,
-    updateService: false,
-    deleteService: false,
-    getServiceDetails: false
+  const { loading, handleAPIResponse } = useAPIResponseHandler({
+    provider: ServicesProvider.name,
+    defaultLoading: {
+      getService: false,
+      getServices: false,
+      createService: false,
+      updateService: false,
+      deleteService: false,
+      getServiceDetails: false
+    }
   });
+  const servicesHTTPClient = new ServicesHTTPClient();
 
   const getServiceAPI = async (serviceId: number) => {
-    setLoading({ ...loading, getService: true });
-    const response = await servicesHTTPClient.getService(serviceId);
-    response && dispatch(setService(response.service));
-    setLoading({ ...loading, getService: false });
-
-    return Boolean(!response);
+    return await handleAPIResponse({
+      key: 'getService',
+      call: servicesHTTPClient.getService(serviceId),
+      handler: (response) => dispatch(setService(response.service))
+    });
   };
 
   const getServicesAPI = async () => {
-    setLoading({ ...loading, getServices: true });
-    const response = await servicesHTTPClient.getServices();
-    response && dispatch(setServices(response.services));
-    setLoading({ ...loading, getServices: false });
+    return await handleAPIResponse({
+      key: 'getServices',
+      call: servicesHTTPClient.getServices(),
+      handler: (response) => dispatch(setServices(response.services))
+    });
   };
 
   const createServiceAPI = async (request: CreateServiceRequest) => {
-    setLoading({ ...loading, createService: true });
-    const response = await servicesHTTPClient.createService(request);
-    response && dispatch(createService(response.details));
-    setLoading({ ...loading, createService: false });
-
-    return Boolean(!response);
+    return await handleAPIResponse({
+      key: 'createService',
+      call: servicesHTTPClient.createService(request),
+      handler: (response) => dispatch(createService(response.details))
+    });
   };
 
   const updateServiceAPI = async (serviceId: number, request: UpdateServiceRequest) => {
-    setLoading({ ...loading, updateService: true });
-    const response = await servicesHTTPClient.updateService(serviceId, request);
-    response && dispatch(updateService(response.details));
-    setLoading({ ...loading, updateService: false });
-
-    return Boolean(!response);
+    return await handleAPIResponse({
+      key: 'updateService',
+      call: servicesHTTPClient.updateService(serviceId, request),
+      handler: (response) => dispatch(updateService(response.details))
+    });
   };
 
   const deleteServiceAPI = async (serviceId: number) => {
-    setLoading({ ...loading, deleteService: true });
-    const error = await servicesHTTPClient.deleteService(serviceId);
-    !error && dispatch(deleteService({ serviceId }));
-    setLoading({ ...loading, deleteService: false });
-
-    return error;
+    return await handleAPIResponse({
+      key: 'deleteService',
+      call: servicesHTTPClient.deleteService(serviceId),
+      handler: () => dispatch(deleteService({ serviceId }))
+    });
   };
 
   const getServiceDetailsAPI = async (serviceId: number) => {
-    setLoading({ ...loading, getServiceDetails: true });
-    const response = await servicesHTTPClient.getServiceDetails(serviceId);
-    response && dispatch(setServiceDetails(response.details));
-    setLoading({ ...loading, getServiceDetails: false });
-
-    return response;
+    return await handleAPIResponse({
+      key: 'getServiceDetails',
+      call: servicesHTTPClient.getServiceDetails(serviceId),
+      handler: (response) => dispatch(setServiceDetails(response.details))
+    });
   };
 
   return (

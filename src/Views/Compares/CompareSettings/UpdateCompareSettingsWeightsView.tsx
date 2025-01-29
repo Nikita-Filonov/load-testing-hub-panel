@@ -1,13 +1,13 @@
 import { SettingsView } from '../../../Components/Views/SettingsView';
-import { FC, useEffect, useMemo, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { CompareSettingsWeights } from '../../../Models/Compares/CompareSettings';
 import { connect } from 'react-redux';
 import { ReduxState } from '../../../Redux/ReduxState';
-import { useCompareSettings } from '../../../Providers/Compares/CompareSettingsProvider';
+import { CompareSettingsErrorKey, useCompareSettings } from '../../../Providers/Compares/CompareSettingsProvider';
 import { Service } from '../../../Models/Services/Services';
 import CheckIcon from '@mui/icons-material/Check';
-import { sumCompareSettingsWeights } from '../../../Services/Compares/Utils';
 import { UpdateCompareSettingsWeightsForm } from '../../../Components/Forms/Compares/UpdateCompareSettingsWeightsForm';
+import { useValidationErrors } from '../../../Services/Clients/Hooks';
 
 type UpdateCompareSettingsViewProps = {
   service: Service;
@@ -17,6 +17,9 @@ type UpdateCompareSettingsViewProps = {
 const UpdateCompareSettingsWeightsView: FC<UpdateCompareSettingsViewProps> = (props) => {
   const { service, weightsStore } = props;
   const { loading, getCompareSettings, updateCompareSettings } = useCompareSettings();
+  const { validationErrors, clearValidationErrors } = useValidationErrors({
+    key: CompareSettingsErrorKey.UpdateCompareSettings
+  });
   const [weights, setWeights] = useState<CompareSettingsWeights>(weightsStore);
 
   useEffect(() => {
@@ -24,26 +27,29 @@ const UpdateCompareSettingsWeightsView: FC<UpdateCompareSettingsViewProps> = (pr
   }, [weightsStore]);
 
   useEffect(() => {
-    service.id && getCompareSettings(service.id);
+    if (service.id) {
+      getCompareSettings(service.id);
+    }
+
+    return () => {
+      clearValidationErrors();
+    };
   }, [service.id]);
 
-  const allowUpdate = useMemo(() => sumCompareSettingsWeights(weights) === 1, [weights]);
-
-  const onUpdateSettings = async () => await updateCompareSettings(service.id, { weights });
+  const onUpdateSettings = async () => {
+    const result = await updateCompareSettings(service.id, { weights });
+    if (!result.error) {
+      clearValidationErrors();
+    }
+  };
 
   return (
     <SettingsView
       title={`Compare weights for ${service.name}`}
       alert={'Sum of metrics weight must not be more than 1'}
-      actions={[
-        {
-          icon: <CheckIcon />,
-          loading: loading.updateCompareSettings,
-          onClick: onUpdateSettings,
-          disabled: !allowUpdate
-        }
-      ]}
-      loading={loading.getCompareSettings}>
+      actions={[{ icon: <CheckIcon />, loading: loading.updateCompareSettings, onClick: onUpdateSettings }]}
+      loading={loading.getCompareSettings}
+      validationErrors={validationErrors}>
       <UpdateCompareSettingsWeightsForm weights={weights} setWeights={setWeights} />
     </SettingsView>
   );

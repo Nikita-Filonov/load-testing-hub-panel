@@ -1,8 +1,7 @@
-export interface RequestsPerSecondAnalytics {
-  datetime: string;
-  requestsPerSecond: number;
-  failuresPerSecond: number;
-}
+import { RequestsPerSecond } from '../Metrics/RequestsPerSecond';
+import { Datetime } from '../Datetime';
+
+export interface RequestsPerSecondAnalytics extends Datetime, RequestsPerSecond {}
 
 export interface GetRequestsPerSecondAnalyticsResponse {
   analytics: RequestsPerSecondAnalytics[];

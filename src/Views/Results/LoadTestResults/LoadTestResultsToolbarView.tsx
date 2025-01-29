@@ -4,7 +4,7 @@ import { FC, Fragment, useState } from 'react';
 import {
   LoadTestResultsFilters,
   LoadTestResultsFiltersModal
-} from '../../../Components/Modals/Results/LoadTestResultsFiltersModal';
+} from '../../../Components/Modals/Results/LoadTestsResults/LoadTestResultsFiltersModal';
 import { countNotNullValues } from '../../../Services/Core/Utils';
 
 type LoadTestResultsToolbarViewProps = {

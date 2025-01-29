@@ -11,14 +11,12 @@ const ConfigProvider: FC<PropsWithChildren> = ({ children }) => {
 
   useEffect(() => {
     getConfig();
-
-    // eslint-disable-next-line
   }, []);
 
   const getConfig = async () => {
     setLoading(true);
-    const config = await configHTTPClient.getConfig();
-    SettingsManager.setup(config);
+    const result = await configHTTPClient.getConfig();
+    SettingsManager.setup(result.response);
     setLoading(false);
   };
 

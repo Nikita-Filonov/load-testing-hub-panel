@@ -13,7 +13,9 @@ export const OpenTriggerJobMenuItem: FC<OpenTriggerJobMenuItemProps> = (props) =
 
   const onOpenTriggerPipeline = () => {
     onClose();
-    result.triggerCIJobUrl && window.open(result.triggerCIJobUrl, '_blank');
+    if (result.triggerCIJobUrl) {
+      window.open(result.triggerCIJobUrl, '_blank');
+    }
   };
 
   return (

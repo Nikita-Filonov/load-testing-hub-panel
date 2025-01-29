@@ -4,7 +4,7 @@ import { GetResultsAnalyticsQuery } from '../../../Models/Analytics/ResultsAnaly
 import { FiltersModal } from '../FiltersModal';
 import { getDefaultAnalyticsEndDatetime, getDefaultAnalyticsStartDatetime } from '../../../Services/Analytics/Utils';
 
-export interface AnalyticsFilters extends Pick<GetResultsAnalyticsQuery, 'startDatetime' | 'endDatetime'> {}
+export type AnalyticsFilters = Pick<GetResultsAnalyticsQuery, 'startDatetime' | 'endDatetime'>;
 
 type AnalyticsFiltersModalProps = {
   modal: boolean;
@@ -18,7 +18,9 @@ export const AnalyticsFiltersModal: FC<AnalyticsFiltersModalProps> = (props) => 
   const [filters, setFilters] = useState<AnalyticsFilters>(externalFilters);
 
   useEffect(() => {
-    modal && setFilters(externalFilters);
+    if (modal) {
+      setFilters(externalFilters);
+    }
   }, [modal]);
 
   const onClose = () => setModal(false);

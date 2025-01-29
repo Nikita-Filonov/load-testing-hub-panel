@@ -18,7 +18,9 @@ const RatioResultsView: FC<RatioResultsViewProps> = (props) => {
   const { loading, getRatioResults } = useRatioResults();
 
   useEffect(() => {
-    loadTestResultId && getRatioResults(loadTestResultId);
+    if (loadTestResultId) {
+      getRatioResults(loadTestResultId);
+    }
   }, [loadTestResultId]);
 
   return (

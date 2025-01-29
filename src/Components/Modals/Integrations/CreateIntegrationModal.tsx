@@ -1,9 +1,10 @@
 import { BaseModal } from '../BaseModal';
 import { FC, useEffect, useState } from 'react';
-import { useIntegrations } from '../../../Providers/Integrations/IntegrationsProvider';
+import { IntegrationsErrorKey, useIntegrations } from '../../../Providers/Integrations/IntegrationsProvider';
 import { CreateIntegrationRequest } from '../../../Models/Integrations/Integrations';
 import { getDefaultCreateIntegrationRequest } from '../../../Services/Integrations/Utils';
 import { CreateIntegrationForm } from '../../Forms/Integrations/CreateIntegrationForm';
+import { useValidationErrors } from '../../../Services/Clients/Hooks';
 
 type CreateIntegrationModalProps = {
   modal: boolean;
@@ -14,17 +15,27 @@ type CreateIntegrationModalProps = {
 export const CreateIntegrationModal: FC<CreateIntegrationModalProps> = (props) => {
   const { modal, setModal, serviceId } = props;
   const { loading, createIntegration } = useIntegrations();
+  const { validationErrors, clearValidationErrors } = useValidationErrors({
+    key: IntegrationsErrorKey.CreateIntegration
+  });
   const [request, setRequest] = useState<CreateIntegrationRequest>(getDefaultCreateIntegrationRequest());
 
   useEffect(() => {
-    modal && setRequest(getDefaultCreateIntegrationRequest());
+    if (modal) {
+      setRequest(getDefaultCreateIntegrationRequest());
+    }
   }, [modal]);
 
-  const onClose = () => setModal(false);
+  const onClose = () => {
+    setModal(false);
+    clearValidationErrors();
+  };
 
   const onCreate = async () => {
-    const error = await createIntegration({ ...request, serviceId });
-    !error && onClose();
+    const result = await createIntegration({ ...request, serviceId });
+    if (!result.error) {
+      onClose();
+    }
   };
 
   return (
@@ -32,9 +43,10 @@ export const CreateIntegrationModal: FC<CreateIntegrationModalProps> = (props) =
       title={'Create integration'}
       modal={modal}
       setModal={setModal}
+      onCancel={onClose}
       onConfirm={onCreate}
       confirmLoading={loading.createIntegration}>
-      <CreateIntegrationForm request={request} setRequest={setRequest} />
+      <CreateIntegrationForm request={request} setRequest={setRequest} validationErrors={validationErrors} />
     </BaseModal>
   );
 };

@@ -8,13 +8,17 @@ import { LoadTestResultViewMenu } from '../../../Components/Menus/Results/LoadTe
 import { BasePaper } from '../../../Components/Views/BasePaper';
 import { LoadTestResultLabelsView } from '../../../Components/Labels/Results/LoadTestResults/LoadTestResultLabelsView';
 import { LoadTestResultJobButton } from '../../../Components/Buttons/Results/LoadTestResults/LoadTestResultJobButton';
-import { MetricName } from '../../../Services/Constants/Metrics';
+import { MetricName } from '../../../Models/Metrics/Base';
 
 type LoadTestResultViewProps = {
   result: LoadTestResult;
+  onSetComment: (result: LoadTestResult) => void;
+  onScenarioDetails: (result: LoadTestResult) => void;
 };
 
-export const LoadTestResultView: FC<LoadTestResultViewProps> = ({ result }) => {
+export const LoadTestResultView: FC<LoadTestResultViewProps> = (props) => {
+  const { result, onSetComment, onScenarioDetails } = props;
+
   return (
     <BasePaper sx={{ mb: 3 }}>
       <Grid2 container spacing={2}>
@@ -22,19 +26,19 @@ export const LoadTestResultView: FC<LoadTestResultViewProps> = ({ result }) => {
           <LoadTestResultTitleLink result={result} />
         </Grid2>
         <Grid2 size={{ xs: 2 }} display={'flex'} alignItems={'center'} justifyContent={'flex-end'}>
-          <LoadTestResultViewMenu result={result} />
+          <LoadTestResultViewMenu result={result} onSetComment={onSetComment} onScenarioDetails={onScenarioDetails} />
         </Grid2>
         <Grid2 size={{ xs: 6 }}>
           <Typography variant={'body2'}>
-            <b>Total requests per second:</b> {result.totalRequestsPerSecond}
+            <b>{MetricName.RequestsPerSecond}:</b> {result.requestsPerSecond}
           </Typography>
         </Grid2>
         <Grid2 size={{ xs: 6 }} display={'flex'} justifyContent={'flex-end'}>
           <NumberOfRequestsProgress
-            requests={result.totalRequests}
-            failures={result.totalFailures}
-            requestsTitle={'Total requests'}
-            failuresTitle={'Total failures'}
+            requests={result.numberOfRequests}
+            failures={result.numberOfFailures}
+            requestsTitle={MetricName.NumberOfRequests}
+            failuresTitle={MetricName.NumberOfFailures}
           />
         </Grid2>
         <Grid2 size={{ xs: 6 }}>

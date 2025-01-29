@@ -1,39 +1,20 @@
-export interface ScenarioMethodSettings {
+import { Metrics } from '../Metrics/Base';
+import { NumberOfUsers } from '../Metrics/NumberOfUsers';
+import { ContentLength } from '../Metrics/ContentLength';
+
+export interface ScenarioResultSettings extends Metrics, NumberOfUsers {}
+
+export interface ScenarioMethodSettings extends Metrics, ContentLength {
   method: string;
-  responseTime: number;
-  contentLength: number;
-  minResponseTime: number;
-  maxResponseTime: number;
-  numberOfRequests: number;
-  numberOfFailures: number;
-  requestsPerSecond: number;
-  failuresPerSecond: number;
 }
 
 export interface ScenarioSettings {
-  scenarioId: number;
-  responseTime: number;
-  numberOfUsers: number;
-  minResponseTime: number;
-  maxResponseTime: number;
-  numberOfRequests: number;
-  numberOfFailures: number;
-  requestsPerSecond: number;
-  failuresPerSecond: number;
-
+  resultSettings: ScenarioResultSettings;
   methodsSettings: ScenarioMethodSettings[];
 }
 
 export interface UpdateScenarioSettingsRequest {
-  responseTime: number;
-  numberOfUsers: number;
-  minResponseTime: number;
-  maxResponseTime: number;
-  numberOfRequests: number;
-  numberOfFailures: number;
-  requestsPerSecond: number;
-  failuresPerSecond: number;
-
+  resultSettings: ScenarioResultSettings;
   methodsSettings: ScenarioMethodSettings[];
 }
 

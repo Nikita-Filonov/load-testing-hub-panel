@@ -1,12 +1,8 @@
-export interface CompareSettingsWeights {
-  responseTime: number;
-  minResponseTime: number;
-  maxResponseTime: number;
-  numberOfRequests: number;
-  numberOfFailures: number;
-  requestsPerSecond: number;
-  failuresPerSecond: number;
-}
+import { Metrics } from '../Metrics/Base';
+import { ContentLength } from '../Metrics/ContentLength';
+import { NumberOfUsers } from '../Metrics/NumberOfUsers';
+
+export interface CompareSettingsWeights extends Metrics, ContentLength, NumberOfUsers {}
 
 export interface CompareSettingsHighlightThreshold {
   compareWithAverage: number;

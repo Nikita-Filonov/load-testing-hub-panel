@@ -1,14 +1,16 @@
 import {
   CreateIntegrationRequest,
   IntegrationEnvironmentType,
+  IntegrationSystemType,
   UpdateIntegrationRequest
 } from '../../Models/Integrations/Integrations';
 
 export const getDefaultUpdateIntegrationRequest = (): UpdateIntegrationRequest => {
   return {
     name: '',
-    cluster: '',
-    namespace: '',
+    systemType: IntegrationSystemType.Kibana,
+    orderIndex: 0,
+    urlTemplate: '',
     environmentType: IntegrationEnvironmentType.Production
   };
 };

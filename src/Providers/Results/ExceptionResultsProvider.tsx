@@ -1,11 +1,14 @@
-import React, { FC, PropsWithChildren, useContext, useState } from 'react';
+import React, { FC, PropsWithChildren, useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import { ExceptionResultsHTTPClient } from '../../Services/Clients/Results/ExceptionResultsHTTPClient';
-import { GetExceptionResultsQuery } from '../../Models/Results/ExceptionResults';
 import {
-  setExceptionResultDetails,
-  setExceptionResults
-} from '../../Redux/Results/ExceptionResults/ExceptionResultsSlice';
+  GetExceptionResultDetailsResponse,
+  GetExceptionResultsQuery,
+  GetExceptionResultsResponse
+} from '../../Models/Results/ExceptionResults';
+import { setExceptionResultDetails, setExceptionResults } from '../../Redux/Results/ExceptionResults/Slice';
+import { useAPIResponseHandler } from '../../Services/Clients/Hooks';
+import { APIResponse } from '../../Services/Clients/Models';
 
 interface Loading {
   getExceptionResults: boolean;
@@ -14,32 +17,37 @@ interface Loading {
 
 export type ExceptionResultsContextProps = {
   loading: Loading;
-  getExceptionResults: (query: GetExceptionResultsQuery) => Promise<void>;
-  getExceptionResultDetails: (exceptionResultId: number) => Promise<void>;
+  getExceptionResults: (query: GetExceptionResultsQuery) => Promise<APIResponse<GetExceptionResultsResponse>>;
+  getExceptionResultDetails: (exceptionResultId: number) => Promise<APIResponse<GetExceptionResultDetailsResponse>>;
 };
 
 const ExceptionResultsContext = React.createContext<ExceptionResultsContextProps | null>(null);
 
 const ExceptionResultsProvider: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();
-  const exceptionResultsHTTPClient = new ExceptionResultsHTTPClient();
-  const [loading, setLoading] = useState<Loading>({
-    getExceptionResults: false,
-    getExceptionResultDetails: false
+  const { loading, handleAPIResponse } = useAPIResponseHandler({
+    provider: ExceptionResultsProvider.name,
+    defaultLoading: {
+      getExceptionResults: false,
+      getExceptionResultDetails: false
+    }
   });
+  const exceptionResultsHTTPClient = new ExceptionResultsHTTPClient();
 
   const getExceptionResultsAPI = async (query: GetExceptionResultsQuery) => {
-    setLoading({ ...loading, getExceptionResults: true });
-    const response = await exceptionResultsHTTPClient.getExceptionResults(query);
-    response && dispatch(setExceptionResults(response.results));
-    setLoading({ ...loading, getExceptionResults: false });
+    return await handleAPIResponse({
+      key: 'getExceptionResults',
+      call: exceptionResultsHTTPClient.getExceptionResults(query),
+      handler: (response) => dispatch(setExceptionResults(response.results))
+    });
   };
 
   const getExceptionResultDetailsAPI = async (exceptionResultId: number) => {
-    setLoading({ ...loading, getExceptionResultDetails: true });
-    const response = await exceptionResultsHTTPClient.getExceptionResultDetails(exceptionResultId);
-    response && dispatch(setExceptionResultDetails(response.details));
-    setLoading({ ...loading, getExceptionResultDetails: false });
+    return await handleAPIResponse({
+      key: 'getExceptionResultDetails',
+      call: exceptionResultsHTTPClient.getExceptionResultDetails(exceptionResultId),
+      handler: (response) => dispatch(setExceptionResultDetails(response.details))
+    });
   };
 
   return (

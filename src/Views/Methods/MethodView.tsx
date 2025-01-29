@@ -1,12 +1,12 @@
 import { Grid2, Typography } from '@mui/material';
-import { Method } from '../../Models/Results/Methods';
+import { Method } from '../../Models/Methods/Methods';
 import { FC } from 'react';
-import { BaseLabel } from '../../Components/Labels/BaseLabel';
 import { NumberOfRequestsProgress } from '../../Components/Progress/Results/NumberOfRequestsProgress';
 import { MethodTitleLink } from '../../Components/Links/Methods/MethodTitleLink';
 import { BasePaper } from '../../Components/Views/BasePaper';
 import { MethodViewMenuItem } from '../../Components/Menus/Methods/MethodViewMenuItem';
-import { MetricName } from '../../Services/Constants/Metrics';
+import { MetricName } from '../../Models/Metrics/Base';
+import { MethodResultProtocolLabel } from '../../Components/Labels/Results/MethodResults/MethodResultProtocolLabel';
 
 type MethodViewProps = {
   method: Method;
@@ -24,15 +24,15 @@ export const MethodView: FC<MethodViewProps> = ({ method }) => {
         </Grid2>
         <Grid2 size={{ xs: 6 }}>
           <Typography variant={'body2'}>
-            <b>Average requests per second:</b> {method.averageRequestsPerSecond}
+            <b>{MetricName.RequestsPerSecond}:</b> {method.requestsPerSecond}
           </Typography>
         </Grid2>
         <Grid2 size={{ xs: 6 }} display={'flex'} justifyContent={'flex-end'}>
           <NumberOfRequestsProgress
-            requests={method.averageNumberOfRequests}
-            failures={method.averageNumberOfFailures}
-            requestsTitle={'Average number of requests'}
-            failuresTitle={'Average number of failures'}
+            requests={method.numberOfRequests}
+            failures={method.numberOfFailures}
+            requestsTitle={MetricName.NumberOfRequests}
+            failuresTitle={MetricName.NumberOfFailures}
           />
         </Grid2>
         <Grid2 size={{ xs: 12 }}>
@@ -41,7 +41,7 @@ export const MethodView: FC<MethodViewProps> = ({ method }) => {
           </Typography>
         </Grid2>
         <Grid2 size={{ xs: 12 }}>
-          <BaseLabel color={'info'} label={'GRPC'} />
+          <MethodResultProtocolLabel />
         </Grid2>
       </Grid2>
     </BasePaper>

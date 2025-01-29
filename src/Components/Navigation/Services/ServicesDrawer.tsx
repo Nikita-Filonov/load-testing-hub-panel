@@ -1,4 +1,4 @@
-import { AppRoutes } from '../../../Services/Constants/Routing';
+import { AppRoutes } from '../../../Services/Navigation/Routing';
 import SpaceDashboardOutlinedIcon from '@mui/icons-material/SpaceDashboardOutlined';
 import WebhookIcon from '@mui/icons-material/Webhook';
 import HandymanOutlinedIcon from '@mui/icons-material/HandymanOutlined';

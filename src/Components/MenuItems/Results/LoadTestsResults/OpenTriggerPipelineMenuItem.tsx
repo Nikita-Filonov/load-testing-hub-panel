@@ -13,7 +13,9 @@ export const OpenTriggerPipelineMenuItem: FC<OpenTriggerPipelineMenuItemProps> =
 
   const onOpenTriggerPipeline = () => {
     onClose();
-    result.triggerCIPipelineUrl && window.open(result.triggerCIPipelineUrl, '_blank');
+    if (result.triggerCIPipelineUrl) {
+      window.open(result.triggerCIPipelineUrl, '_blank');
+    }
   };
 
   return (

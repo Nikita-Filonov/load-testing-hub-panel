@@ -1,15 +1,31 @@
-import { BaseTableHeader } from '../BaseTableHeader';
+import { BaseTableHeader, SortingTableHeaderProps, TableHeaderCell } from '../BaseTableHeader';
+import { FC } from 'react';
 
-export const MethodResultsCompareTableHeader = () => {
+type Props = {
+  allowCompareMethodResultsHistory?: boolean;
+} & SortingTableHeaderProps;
+
+export const MethodResultsCompareTableHeader: FC<Props> = (props) => {
+  const { orderBy, setOrderBy, orderDirection, setOrderDirection, allowCompareMethodResultsHistory } = props;
+  const cells: TableHeaderCell[] = [
+    { value: 'Method', orderKey: 'method' },
+    { value: 'Metric' },
+    { value: 'Actual' },
+    { value: 'Expected' },
+    { value: 'Compare (%)' }
+  ];
+
+  if (allowCompareMethodResultsHistory) {
+    cells.unshift({ value: undefined });
+  }
+
   return (
     <BaseTableHeader
-      cells={[
-        { value: 'Method' },
-        { value: 'Metric' },
-        { value: 'Actual' },
-        { value: 'Expected' },
-        { value: 'Compare (%)' }
-      ]}
+      cells={cells}
+      orderBy={orderBy}
+      setOrderBy={setOrderBy}
+      orderDirection={orderDirection}
+      setOrderDirection={setOrderDirection}
     />
   );
 };

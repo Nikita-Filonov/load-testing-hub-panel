@@ -1,5 +1,21 @@
-import { BaseTableHeader } from '../BaseTableHeader';
+import { BaseTableHeader, SortingTableHeaderProps } from '../BaseTableHeader';
+import { FC } from 'react';
+import { HeaderSettings } from '../../../Models/Core/TableSettings';
 
-export const ExceptionResultsTableHeader = () => {
-  return <BaseTableHeader cells={[{ value: 'Number of exceptions' }, { value: 'Message' }, { value: undefined }]} />;
+type ExceptionResultsTableHeaderProps = {
+  headers: HeaderSettings[];
+} & SortingTableHeaderProps;
+
+export const ExceptionResultsTableHeader: FC<ExceptionResultsTableHeaderProps> = (props) => {
+  const { headers, orderBy, setOrderBy, orderDirection, setOrderDirection } = props;
+
+  return (
+    <BaseTableHeader
+      cells={[...headers, { value: undefined }]}
+      orderBy={orderBy}
+      setOrderBy={setOrderBy}
+      orderDirection={orderDirection}
+      setOrderDirection={setOrderDirection}
+    />
+  );
 };

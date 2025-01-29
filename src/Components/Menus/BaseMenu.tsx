@@ -3,7 +3,7 @@ import { Badge, CircularProgress, IconButton, SxProps, Theme } from '@mui/materi
 import Menu from '@mui/material/Menu';
 import React, { FC } from 'react';
 
-type BaseMenuProps = {
+export type BaseMenuProps = {
   children: React.ReactNode;
   icon?: React.ReactNode;
   buttonLabel?: string;

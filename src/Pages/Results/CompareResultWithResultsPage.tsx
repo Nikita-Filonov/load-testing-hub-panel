@@ -4,14 +4,14 @@ import { LoadTestResultsProvider } from '../../Providers/Results/LoadTestResults
 import LoadTestResultDetailsView from '../../Views/Results/LoadTestResults/LoadTestResultDetailsView';
 import CompareResultWithResultsView from '../../Views/Compares/CompareResultWithResults/CompareResultWithResultsView';
 import { CompareResultWithResultsToolbarView } from '../../Views/Compares/CompareResultWithResults/CompareResultWithResultsToolbarView';
-import { ComparesProvider } from '../../Providers/Compares/ComparesProvider';
-import CompareHistoryResultsView from '../../Views/Compares/CompareHistoryResults/CompareHistoryResultsView';
+import { CompareResultWithResultsProvider } from '../../Providers/Compares/CompareResultWithResultsProvider';
+import { CompareLoadTestResultsHistoryChartsView } from '../../Views/Compares/CompareLoadTestResultsHistory/CompareLoadTestResultsHistoryChartsView';
 import { FC, useEffect, useState } from 'react';
 import { LoadTestResultDetails } from '../../Models/Results/LoadTestResults';
 import { connect } from 'react-redux';
 import { ReduxState } from '../../Redux/ReduxState';
 import { Scenario } from '../../Models/Services/Scenarios';
-import { IntegrationsProvider } from '../../Providers/Integrations/IntegrationsProvider';
+import { CompareLoadTestResultsHistoryProvider } from '../../Providers/Compares/CompareLoadTestResultsHistoryProvider';
 
 type Params = {
   loadTestResultId: string;
@@ -27,7 +27,9 @@ const CompareResultWithResultsPage: FC<CompareResultWithResultsPageProps> = ({ d
   const [compareWithLoadTestResults, setCompareWithLoadTestResults] = useState<number[]>([]);
 
   useEffect(() => {
-    details.compare?.previousId && setCompareWithLoadTestResults([details.compare?.previousId]);
+    if (details.compare?.previousId) {
+      setCompareWithLoadTestResults([details.compare?.previousId]);
+    }
   }, [details.compare]);
 
   useEffect(() => {
@@ -36,32 +38,30 @@ const CompareResultWithResultsPage: FC<CompareResultWithResultsPageProps> = ({ d
 
   return (
     <MainLayout>
-      <IntegrationsProvider>
-        <CompareResultWithResultsToolbarView
-          compareWithLoadTestResults={compareWithLoadTestResults}
-          setCompareWithLoadTestResults={setCompareWithLoadTestResults}
-        />
-      </IntegrationsProvider>
+      <CompareResultWithResultsToolbarView
+        compareWithLoadTestResults={compareWithLoadTestResults}
+        setCompareWithLoadTestResults={setCompareWithLoadTestResults}
+      />
       {loadTestResultId && (
         <LoadTestResultsProvider>
           <LoadTestResultDetailsView loadTestResultId={Number(loadTestResultId)} />
         </LoadTestResultsProvider>
       )}
       {loadTestResultId && (
-        <ComparesProvider>
+        <CompareResultWithResultsProvider>
           <CompareResultWithResultsView
             loadTestResultId={Number(loadTestResultId)}
             compareWithLoadTestResults={compareWithLoadTestResults}
           />
-        </ComparesProvider>
+        </CompareResultWithResultsProvider>
       )}
       {loadTestResultId && (
-        <ComparesProvider>
-          <CompareHistoryResultsView
+        <CompareLoadTestResultsHistoryProvider>
+          <CompareLoadTestResultsHistoryChartsView
             loadTestResultId={Number(loadTestResultId)}
             compareWithLoadTestResults={compareWithLoadTestResults}
           />
-        </ComparesProvider>
+        </CompareLoadTestResultsHistoryProvider>
       )}
     </MainLayout>
   );

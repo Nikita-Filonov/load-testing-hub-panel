@@ -4,11 +4,11 @@ import { BaseMenuItem } from '../../BaseMenuItem';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import { useLoadTestResultsNavigation } from '../../../../Services/Results/Hooks';
 
-type LoadTestsResultsGrafanaMenuProps = {
+type Props = {
   loadTestResultId: number;
 };
 
-export const LoadTestsResultsCompareMenu: FC<LoadTestsResultsGrafanaMenuProps> = ({ loadTestResultId }) => {
+export const LoadTestsResultsCompareMenu: FC<Props> = ({ loadTestResultId }) => {
   const { navigateCompareWithResults, navigateCompareWithAverages, navigateCompareWithScenario } =
     useLoadTestResultsNavigation();
   const [menu, setMenu] = useState<null | HTMLElement>(null);

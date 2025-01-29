@@ -1,7 +1,11 @@
 import { BoxView } from '../../Components/Views/BoxView';
-import { UpdateScenarioSettingsForm } from '../../Components/Forms/Scenarios/UpdateScenarioSettingsForm';
+import { UpdateScenarioResultSettingsForm } from '../../Components/Forms/Scenarios/UpdateScenarioResultSettingsForm';
 import { FC, Fragment } from 'react';
-import { ScenarioMethodSettings, UpdateScenarioSettingsRequest } from '../../Models/Services/ScenarioSettings';
+import {
+  ScenarioMethodSettings,
+  ScenarioResultSettings,
+  UpdateScenarioSettingsRequest
+} from '../../Models/Services/ScenarioSettings';
 import { UpdateScenarioMethodSettingsView } from './UpdateScenarioMethodSettingsView';
 
 type UpdateScenarioSettingsViewProps = {
@@ -13,6 +17,10 @@ type UpdateScenarioSettingsViewProps = {
 export const UpdateScenarioSettingsView: FC<UpdateScenarioSettingsViewProps> = (props) => {
   const { request, setRequest, scenarioId } = props;
 
+  const onSetResultSettings = (resultSettings: ScenarioResultSettings) => {
+    setRequest({ ...request, resultSettings });
+  };
+
   const onSetMethodSettings = (methodsSettings: ScenarioMethodSettings[]) => {
     setRequest({ ...request, methodsSettings });
   };
@@ -20,7 +28,7 @@ export const UpdateScenarioSettingsView: FC<UpdateScenarioSettingsViewProps> = (
   return (
     <Fragment>
       <BoxView title={'Aggregated'} containerSx={{ mt: 0 }}>
-        <UpdateScenarioSettingsForm request={request} setRequest={setRequest} />
+        <UpdateScenarioResultSettingsForm settings={request.resultSettings} setSettings={onSetResultSettings} />
       </BoxView>
       <UpdateScenarioMethodSettingsView
         scenarioId={scenarioId}

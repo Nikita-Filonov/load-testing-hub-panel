@@ -1,9 +1,8 @@
-import { BaseToolbarView } from '../../../Components/Toolbar/BaseToolbarView';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import { FC, Fragment, useState } from 'react';
-import SelectLoadTestResultsModal from '../../../Components/Modals/Results/SelectLoadTestResultsModal';
+import SelectLoadTestResultsModal from '../../../Components/Modals/Results/LoadTestsResults/SelectLoadTestResultsModal';
 import { LoadTestResultsProvider } from '../../../Providers/Results/LoadTestResultsProvider';
-import { useLoadTestResultDetailsToolbarActions } from '../../../Services/Results/Hooks';
+import BaseLoadTestResultDetailsToolbarView from '../../Results/LoadTestResults/BaseLoadTestResultDetailsToolbarView';
 
 type CompareResultWithResultsToolbarViewProps = {
   compareWithLoadTestResults: number[];
@@ -12,17 +11,15 @@ type CompareResultWithResultsToolbarViewProps = {
 
 export const CompareResultWithResultsToolbarView: FC<CompareResultWithResultsToolbarViewProps> = (props) => {
   const { compareWithLoadTestResults, setCompareWithLoadTestResults } = props;
-  const actions = useLoadTestResultDetailsToolbarActions();
   const [selectLoadTestResultsModal, setSelectLoadTestResultsModal] = useState(false);
 
   const onSelectLoadTestResults = () => setSelectLoadTestResultsModal(true);
 
   return (
     <Fragment>
-      <BaseToolbarView
+      <BaseLoadTestResultDetailsToolbarView
         title={'Comparison with results'}
         actions={[
-          ...actions,
           {
             icon: <FormatListBulletedIcon />,
             onClick: onSelectLoadTestResults,

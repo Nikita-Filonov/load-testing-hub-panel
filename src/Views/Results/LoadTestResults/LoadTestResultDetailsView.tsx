@@ -13,7 +13,8 @@ import {
 } from '../../../Services/Results/Utils';
 import { LoadTestResultLabelsView } from '../../../Components/Labels/Results/LoadTestResults/LoadTestResultLabelsView';
 import { Scenario } from '../../../Models/Services/Scenarios';
-import { MetricName } from '../../../Services/Constants/Metrics';
+import { MetricName } from '../../../Models/Metrics/Base';
+import { PercentilesTable } from '../../../Components/Tables/Percentiles/PercentilesTable';
 
 type LoadTestResultDetailsViewProps = {
   loadTestResultId: number;
@@ -26,7 +27,9 @@ const LoadTestResultDetailsView: FC<LoadTestResultDetailsViewProps> = (props) =>
   const { loading, getLoadTestResultDetails } = useLoadTestResults();
 
   useEffect(() => {
-    loadTestResultId && getLoadTestResultDetails(loadTestResultId, { scenarioId: scenario.id });
+    if (loadTestResultId) {
+      getLoadTestResultDetails(loadTestResultId, { scenarioId: scenario.id });
+    }
   }, [loadTestResultId, scenario.id]);
 
   return (
@@ -39,15 +42,17 @@ const LoadTestResultDetailsView: FC<LoadTestResultDetailsViewProps> = (props) =>
         <BaseInfoRowView name={'Time range'} value={getLoadTestResultDates(details)} />
         <BaseInfoRowView name={'Duration'} value={getLoadTestResultDuration(details)} />
         <BaseInfoRowView name={MetricName.NumberOfUsers} value={details.numberOfUsers} />
-        <BaseInfoRowView name={'Total requests'} value={details.totalRequests} />
-        <BaseInfoRowView name={'Total requests per second'} value={details.totalRequestsPerSecond} />
-        <BaseInfoRowView name={'Total failures'} value={details.totalFailures} />
-        <BaseInfoRowView name={'Total failures per second'} value={details.totalFailuresPerSecond} />
+        <BaseInfoRowView name={MetricName.NumberOfRequests} value={details.numberOfRequests} />
+        <BaseInfoRowView name={MetricName.RequestsPerSecond} value={details.requestsPerSecond} />
+        <BaseInfoRowView name={MetricName.NumberOfFailures} value={details.numberOfFailures} />
+        <BaseInfoRowView name={MetricName.FailuresPerSecond} value={details.failuresPerSecond} />
         <BaseInfoRowView name={MetricName.MaxResponseTime} value={details.maxResponseTime} />
         <BaseInfoRowView name={MetricName.MinResponseTime} value={details.minResponseTime} />
+        <BaseInfoRowView name={MetricName.MedianResponseTime} value={details.medianResponseTime} />
         <BaseInfoRowView name={MetricName.AverageResponseTime} value={details.averageResponseTime} />
         <BaseInfoRowView name={'Comment'} value={details.comment} />
       </WidgetInfoRowsView>
+      <PercentilesTable percentiles={details} />
     </WidgetView>
   );
 };

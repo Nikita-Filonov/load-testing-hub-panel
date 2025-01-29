@@ -10,9 +10,13 @@ import { Service } from '../../../Models/Services/Services';
 import { EmptyView } from '../../../Components/Views/EmptyView';
 import { ListView } from '../../../Components/Views/ListView';
 import { LoadTestResultsToolbarView } from './LoadTestResultsToolbarView';
-import { LoadTestResultsFilters } from '../../../Components/Modals/Results/LoadTestResultsFiltersModal';
+import { LoadTestResultsFilters } from '../../../Components/Modals/Results/LoadTestsResults/LoadTestResultsFiltersModal';
 import { Scenario } from '../../../Models/Services/Scenarios';
 import { getDefaultLoadTestResultsFilters } from '../../../Services/Results/Utils';
+import { INITIAL_LOAD_TEST_RESULTS } from '../../../Redux/Results/LoadTestResults/InitialState';
+import { ScenarioDetailsModal } from '../../../Components/Modals/Scenarios/ScenarioDetailsModal';
+import { ScenariosProvider } from '../../../Providers/Services/ScenariosProvider';
+import SetLoadTestResultCommentModal from '../../../Components/Modals/Results/LoadTestsResults/SetLoadTestResultCommentModal';
 
 type LoadTestResultsListViewProps = {
   service: Service;
@@ -28,11 +32,26 @@ const LoadTestResultsListView: FC<LoadTestResultsListViewProps> = (props) => {
   const { loading, getLoadTestResults } = useLoadTestResults();
   const [page, setPage] = useState(1);
   const [offset, setOffset] = useState(0);
+  const [result, setResult] = useState<LoadTestResult>(INITIAL_LOAD_TEST_RESULTS.loadTestResultDetails);
   const [filters, setFilters] = useState<LoadTestResultsFilters>(getDefaultLoadTestResultsFilters());
+  const [scenarioDetailsModal, setScenarioDetailsModal] = useState(false);
+  const [loadTestResultCommentModal, setLoadTestResultCommentModal] = useState(false);
 
   useEffect(() => {
-    service.id && getLoadTestResults({ serviceId: service.id, scenarioId: scenario.id, limit, offset, ...filters });
+    if (service.id) {
+      getLoadTestResults({ serviceId: service.id, scenarioId: scenario.id, limit, offset, ...filters });
+    }
   }, [offset, service.id, scenario.id, filters]);
+
+  const onSetComment = (result: LoadTestResult) => {
+    setResult(result);
+    setLoadTestResultCommentModal(true);
+  };
+
+  const onScenarioDetails = (result: LoadTestResult) => {
+    setResult(result);
+    setScenarioDetailsModal(true);
+  };
 
   return (
     <Box>
@@ -46,7 +65,12 @@ const LoadTestResultsListView: FC<LoadTestResultsListViewProps> = (props) => {
       )}
       <ListView loading={loading.getLoadTestResults}>
         {loadTestResults.map((result) => (
-          <LoadTestResultView key={result.id} result={result} />
+          <LoadTestResultView
+            key={result.id}
+            result={result}
+            onSetComment={onSetComment}
+            onScenarioDetails={onScenarioDetails}
+          />
         ))}
         {loadTestResults.length > 0 && (
           <BasePagination
@@ -58,6 +82,18 @@ const LoadTestResultsListView: FC<LoadTestResultsListViewProps> = (props) => {
           />
         )}
       </ListView>
+      <ScenariosProvider>
+        <ScenarioDetailsModal
+          modal={scenarioDetailsModal}
+          setModal={setScenarioDetailsModal}
+          scenarioId={result.scenario.id}
+        />
+      </ScenariosProvider>
+      <SetLoadTestResultCommentModal
+        modal={loadTestResultCommentModal}
+        setModal={setLoadTestResultCommentModal}
+        loadTestResultId={result.id}
+      />
     </Box>
   );
 };

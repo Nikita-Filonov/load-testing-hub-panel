@@ -1,5 +1,6 @@
 import { Scenario, ScenarioDetails } from '../../../Models/Services/Scenarios';
-import { ScenarioMethodSettings, ScenarioSettings } from '../../../Models/Services/ScenarioSettings';
+import { ScenarioSettings } from '../../../Models/Services/ScenarioSettings';
+import { getDefaultScenarioResultSettings } from '../../../Services/Scenarios/Utils';
 
 export type ScenariosInitialState = {
   scenario: Scenario;
@@ -15,18 +16,6 @@ const DEFAULT_SCENARIO: Scenario = {
   version: ''
 };
 
-export const DEFAULT_SCENARIO_METHOD_SETTINGS: ScenarioMethodSettings = {
-  method: '',
-  responseTime: 0,
-  contentLength: 0,
-  minResponseTime: 0,
-  maxResponseTime: 0,
-  numberOfRequests: 0,
-  numberOfFailures: 0,
-  requestsPerSecond: 0,
-  failuresPerSecond: 0
-};
-
 export const INITIAL_SCENARIOS: ScenariosInitialState = {
   scenario: DEFAULT_SCENARIO,
   scenarios: [],
@@ -34,19 +23,12 @@ export const INITIAL_SCENARIOS: ScenariosInitialState = {
     ...DEFAULT_SCENARIO,
     file: '',
     ratioTotal: [],
-    ratioPerClass: []
+    ratioPerClass: [],
+    numberOfUsers: 0,
+    runtimeDuration: ''
   },
   scenarioSettings: {
-    scenarioId: 0,
-    responseTime: 0,
-    numberOfUsers: 0,
-    minResponseTime: 0,
-    maxResponseTime: 0,
-    numberOfRequests: 0,
-    numberOfFailures: 0,
-    requestsPerSecond: 0,
-    failuresPerSecond: 0,
-
+    resultSettings: getDefaultScenarioResultSettings(),
     methodsSettings: []
   }
 };

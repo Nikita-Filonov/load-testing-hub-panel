@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { BaseListItem } from '../BaseListItem';
 import { Scenario } from '../../../Models/Services/Scenarios';
 import ChecklistIcon from '@mui/icons-material/Checklist';
-import { ScenarioTagsLabel } from '../../Labels/Scenarios/ScenarioTagsLabel';
+import { ScenarioTagsLabelsView } from '../../Labels/Scenarios/ScenarioTagsLabelsView';
 import { getScenarioTitle } from '../../../Services/Scenarios/Utils';
 
 type ScenarioSelectionListItemProps = {
@@ -20,7 +20,7 @@ export const ScenarioSelectionListItem: FC<ScenarioSelectionListItemProps> = (pr
     <BaseListItem
       icon={<ChecklistIcon fontSize={'small'} />}
       title={getScenarioTitle(scenario)}
-      label={<ScenarioTagsLabel tags={scenario.tags} />}
+      label={<ScenarioTagsLabelsView tags={scenario.tags} />}
       onClick={onSelect}
       subtitle={scenario.version}
       selected={selected}

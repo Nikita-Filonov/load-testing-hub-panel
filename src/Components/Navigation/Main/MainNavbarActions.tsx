@@ -1,9 +1,8 @@
 import React, { Fragment, useState } from 'react';
-import IconButton from '@mui/material/IconButton';
 import { AppInfoModal } from '../../Modals/AppInfoModal';
-import { AppSettingsFeature, AppSettingsModal } from '../../Modals/Settings/AppSettingsModal';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import { AppSettingsModal } from '../../Modals/Settings/AppSettingsModal';
 import { AppInfoButton } from '../../Buttons/AppInfoButton';
+import { AppSettingsButton } from '../../Buttons/AppSettingsButton';
 
 export const MainNavbarActions = () => {
   const [appInfoModal, setAppInfoModal] = useState(false);
@@ -15,12 +14,10 @@ export const MainNavbarActions = () => {
 
   return (
     <Fragment>
-      <IconButton sx={{ mr: 2 }} color="inherit" onClick={onAppSettings}>
-        <SettingsOutlinedIcon />
-      </IconButton>
+      <AppSettingsButton onAppSettings={onAppSettings} />
       <AppInfoButton onAppInfo={onAppInfo} />
       <AppInfoModal modal={appInfoModal} setModal={setAppInfoModal} />
-      <AppSettingsModal modal={appSettingsModal} setModal={setAppSettingsModal} features={[AppSettingsFeature.Theme]} />
+      <AppSettingsModal modal={appSettingsModal} setModal={setAppSettingsModal} />
     </Fragment>
   );
 };

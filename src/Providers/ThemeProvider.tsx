@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createTheme, CssBaseline, ThemeProvider as LibThemeProvider } from '@mui/material';
 import { ReduxState } from '../Redux/ReduxState';
 import { ThemeMode } from '../Models/Core/Theme';
-import { setTheme } from '../Redux/Core/CoreSlice';
+import { setTheme } from '../Redux/Core/Slice';
 
 const darkTheme = createTheme({
   palette: { mode: ThemeMode.Dark },

@@ -2,12 +2,21 @@ import { RequestsPerSecondAnalytics } from '../../Models/Analytics/RequestsPerSe
 import { NumberOfRequestsAnalytics } from '../../Models/Analytics/NumberOfRequestsAnalytics';
 import { ResponseTimesAnalytics } from '../../Models/Analytics/ResponseTimesAnalytics';
 import { AverageAnalytics } from '../../Models/Analytics/AverageAnalytics';
+import { PercentilesAnalytics } from '../../Models/Analytics/PercentilesAnalytics';
+import { getDefaultMetrics } from '../../Services/Metrics/Base';
+import { getDefaultNumberOfUsers } from '../../Services/Metrics/NumberOfUsers';
+import {
+  MethodsNumberOfRequestsAnalytics,
+  MethodsRequestsPerSecondAnalytics,
+  MethodsResponseTimesAnalytics
+} from '../../Models/Analytics/MethodsAnalytics';
 
 export type AnalyticsInitialState = {
   averageAnalytics: AverageAnalytics;
-  methodsResponseTimesAnalytics: ResponseTimesAnalytics[];
-  methodsNumberOfRequestsAnalytics: NumberOfRequestsAnalytics[];
-  methodsRequestsPerSecondAnalytics: RequestsPerSecondAnalytics[];
+  methodsResponseTimesAnalytics: MethodsResponseTimesAnalytics[];
+  methodsNumberOfRequestsAnalytics: MethodsNumberOfRequestsAnalytics[];
+  methodsRequestsPerSecondAnalytics: MethodsRequestsPerSecondAnalytics[];
+  resultsPercentilesAnalytics: PercentilesAnalytics[];
   resultsResponseTimesAnalytics: ResponseTimesAnalytics[];
   resultsNumberOfRequestsAnalytics: NumberOfRequestsAnalytics[];
   resultsRequestsPerSecondAnalytics: RequestsPerSecondAnalytics[];
@@ -15,18 +24,13 @@ export type AnalyticsInitialState = {
 
 export const INITIAL_ANALYTICS: AnalyticsInitialState = {
   averageAnalytics: {
-    totalRequests: 0,
-    totalFailures: 0,
-    numberOfUsers: 0,
-    maxResponseTime: 0,
-    minResponseTime: 0,
-    averageResponseTime: 0,
-    totalRequestsPerSecond: 0,
-    totalFailuresPerSecond: 0
+    ...getDefaultMetrics(),
+    ...getDefaultNumberOfUsers()
   },
   methodsResponseTimesAnalytics: [],
   methodsNumberOfRequestsAnalytics: [],
   methodsRequestsPerSecondAnalytics: [],
+  resultsPercentilesAnalytics: [],
   resultsResponseTimesAnalytics: [],
   resultsNumberOfRequestsAnalytics: [],
   resultsRequestsPerSecondAnalytics: []

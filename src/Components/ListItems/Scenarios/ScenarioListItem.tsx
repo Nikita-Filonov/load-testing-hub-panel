@@ -3,7 +3,7 @@ import { BaseListItem } from '../BaseListItem';
 import { Scenario } from '../../../Models/Services/Scenarios';
 import ChecklistIcon from '@mui/icons-material/Checklist';
 import { ScenarioListItemMenu } from '../../Menus/Scenarios/ScenarioListItemMenu';
-import { ScenarioTagsLabel } from '../../Labels/Scenarios/ScenarioTagsLabel';
+import { ScenarioTagsLabelsView } from '../../Labels/Scenarios/ScenarioTagsLabelsView';
 import { getScenarioTitle } from '../../../Services/Scenarios/Utils';
 
 type ScenarioListItemProps = {
@@ -29,7 +29,7 @@ export const ScenarioListItem: FC<ScenarioListItemProps> = (props) => {
           onScenarioSettings={onScenarioSettings}
         />
       }
-      label={<ScenarioTagsLabel tags={scenario.tags} />}
+      label={<ScenarioTagsLabelsView tags={scenario.tags} />}
       title={getScenarioTitle(scenario)}
       subtitle={scenario.version}
       onClick={onDetails}

@@ -1,8 +1,11 @@
-import React, { FC, PropsWithChildren, useContext, useState } from 'react';
+import React, { FC, PropsWithChildren, useContext } from 'react';
 import { useDispatch } from 'react-redux';
-import { setAverageAnalytics } from '../../Redux/Analytics/AnalyticsSlice';
+import { setAverageAnalytics } from '../../Redux/Analytics/Slice';
 import { AverageAnalyticsHTTPClient } from '../../Services/Clients/Analytics/AverageAnalyticsHTTPClient';
 import { GetResultsAnalyticsQuery } from '../../Models/Analytics/ResultsAnalytics';
+import { useAPIResponseHandler } from '../../Services/Clients/Hooks';
+import { APIResponse } from '../../Services/Clients/Models';
+import { GetAverageAnalyticsResponse } from '../../Models/Analytics/AverageAnalytics';
 
 interface Loading {
   getAverageAnalytics: boolean;
@@ -10,31 +13,29 @@ interface Loading {
 
 export type AverageAnalyticsContextProps = {
   loading: Loading;
-  getAverageAnalytics: (query: GetResultsAnalyticsQuery) => Promise<void>;
+  getAverageAnalytics: (query: GetResultsAnalyticsQuery) => Promise<APIResponse<GetAverageAnalyticsResponse>>;
 };
 
 const AverageAnalyticsContext = React.createContext<AverageAnalyticsContextProps | null>(null);
 
 const AverageAnalyticsProvider: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();
-  const averageAnalyticsHTTPClient = new AverageAnalyticsHTTPClient();
-  const [loading, setLoading] = useState<Loading>({
-    getAverageAnalytics: false
+  const { loading, handleAPIResponse } = useAPIResponseHandler({
+    provider: AverageAnalyticsProvider.name,
+    defaultLoading: { getAverageAnalytics: false }
   });
+  const averageAnalyticsHTTPClient = new AverageAnalyticsHTTPClient();
 
   const getAverageAnalyticsAPI = async (query: GetResultsAnalyticsQuery) => {
-    setLoading((loading) => ({ ...loading, getAverageAnalytics: true }));
-    const response = await averageAnalyticsHTTPClient.getAverageAnalytics(query);
-    response && dispatch(setAverageAnalytics(response.analytics));
-    setLoading((loading) => ({ ...loading, getAverageAnalytics: false }));
+    return await handleAPIResponse({
+      key: 'getAverageAnalytics',
+      call: averageAnalyticsHTTPClient.getAverageAnalytics(query),
+      handler: (response) => dispatch(setAverageAnalytics(response.analytics))
+    });
   };
 
   return (
-    <AverageAnalyticsContext.Provider
-      value={{
-        loading,
-        getAverageAnalytics: getAverageAnalyticsAPI
-      }}>
+    <AverageAnalyticsContext.Provider value={{ loading, getAverageAnalytics: getAverageAnalyticsAPI }}>
       {children}
     </AverageAnalyticsContext.Provider>
   );

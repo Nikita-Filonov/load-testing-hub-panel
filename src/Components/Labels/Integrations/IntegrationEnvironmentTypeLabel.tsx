@@ -1,16 +1,22 @@
 import { BaseLabel, LabelColor } from '../BaseLabel';
 import { FC } from 'react';
-import { IntegrationEnvironmentType } from '../../../Models/Integrations/Integrations';
+import { IntegrationEnvironmentType, ShortIntegration } from '../../../Models/Integrations/Integrations';
 
-export const MAP_INTEGRATION_ENVIRONMENT_TYPE_TO_COLOR: Record<IntegrationEnvironmentType, LabelColor> = {
+const MAP_INTEGRATION_ENVIRONMENT_TYPE_TO_COLOR: Record<IntegrationEnvironmentType, LabelColor> = {
   [IntegrationEnvironmentType.Internal]: 'warning',
   [IntegrationEnvironmentType.Production]: 'success'
 };
 
-type IntegrationEnvironmentTypeLabelProps = {
-  type: IntegrationEnvironmentType;
+type Props = {
+  integration: ShortIntegration;
 };
 
-export const IntegrationEnvironmentTypeLabel: FC<IntegrationEnvironmentTypeLabelProps> = ({ type }) => {
-  return <BaseLabel sx={{ ml: 1 }} label={type} color={MAP_INTEGRATION_ENVIRONMENT_TYPE_TO_COLOR[type]} />;
+export const IntegrationEnvironmentTypeLabel: FC<Props> = ({ integration }) => {
+  return (
+    <BaseLabel
+      sx={{ ml: 1 }}
+      label={integration.environmentType}
+      color={MAP_INTEGRATION_ENVIRONMENT_TYPE_TO_COLOR[integration.environmentType]}
+    />
+  );
 };

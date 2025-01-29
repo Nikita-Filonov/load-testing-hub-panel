@@ -1,10 +1,10 @@
 import React, { Fragment, useState } from 'react';
-import { AppSettingsFeature, AppSettingsModal } from '../../Modals/Settings/AppSettingsModal';
-import ServiceLabel from '../../Labels/Services/ServiceLabel';
-import { ScenariosProvider } from '../../../Providers/Services/ScenariosProvider';
+import { AppSettingsModal } from '../../Modals/Settings/AppSettingsModal';
 import { AppInfoModal } from '../../Modals/AppInfoModal';
-import ServicesAppSettingsButton from '../../Buttons/Settings/ServicesAppSettingsButton';
 import { AppInfoButton } from '../../Buttons/AppInfoButton';
+import { ServiceSelectionPopover } from '../../Popovers/Services/ServiceSelectionPopover';
+import { ScenarioSelectionPopover } from '../../Popovers/Scenarios/ScenarioSelectionPopover';
+import { AppSettingsButton } from '../../Buttons/AppSettingsButton';
 
 export const ServicesNavbarActions = () => {
   const [appInfoModal, setAppInfoModal] = useState(false);
@@ -16,17 +16,12 @@ export const ServicesNavbarActions = () => {
 
   return (
     <Fragment>
-      <ServiceLabel />
-      <ServicesAppSettingsButton onAppSettings={onAppSettings} />
+      <ScenarioSelectionPopover />
+      <ServiceSelectionPopover />
+      <AppSettingsButton onAppSettings={onAppSettings} />
       <AppInfoButton onAppInfo={onAppInfo} />
       <AppInfoModal modal={appInfoModal} setModal={setAppInfoModal} />
-      <ScenariosProvider>
-        <AppSettingsModal
-          modal={appSettingsModal}
-          setModal={setAppSettingsModal}
-          features={[AppSettingsFeature.Theme, AppSettingsFeature.Scenarios]}
-        />
-      </ScenariosProvider>
+      <AppSettingsModal modal={appSettingsModal} setModal={setAppSettingsModal} />
     </Fragment>
   );
 };

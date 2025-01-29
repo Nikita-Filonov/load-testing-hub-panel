@@ -5,6 +5,7 @@ import { LoadingView } from './LoadingView';
 import Box from '@mui/material/Box';
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
+import { getActionMarginRight } from '../../Services/Views/Utils';
 
 type WidgetAction = {
   icon?: ReactNode;
@@ -12,7 +13,7 @@ type WidgetAction = {
   content?: ReactNode;
 };
 
-type WidgetViewProps = {
+export type WidgetViewProps = {
   sx?: SxProps<Theme>;
   flat?: boolean;
   title?: string | ReactNode;
@@ -61,6 +62,10 @@ export const WidgetView: FC<WidgetViewProps> = (props) => {
 
   const onHide = () => setWidgetHidden(!widgetHidden);
 
+  const getMarginRight = (index: number): number => {
+    return allowClose ? 1 : getActionMarginRight({ index, actions, margin: 1 });
+  };
+
   return (
     <Container sx={sx} flat={flat}>
       <Grid2 container spacing={1} display={'flex'} alignItems={'center'}>
@@ -71,11 +76,11 @@ export const WidgetView: FC<WidgetViewProps> = (props) => {
         <Grid2 sx={{ ml: 'auto', display: 'flex', alignItems: 'flex-end' }}>
           {actions?.map((action, index) =>
             action.icon ? (
-              <IconButton size={'small'} key={index} sx={{ mr: 1 }} onClick={action.onClick}>
+              <IconButton key={index} sx={{ mr: getMarginRight(index) }} size={'small'} onClick={action.onClick}>
                 {action.icon}
               </IconButton>
             ) : (
-              <Box key={index} sx={{ mr: 1 }}>
+              <Box key={index} sx={{ mr: getMarginRight(index) }}>
                 {action.content}
               </Box>
             )

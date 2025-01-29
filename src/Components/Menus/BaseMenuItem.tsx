@@ -1,8 +1,8 @@
 import { ListItemIcon, ListItemText, MenuItem } from '@mui/material';
-import React, { FC, ReactNode } from 'react';
+import { FC, ReactNode } from 'react';
 
 type BaseMenuItemProps = {
-  icon?: React.ReactNode;
+  icon?: ReactNode;
   title: string;
   label?: ReactNode;
   onClick?: () => void | Promise<void>;

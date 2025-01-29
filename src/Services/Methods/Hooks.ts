@@ -1,6 +1,6 @@
 import { useSearchParams, To } from 'react-router-dom';
 import { useEffect, useMemo } from 'react';
-import { AppRoutes } from '../Constants/Routing';
+import { AppRoutes } from '../Navigation/Routing';
 import { useAppNavigation } from '../Navigation/Hooks';
 import { useServicesNavigation } from '../Services/Hooks';
 import { getQueryString } from '../Clients/Utils';
@@ -35,7 +35,9 @@ export const useMethodDetailsNavigation = () => {
   const method = useMemo(() => searchParams.get('method'), [searchParams]);
 
   useEffect(() => {
-    !method && onNavigate(AppRoutes.ServiceMethods, { serviceId });
+    if (!method) {
+      onNavigate(AppRoutes.ServiceMethods, { serviceId });
+    }
   }, [method]);
 
   return { method };

@@ -1,4 +1,3 @@
-import { useCompares } from '../../../Providers/Compares/ComparesProvider';
 import { Service } from '../../../Models/Services/Services';
 import { Scenario } from '../../../Models/Services/Scenarios';
 import { AnalyticsFilters } from '../../../Components/Modals/Analytics/AnalyticsFiltersModal';
@@ -8,6 +7,7 @@ import { LoadTestResultCompareView } from '../LoadTestResultCompareView';
 import { connect } from 'react-redux';
 import { ReduxState } from '../../../Redux/ReduxState';
 import { CompareWidgetType } from '../../../Models/Compares/CompareTableSettings';
+import { useCompareAveragesWithScenario } from '../../../Providers/Compares/CompareAveragesWithScenarioProvider';
 
 type CompareAveragesWithScenarioViewProps = {
   filters: AnalyticsFilters;
@@ -18,7 +18,7 @@ type CompareAveragesWithScenarioViewProps = {
 
 const CompareAveragesWithScenarioView: FC<CompareAveragesWithScenarioViewProps> = (props) => {
   const { filters, compare, service, scenario } = props;
-  const { loading, getCompareAveragesWithScenario } = useCompares();
+  const { loading, getCompareAveragesWithScenario } = useCompareAveragesWithScenario();
 
   if (scenario.name === '') return null;
 
@@ -37,7 +37,7 @@ const CompareAveragesWithScenarioView: FC<CompareAveragesWithScenarioViewProps> 
 };
 
 const getState = (state: ReduxState) => ({
-  compare: state.compares.compareAveragesWithScenario,
+  compare: state.compareAveragesWithScenario.compareAveragesWithScenario,
   service: state.services.service,
   scenario: state.scenarios.scenario
 });

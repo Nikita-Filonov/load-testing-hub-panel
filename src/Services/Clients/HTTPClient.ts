@@ -1,37 +1,14 @@
 import { getQueryString } from './Utils';
+import {
+  APIResponse,
+  HTTPClientGetRequest,
+  HTTPClientPOSTRequest,
+  HTTPClientRequest,
+  HTTPClientResponse
+} from './Models';
 
 interface HTTPClientProps {
   baseUrl?: string;
-}
-
-interface HTTPClientRequest extends RequestInit {
-  url: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  body?: any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  query?: any;
-  method: 'GET' | 'PUT' | 'POST' | 'PATCH' | 'DELETE';
-}
-
-interface HTTPClientResponse {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  json: any | null;
-  error: boolean;
-  status: number;
-}
-
-export interface HTTPClientPOSTRequest {
-  url: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  body?: BodyInit | null | undefined | Record<string, any>;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  query?: any;
-}
-
-export interface HTTPClientGetRequest {
-  url: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  query?: any;
 }
 
 export class HTTPClient {
@@ -65,19 +42,30 @@ export class HTTPClient {
     }
   }
 
-  async get(props: HTTPClientGetRequest): Promise<HTTPClientResponse> {
-    return await this.makeRequest({ ...props, method: 'GET' });
+  private handleResponse = <Response>(response: HTTPClientResponse): APIResponse<Response> => {
+    switch (response.status) {
+      case 200:
+        return { error: response.error, response: response.json, validationErrors: null };
+      case 422:
+        return { error: response.error, response: null, validationErrors: response.json?.detail || [] };
+      default:
+        return { error: response.error, response: null, validationErrors: null };
+    }
+  };
+
+  async get<Response>(props: HTTPClientGetRequest): Promise<APIResponse<Response>> {
+    return this.handleResponse(await this.makeRequest({ ...props, method: 'GET' }));
   }
 
-  async post(props: HTTPClientPOSTRequest): Promise<HTTPClientResponse> {
-    return await this.makeRequest({ ...props, method: 'POST' });
+  async post<Response>(props: HTTPClientPOSTRequest): Promise<APIResponse<Response>> {
+    return this.handleResponse(await this.makeRequest({ ...props, method: 'POST' }));
   }
 
-  async patch(props: HTTPClientPOSTRequest): Promise<HTTPClientResponse> {
-    return await this.makeRequest({ ...props, method: 'PATCH' });
+  async patch<Response>(props: HTTPClientPOSTRequest): Promise<APIResponse<Response>> {
+    return this.handleResponse(await this.makeRequest({ ...props, method: 'PATCH' }));
   }
 
-  async delete(props: HTTPClientPOSTRequest): Promise<HTTPClientResponse> {
-    return await this.makeRequest({ ...props, method: 'DELETE' });
+  async delete<Response>(props: HTTPClientPOSTRequest): Promise<APIResponse<Response>> {
+    return this.handleResponse(await this.makeRequest({ ...props, method: 'DELETE' }));
   }
 }

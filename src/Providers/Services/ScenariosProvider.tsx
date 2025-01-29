@@ -1,7 +1,14 @@
-import React, { FC, PropsWithChildren, useContext, useEffect, useState } from 'react';
+import React, { FC, PropsWithChildren, useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import { ScenariosHTTPClient } from '../../Services/Clients/Services/ScenariosHTTPClient';
-import { CreateScenarioRequest, GetScenariosQuery, UpdateScenarioRequest } from '../../Models/Services/Scenarios';
+import {
+  CreateScenarioRequest,
+  GetScenarioDetailsResponse,
+  GetScenarioResponse,
+  GetScenariosQuery,
+  GetScenariosResponse,
+  UpdateScenarioRequest
+} from '../../Models/Services/Scenarios';
 import {
   createScenario,
   deleteScenario,
@@ -9,8 +16,14 @@ import {
   setScenarioDetails,
   setScenarios,
   updateScenario
-} from '../../Redux/Services/Scenarios/ScenariosSlice';
-import { useScenariosNavigation } from '../../Services/Scenarios/Hooks';
+} from '../../Redux/Services/Scenarios/Slice';
+import { APIResponse } from '../../Services/Clients/Models';
+import { useAPIResponseHandler } from '../../Services/Clients/Hooks';
+
+export enum ScenariosErrorKey {
+  CreateScenario = 'ScenariosProvider/createScenario',
+  UpdateScenario = 'ScenariosProvider/updateScenario'
+}
 
 interface Loading {
   getScenario: boolean;
@@ -21,91 +34,89 @@ interface Loading {
   getScenarioDetails: boolean;
 }
 
-export type ServicesContextProps = {
+export type ScenariosContextProps = {
   loading: Loading;
-  getScenarios: (query: GetScenariosQuery) => Promise<void>;
-  createScenario: (request: CreateScenarioRequest) => Promise<boolean>;
-  updateScenario: (scenarioId: number, request: UpdateScenarioRequest) => Promise<boolean>;
-  deleteScenario: (scenarioId: number) => Promise<boolean>;
-  getScenarioDetails: (scenarioId: number) => Promise<void>;
+  getScenario: (scenarioId: number) => Promise<APIResponse<GetScenarioResponse>>;
+  getScenarios: (query: GetScenariosQuery) => Promise<APIResponse<GetScenariosResponse>>;
+  createScenario: (request: CreateScenarioRequest) => Promise<APIResponse<GetScenarioDetailsResponse>>;
+  updateScenario: (
+    scenarioId: number,
+    request: UpdateScenarioRequest
+  ) => Promise<APIResponse<GetScenarioDetailsResponse>>;
+  deleteScenario: (scenarioId: number) => Promise<APIResponse>;
+  getScenarioDetails: (scenarioId: number) => Promise<APIResponse<GetScenarioDetailsResponse>>;
 };
 
-const ScenariosContext = React.createContext<ServicesContextProps | null>(null);
+const ScenariosContext = React.createContext<ScenariosContextProps | null>(null);
 
 const ScenariosProvider: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();
-  const { scenarioId, removeScenarioId } = useScenariosNavigation();
-  const scenariosHTTPClient = new ScenariosHTTPClient();
-  const [loading, setLoading] = useState<Loading>({
-    getScenario: false,
-    getScenarios: false,
-    createScenario: false,
-    updateScenario: false,
-    deleteScenario: false,
-    getScenarioDetails: false
+  const { loading, handleAPIResponse } = useAPIResponseHandler({
+    provider: ScenariosProvider.name,
+    defaultLoading: {
+      getScenario: false,
+      getScenarios: false,
+      createScenario: false,
+      updateScenario: false,
+      deleteScenario: false,
+      getScenarioDetails: false
+    }
   });
-
-  useEffect(() => {
-    scenarioId && getScenarioAPI(scenarioId);
-  }, [scenarioId]);
+  const scenariosHTTPClient = new ScenariosHTTPClient();
 
   const getScenarioAPI = async (scenarioId: number) => {
-    setLoading({ ...loading, getScenario: true });
-    const response = await scenariosHTTPClient.getScenario(scenarioId);
-
-    if (response) {
-      dispatch(setScenario(response.scenario));
-      removeScenarioId();
-    }
-
-    setLoading({ ...loading, getScenario: false });
+    return await handleAPIResponse({
+      key: 'getScenario',
+      call: scenariosHTTPClient.getScenario(scenarioId),
+      handler: (response) => dispatch(setScenario(response.scenario))
+    });
   };
 
   const getScenariosAPI = async (query: GetScenariosQuery) => {
-    setLoading({ ...loading, getScenarios: true });
-    const response = await scenariosHTTPClient.getScenarios(query);
-    response && dispatch(setScenarios(response.scenarios));
-    setLoading({ ...loading, getScenarios: false });
+    return await handleAPIResponse({
+      key: 'getScenarios',
+      call: scenariosHTTPClient.getScenarios(query),
+      handler: (response) => dispatch(setScenarios(response.scenarios))
+    });
   };
 
   const createScenarioAPI = async (request: CreateScenarioRequest) => {
-    setLoading({ ...loading, createScenario: true });
-    const response = await scenariosHTTPClient.createScenario(request);
-    response && dispatch(createScenario(response.details));
-    setLoading({ ...loading, createScenario: false });
-
-    return Boolean(!response);
+    return await handleAPIResponse({
+      key: 'createScenario',
+      call: scenariosHTTPClient.createScenario(request),
+      handler: (response) => dispatch(createScenario(response.details))
+    });
   };
 
   const updateScenarioAPI = async (scenarioId: number, request: UpdateScenarioRequest) => {
-    setLoading({ ...loading, updateScenario: true });
-    const response = await scenariosHTTPClient.updateScenario(scenarioId, request);
-    response && dispatch(updateScenario(response.details));
-    setLoading({ ...loading, updateScenario: false });
-
-    return Boolean(!response);
+    return await handleAPIResponse({
+      key: 'updateScenario',
+      call: scenariosHTTPClient.updateScenario(scenarioId, request),
+      handler: (response) => dispatch(updateScenario(response.details))
+    });
   };
 
   const deleteScenarioAPI = async (scenarioId: number) => {
-    setLoading({ ...loading, deleteScenario: true });
-    const error = await scenariosHTTPClient.deleteScenario(scenarioId);
-    !error && dispatch(deleteScenario({ scenarioId }));
-    setLoading({ ...loading, deleteScenario: false });
-
-    return error;
+    return await handleAPIResponse({
+      key: 'deleteScenario',
+      call: scenariosHTTPClient.deleteScenario(scenarioId),
+      handler: () => dispatch(deleteScenario({ scenarioId }))
+    });
   };
 
   const getScenarioDetailsAPI = async (scenarioId: number) => {
-    setLoading({ ...loading, getScenarioDetails: true });
-    const response = await scenariosHTTPClient.getScenarioDetails(scenarioId);
-    response && dispatch(setScenarioDetails(response.details));
-    setLoading({ ...loading, getScenarioDetails: false });
+    return await handleAPIResponse({
+      key: 'getScenarioDetails',
+      call: scenariosHTTPClient.getScenarioDetails(scenarioId),
+      handler: (response) => dispatch(setScenarioDetails(response.details))
+    });
   };
 
   return (
     <ScenariosContext.Provider
       value={{
         loading,
+        getScenario: getScenarioAPI,
         getScenarios: getScenariosAPI,
         createScenario: createScenarioAPI,
         updateScenario: updateScenarioAPI,

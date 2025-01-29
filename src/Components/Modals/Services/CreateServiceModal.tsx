@@ -2,8 +2,9 @@ import { BaseModal } from '../BaseModal';
 import { FC, useEffect, useState } from 'react';
 import { CreateServiceForm } from '../../Forms/Services/CreateServiceForm';
 import { CreateServiceRequest } from '../../../Models/Services/Services';
-import { useServices } from '../../../Providers/Services/ServicesProvider';
+import { ServicesErrorKey, useServices } from '../../../Providers/Services/ServicesProvider';
 import { getDefaultCreateServiceRequest } from '../../../Services/Services/Utils';
+import { useValidationErrors } from '../../../Services/Clients/Hooks';
 
 type CreateServiceModalProps = {
   modal: boolean;
@@ -12,17 +13,25 @@ type CreateServiceModalProps = {
 
 export const CreateServiceModal: FC<CreateServiceModalProps> = ({ modal, setModal }) => {
   const { loading, createService } = useServices();
+  const { validationErrors, clearValidationErrors } = useValidationErrors({ key: ServicesErrorKey.CreateService });
   const [request, setRequest] = useState<CreateServiceRequest>(getDefaultCreateServiceRequest());
 
   useEffect(() => {
-    modal && setRequest(getDefaultCreateServiceRequest());
+    if (modal) {
+      setRequest(getDefaultCreateServiceRequest());
+    }
   }, [modal]);
 
-  const onClose = () => setModal(false);
+  const onClose = () => {
+    setModal(false);
+    clearValidationErrors();
+  };
 
   const onCreate = async () => {
-    const error = await createService(request);
-    !error && onClose();
+    const result = await createService(request);
+    if (!result.error) {
+      onClose();
+    }
   };
 
   return (
@@ -30,9 +39,10 @@ export const CreateServiceModal: FC<CreateServiceModalProps> = ({ modal, setModa
       title={'Create service'}
       modal={modal}
       setModal={setModal}
+      onCancel={onClose}
       onConfirm={onCreate}
       confirmLoading={loading.createService}>
-      <CreateServiceForm request={request} setRequest={setRequest} />
+      <CreateServiceForm request={request} setRequest={setRequest} validationErrors={validationErrors} />
     </BaseModal>
   );
 };

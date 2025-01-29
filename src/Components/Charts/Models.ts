@@ -4,6 +4,7 @@ export interface LineChartYAxis {
   data: (null | number)[];
   label: string;
   color?: string;
+  valueFormatter?: (value: null | number) => string | null;
 }
 
 export interface LineChartXAxis<T> {

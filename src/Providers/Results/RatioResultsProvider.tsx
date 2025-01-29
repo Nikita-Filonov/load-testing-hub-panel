@@ -1,7 +1,10 @@
-import React, { FC, PropsWithChildren, useContext, useState } from 'react';
+import React, { FC, PropsWithChildren, useContext } from 'react';
 import { useDispatch } from 'react-redux';
-import { setRatioResultsPerClass, setRatioResultsTotal } from '../../Redux/Results/RatioResults/ResultsSlice';
+import { setRatioResultsPerClass, setRatioResultsTotal } from '../../Redux/Results/RatioResults/Slice';
 import { RatioResultsHTTPClient } from '../../Services/Clients/Results/RatioResultsHTTPClient';
+import { useAPIResponseHandler } from '../../Services/Clients/Hooks';
+import { APIResponse } from '../../Services/Clients/Models';
+import { GetRatioResultResponse } from '../../Models/Results/RatioResults';
 
 interface Loading {
   getRatioResults: boolean;
@@ -9,28 +12,28 @@ interface Loading {
 
 export type RatioResultsContextProps = {
   loading: Loading;
-  getRatioResults: (loadTestResultId: number) => Promise<void>;
+  getRatioResults: (loadTestResultId: number) => Promise<APIResponse<GetRatioResultResponse>>;
 };
 
 const RatioResultsContext = React.createContext<RatioResultsContextProps | null>(null);
 
 const RatioResultsProvider: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();
-  const ratioResultsHTTPClient = new RatioResultsHTTPClient();
-  const [loading, setLoading] = useState<Loading>({
-    getRatioResults: false
+  const { loading, handleAPIResponse } = useAPIResponseHandler({
+    provider: RatioResultsProvider.name,
+    defaultLoading: { getRatioResults: false }
   });
+  const ratioResultsHTTPClient = new RatioResultsHTTPClient();
 
   const getRatioResultsAPI = async (loadTestResultId: number) => {
-    setLoading({ ...loading, getRatioResults: true });
-    const response = await ratioResultsHTTPClient.getRatioResults(loadTestResultId);
-
-    if (response) {
-      dispatch(setRatioResultsTotal(response.ratioTotal));
-      dispatch(setRatioResultsPerClass(response.ratioPerClass));
-    }
-
-    setLoading({ ...loading, getRatioResults: false });
+    return await handleAPIResponse({
+      key: 'getRatioResults',
+      call: ratioResultsHTTPClient.getRatioResults(loadTestResultId),
+      handler: (response) => {
+        dispatch(setRatioResultsTotal(response.ratioTotal));
+        dispatch(setRatioResultsPerClass(response.ratioPerClass));
+      }
+    });
   };
 
   return (

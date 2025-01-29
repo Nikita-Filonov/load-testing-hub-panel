@@ -1,13 +1,12 @@
+import { IntegrationSystemType } from './Integrations';
+
 export interface BuildIntegrationURLRequest {
   serviceId: number;
+  systemType: IntegrationSystemType;
   integrationId: number;
   loadTestResultId: number;
 }
 
-export interface BuildKibanaDiscoverURLResponse {
-  discoverUrl: string;
-}
-
-export interface BuildGrafanaDashboardURLResponse {
-  dashboardUrl: string;
+export interface BuildIntegrationURLResponse {
+  integrationUrl: string;
 }

@@ -1,11 +1,11 @@
 import { FC, useEffect, useState } from 'react';
-import { GetMethodsQuery } from '../../../Models/Results/Methods';
+import { GetMethodsQuery } from '../../../Models/Methods/Methods';
 import { BaseTextField } from '../../TextFields/BaseTextField';
 import { FiltersModal } from '../FiltersModal';
 import { BaseDateTimePicker } from '../../Pickers/BaseDateTimePicker';
 import { getDefaultMethodsFilters } from '../../../Services/Methods/Utils';
 
-export interface MethodsFilters extends Pick<GetMethodsQuery, 'method' | 'endDatetime' | 'startDatetime'> {}
+export type MethodsFilters = Pick<GetMethodsQuery, 'method' | 'endDatetime' | 'startDatetime'>;
 
 type MethodsFiltersModalProps = {
   modal: boolean;
@@ -19,7 +19,9 @@ export const MethodsFiltersModal: FC<MethodsFiltersModalProps> = (props) => {
   const [filters, setFilters] = useState<MethodsFilters>(externalFilters);
 
   useEffect(() => {
-    modal && setFilters(externalFilters);
+    if (modal) {
+      setFilters(externalFilters);
+    }
   }, [modal]);
 
   const onClose = () => setModal(false);

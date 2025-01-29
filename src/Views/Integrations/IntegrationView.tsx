@@ -7,6 +7,7 @@ import { BoxView } from '../../Components/Views/BoxView';
 import { Integration } from '../../Models/Integrations/Integrations';
 import { useIntegrations } from '../../Providers/Integrations/IntegrationsProvider';
 import { IntegrationEnvironmentTypeLabel } from '../../Components/Labels/Integrations/IntegrationEnvironmentTypeLabel';
+import { IntegrationSystemTypeLabel } from '../../Components/Labels/Integrations/IntegrationSystemTypeLabel';
 
 type IntegrationViewProps = {
   integration: Integration;
@@ -17,7 +18,9 @@ const IntegrationView: FC<IntegrationViewProps> = ({ integration, integrationId 
   const { loading, getIntegration } = useIntegrations();
 
   useEffect(() => {
-    integrationId && getIntegration(integrationId);
+    if (integrationId) {
+      getIntegration(integrationId);
+    }
   }, [integrationId]);
 
   return (
@@ -25,12 +28,13 @@ const IntegrationView: FC<IntegrationViewProps> = ({ integration, integrationId 
       <WidgetInfoRowsView containerSx={{ mt: 0 }}>
         <BaseInfoRowView name={'ID'} value={integration.id} />
         <BaseInfoRowView name={'Name'} value={integration.name} />
-        <BaseInfoRowView name={'Cluster'} value={integration.cluster} />
-        <BaseInfoRowView name={'Namespace'} value={integration.namespace} />
+        <BaseInfoRowView name={'Order index'} value={integration.orderIndex} />
+        <BaseInfoRowView name={'System type'} component={<IntegrationSystemTypeLabel integration={integration} />} />
         <BaseInfoRowView
           name={'Environment type'}
-          component={<IntegrationEnvironmentTypeLabel type={integration.environmentType} />}
+          component={<IntegrationEnvironmentTypeLabel integration={integration} />}
         />
+        <BaseInfoRowView name={'URL template'} value={integration.urlTemplate} />
       </WidgetInfoRowsView>
     </BoxView>
   );

@@ -1,7 +1,12 @@
-export interface Service {
+export interface ShortService {
   id: number;
   url: string;
   name: string;
+}
+
+export interface Service extends ShortService {
+  numberOfScenarios: number;
+  numberOfLoadTestResults: number;
 }
 
 export interface ServiceDetails extends Service {
@@ -24,7 +29,7 @@ export interface CreateServiceRequest {
   namespace: string;
 }
 
-export interface UpdateServiceRequest extends CreateServiceRequest {}
+export type UpdateServiceRequest = CreateServiceRequest;
 
 export interface GetServiceDetailsResponse {
   details: ServiceDetails;

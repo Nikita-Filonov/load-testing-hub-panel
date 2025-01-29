@@ -13,7 +13,9 @@ export const OpenLoadTestJobMenuItem: FC<OpenLoadTestJobMenuItemProps> = (props)
 
   const onOpenLoadTestsJob = () => {
     onClose();
-    result.loadTestsCIJobUrl && window.open(result.loadTestsCIJobUrl, '_blank');
+    if (result.loadTestsCIJobUrl) {
+      window.open(result.loadTestsCIJobUrl, '_blank');
+    }
   };
 
   return (

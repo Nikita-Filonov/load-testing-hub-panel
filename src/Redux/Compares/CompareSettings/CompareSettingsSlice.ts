@@ -4,7 +4,8 @@ import { CompareSettings } from '../../../Models/Compares/CompareSettings';
 import { CompareWidgetSettings, CompareWidgetType } from '../../../Models/Compares/CompareTableSettings';
 import { PersistConfig } from 'redux-persist/es/types';
 import storage from 'redux-persist/lib/storage';
-import { persistReducer } from 'redux-persist';
+import { createMigrate, persistReducer } from 'redux-persist';
+import { COMPARE_SETTINGS_MIGRATIONS } from './Migrations';
 
 type SetCompareWidgetSettings = {
   type: CompareWidgetType;
@@ -30,6 +31,8 @@ export const compareSettingsSlice = createSlice({
 const persistConfig: PersistConfig<CompareSettingsInitialState> = {
   key: 'compareSettings',
   storage,
+  version: 1,
+  migrate: createMigrate(COMPARE_SETTINGS_MIGRATIONS, { debug: false }),
   whitelist: ['compareWidgetsSettings']
 };
 

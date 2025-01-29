@@ -15,8 +15,10 @@ export const DeleteScenarioModal: FC<DeleteScenarioModalProps> = (props) => {
   const onClose = () => setModal(false);
 
   const onDelete = async () => {
-    const error = await deleteScenario(scenarioId);
-    !error && onClose();
+    const result = await deleteScenario(scenarioId);
+    if (!result.error) {
+      onClose();
+    }
   };
 
   return (

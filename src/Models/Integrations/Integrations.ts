@@ -1,20 +1,30 @@
+export enum IntegrationSystemType {
+  Kibana = 'KIBANA',
+  Grafana = 'GRAFANA'
+}
+
 export enum IntegrationEnvironmentType {
   Internal = 'INTERNAL',
   Production = 'PRODUCTION'
 }
 
-export interface Integration {
+export interface ShortIntegration {
   id: number;
   name: string;
-  cluster: string;
-  namespace: string;
+  systemType: IntegrationSystemType;
   environmentType: IntegrationEnvironmentType;
+}
+
+export interface Integration extends ShortIntegration {
+  orderIndex: number;
+  urlTemplate: string;
 }
 
 export interface UpdateIntegrationRequest {
   name: string;
-  cluster: string;
-  namespace: string;
+  systemType: IntegrationSystemType;
+  orderIndex: number;
+  urlTemplate: string;
   environmentType: IntegrationEnvironmentType;
 }
 
@@ -32,4 +42,8 @@ export interface GetIntegrationResponse {
 
 export interface GetIntegrationsResponse {
   integrations: Integration[];
+}
+
+export interface GetShortIntegrationsResponse {
+  integrations: ShortIntegration[];
 }

@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { AppRoutes } from '../Constants/Routing';
+import { AppRoutes } from './Routing';
 import { formatRouteTemplate, OnNavigateParams } from './Utils';
 
 export const useAppNavigation = () => {

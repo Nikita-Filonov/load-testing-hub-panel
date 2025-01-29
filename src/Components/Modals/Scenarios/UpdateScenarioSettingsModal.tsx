@@ -20,18 +20,24 @@ const UpdateScenarioSettingsModal: FC<UpdateScenarioSettingsModalProps> = (props
   const [request, setRequest] = useState<UpdateScenarioSettingsRequest>(getDefaultUpdateScenarioSettingsRequest());
 
   useEffect(() => {
-    modal && setRequest(settings);
+    if (modal) {
+      setRequest(settings);
+    }
   }, [modal, settings]);
 
   useEffect(() => {
-    scenarioId && modal && getScenarioSettings(scenarioId);
+    if (scenarioId && modal) {
+      getScenarioSettings(scenarioId);
+    }
   }, [scenarioId, modal]);
 
   const onClose = () => setModal(false);
 
   const onUpdate = async () => {
-    const error = await updateScenarioSettings(scenarioId, request);
-    !error && onClose();
+    const result = await updateScenarioSettings(scenarioId, request);
+    if (!result.error) {
+      onClose();
+    }
   };
 
   return (

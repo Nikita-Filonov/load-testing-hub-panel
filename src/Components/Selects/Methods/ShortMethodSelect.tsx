@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { ShortMethod } from '../../../Models/Results/Methods';
+import { ShortMethod } from '../../../Models/Methods/Methods';
 import { BaseSelect } from '../BaseSelect';
 
 type ShortMethodSelectProps = {

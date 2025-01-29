@@ -3,11 +3,11 @@ import { UpdateScenarioMethodSettingsForm } from '../../Forms/Scenarios/UpdateSc
 import { FC, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { ReduxState } from '../../../Redux/ReduxState';
-import { ShortMethod } from '../../../Models/Results/Methods';
+import { ShortMethod } from '../../../Models/Methods/Methods';
 import { ScenarioMethodSettings } from '../../../Models/Services/ScenarioSettings';
-import { DEFAULT_SCENARIO_METHOD_SETTINGS } from '../../../Redux/Services/Scenarios/InitialState';
-import { useMethods } from '../../../Providers/Results/MethodsProvider';
+import { useMethods } from '../../../Providers/Methods/MethodsProvider';
 import { Service } from '../../../Models/Services/Services';
+import { getDefaultScenarioMethodSettings } from '../../../Services/Scenarios/Utils';
 
 type UpdateScenarioMethodSettingsModalProps = {
   modal: boolean;
@@ -22,14 +22,18 @@ type UpdateScenarioMethodSettingsModalProps = {
 const UpdateScenarioMethodSettingsModal: FC<UpdateScenarioMethodSettingsModalProps> = (props) => {
   const { modal, setModal, methods, service, settings, setSettings, scenarioId } = props;
   const { getShortMethods } = useMethods();
-  const [internalSettings, setInternalSettings] = useState<ScenarioMethodSettings>(DEFAULT_SCENARIO_METHOD_SETTINGS);
+  const [internalSettings, setInternalSettings] = useState<ScenarioMethodSettings>(getDefaultScenarioMethodSettings);
 
   useEffect(() => {
-    modal && setInternalSettings(settings);
+    if (modal) {
+      setInternalSettings(settings);
+    }
   }, [modal]);
 
   useEffect(() => {
-    scenarioId && modal && getShortMethods({ serviceId: service.id, scenarioId });
+    if (scenarioId && modal) {
+      getShortMethods({ serviceId: service.id, scenarioId });
+    }
   }, [modal, service.id, scenarioId]);
 
   const onClose = () => setModal(false);

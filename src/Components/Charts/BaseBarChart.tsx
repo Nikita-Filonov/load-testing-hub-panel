@@ -9,6 +9,7 @@ import {
   ResponsiveChartContainer
 } from '@mui/x-charts';
 import { LineChartXAxis, LineChartYAxis } from './Models';
+import { useTheme } from '@mui/material';
 
 type BaseLineChartProps<T> = {
   xAxis: LineChartXAxis<T>[];
@@ -16,13 +17,24 @@ type BaseLineChartProps<T> = {
 };
 
 export const BaseBarChart = <T,>({ xAxis, yAxis }: BaseLineChartProps<T>) => {
+  const theme = useTheme();
+
   return (
-    <ResponsiveChartContainer xAxis={xAxis} series={yAxis.map((axis) => ({ ...axis, type: 'bar' }))}>
+    <ResponsiveChartContainer
+      margin={{ bottom: 30 }}
+      height={300}
+      xAxis={xAxis}
+      series={yAxis.map((axis) => ({ ...axis, type: 'bar' }))}>
       <BarPlot />
       <ChartsGrid vertical={true} horizontal={true} />
       <ChartsXAxis />
       <ChartsYAxis />
-      <ChartsLegend />
+      <ChartsLegend
+        itemMarkHeight={13}
+        itemMarkWidth={13}
+        position={{ horizontal: 'middle', vertical: 'top' }}
+        labelStyle={{ fontSize: theme.typography.subtitle2.fontSize }}
+      />
       <ChartsTooltip />
       <ChartsAxisHighlight x={'band'} />
     </ResponsiveChartContainer>

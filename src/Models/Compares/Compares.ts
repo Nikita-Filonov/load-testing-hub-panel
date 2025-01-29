@@ -1,3 +1,5 @@
+import { CompareExplanationSummary } from './CompareExplanation';
+
 export interface CompareMetric {
   actual: number;
   expected: number;
@@ -7,18 +9,28 @@ export interface CompareMetric {
 export interface BaseCompare {
   compare: number;
   highlight: boolean;
-  responseTime: CompareMetric;
+  explanation: CompareExplanationSummary;
   minResponseTime: CompareMetric;
   maxResponseTime: CompareMetric;
   numberOfRequests: CompareMetric;
   numberOfFailures: CompareMetric;
   requestsPerSecond: CompareMetric;
   failuresPerSecond: CompareMetric;
+  medianResponseTime: CompareMetric;
+  averageResponseTime: CompareMetric;
+  responseTimePercentile50: CompareMetric;
+  responseTimePercentile60: CompareMetric;
+  responseTimePercentile70: CompareMetric;
+  responseTimePercentile80: CompareMetric;
+  responseTimePercentile90: CompareMetric;
+  responseTimePercentile95: CompareMetric;
+  responseTimePercentile99: CompareMetric;
+  responseTimePercentile100: CompareMetric;
 }
 
 export interface MethodResultCompare extends BaseCompare {
   method: string;
-  contentLength: CompareMetric;
+  averageContentLength: CompareMetric;
 }
 
 export interface LoadTestResultCompare extends BaseCompare {

@@ -4,28 +4,35 @@ import { GetRequestsPerSecondAnalyticsResponse } from '../../../Models/Analytics
 import { GetNumberOfRequestsAnalyticsResponse } from '../../../Models/Analytics/NumberOfRequestsAnalytics';
 import { GetResponseTimesAnalyticsResponse } from '../../../Models/Analytics/ResponseTimesAnalytics';
 import { GetResultsAnalyticsQuery } from '../../../Models/Analytics/ResultsAnalytics';
+import { GetPercentilesAnalyticsResponse } from '../../../Models/Analytics/PercentilesAnalytics';
+import { APIResponse } from '../Models';
 
 export class ResultsAnalyticsHTTPClient extends HTTPClient {
   constructor() {
     super({ baseUrl: SettingsManager.apiUrl });
   }
 
+  async getPercentilesAnalytics(
+    query: GetResultsAnalyticsQuery
+  ): Promise<APIResponse<GetPercentilesAnalyticsResponse>> {
+    return await this.get({ url: '/results-analytics/percentiles', query });
+  }
+
   async getNumberOfRequestsAnalytics(
     query: GetResultsAnalyticsQuery
-  ): Promise<GetNumberOfRequestsAnalyticsResponse | null> {
-    const response = await this.get({ url: '/results-analytics/number-of-requests', query });
-    return response.json;
+  ): Promise<APIResponse<GetNumberOfRequestsAnalyticsResponse>> {
+    return await this.get({ url: '/results-analytics/number-of-requests', query });
   }
 
   async getRequestsPerSecondAnalytics(
     query: GetResultsAnalyticsQuery
-  ): Promise<GetRequestsPerSecondAnalyticsResponse | null> {
-    const response = await this.get({ url: '/results-analytics/requests-per-second', query });
-    return response.json;
+  ): Promise<APIResponse<GetRequestsPerSecondAnalyticsResponse>> {
+    return await this.get({ url: '/results-analytics/requests-per-second', query });
   }
 
-  async getResponseTimesAnalytics(query: GetResultsAnalyticsQuery): Promise<GetResponseTimesAnalyticsResponse | null> {
-    const response = await this.get({ url: '/results-analytics/response-times', query });
-    return response.json;
+  async getResponseTimesAnalytics(
+    query: GetResultsAnalyticsQuery
+  ): Promise<APIResponse<GetResponseTimesAnalyticsResponse>> {
+    return await this.get({ url: '/results-analytics/response-times', query });
   }
 }

@@ -4,8 +4,9 @@ import { CreateScenarioForm } from '../../Forms/Scenarios/CreateScenarioForm';
 import { ScenarioDetails, UpdateScenarioRequest } from '../../../Models/Services/Scenarios';
 import { connect } from 'react-redux';
 import { ReduxState } from '../../../Redux/ReduxState';
-import { useScenarios } from '../../../Providers/Services/ScenariosProvider';
+import { ScenariosErrorKey, useScenarios } from '../../../Providers/Services/ScenariosProvider';
 import { getDefaultUpdateScenarioRequest } from '../../../Services/Scenarios/Utils';
+import { useValidationErrors } from '../../../Services/Clients/Hooks';
 
 type UpdateScenarioModalProps = {
   modal: boolean;
@@ -17,21 +18,31 @@ type UpdateScenarioModalProps = {
 const UpdateScenarioModal: FC<UpdateScenarioModalProps> = (props) => {
   const { modal, setModal, details, scenarioId } = props;
   const { loading, updateScenario, getScenarioDetails } = useScenarios();
+  const { validationErrors, clearValidationErrors } = useValidationErrors({ key: ScenariosErrorKey.UpdateScenario });
   const [request, setRequest] = useState<UpdateScenarioRequest>(getDefaultUpdateScenarioRequest());
 
   useEffect(() => {
-    modal && setRequest(details);
+    if (modal) {
+      setRequest(details);
+    }
   }, [modal, details]);
 
   useEffect(() => {
-    modal && getScenarioDetails(scenarioId);
+    if (modal) {
+      getScenarioDetails(scenarioId);
+    }
   }, [modal, scenarioId]);
 
-  const onClose = () => setModal(false);
+  const onClose = () => {
+    setModal(false);
+    clearValidationErrors();
+  };
 
   const onUpdate = async () => {
-    const error = await updateScenario(scenarioId, request);
-    !error && onClose();
+    const result = await updateScenario(scenarioId, request);
+    if (!result.error) {
+      onClose();
+    }
   };
 
   return (
@@ -40,9 +51,10 @@ const UpdateScenarioModal: FC<UpdateScenarioModalProps> = (props) => {
       modal={modal}
       setModal={setModal}
       loading={loading.getScenarioDetails}
+      onCancel={onClose}
       onConfirm={onUpdate}
       confirmLoading={loading.updateScenario}>
-      <CreateScenarioForm request={request} setRequest={setRequest} />
+      <CreateScenarioForm request={request} setRequest={setRequest} validationErrors={validationErrors} />
     </BaseModal>
   );
 };

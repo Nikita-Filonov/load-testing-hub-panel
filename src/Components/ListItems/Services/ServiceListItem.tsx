@@ -3,18 +3,20 @@ import { FC } from 'react';
 import { BaseListItem } from '../BaseListItem';
 import CodeIcon from '@mui/icons-material/Code';
 import { ServiceListItemMenu } from '../../Menus/Services/ServiceListItemMenu';
-import { ServiceListItemTitleLink } from '../../Links/Services/ServiceListItemTitleLink';
+import { ServiceListItemLabelsView } from '../../Labels/Services/ServiceListItemLabelsView';
+import { getServiceTitle } from '../../../Services/Services/Utils';
 
 type ServiceListItemProps = {
   service: Service;
+  onViewService: (service: Service) => void;
   onUpdateService: (service: Service) => void;
   onServiceDetails: (service: Service) => void;
 };
 
 export const ServiceListItem: FC<ServiceListItemProps> = (props) => {
-  const { service, onUpdateService, onServiceDetails } = props;
+  const { service, onViewService, onUpdateService, onServiceDetails } = props;
 
-  const onDetails = () => onServiceDetails(service);
+  const onView = () => onViewService(service);
 
   return (
     <BaseListItem
@@ -22,9 +24,10 @@ export const ServiceListItem: FC<ServiceListItemProps> = (props) => {
         <ServiceListItemMenu service={service} onUpdateService={onUpdateService} onServiceDetails={onServiceDetails} />
       }
       icon={<CodeIcon fontSize={'small'} />}
-      title={<ServiceListItemTitleLink service={service} />}
+      label={<ServiceListItemLabelsView service={service} />}
+      title={getServiceTitle(service)}
       subtitle={service.url}
-      onClick={onDetails}
+      onClick={onView}
     />
   );
 };

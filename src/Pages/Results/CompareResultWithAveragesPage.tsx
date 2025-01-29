@@ -2,13 +2,12 @@ import { MainLayout } from '../../Components/Layouts/MainLayouts';
 import { useParams } from 'react-router-dom';
 import { LoadTestResultsProvider } from '../../Providers/Results/LoadTestResultsProvider';
 import ResultsSummaryDetailsView from '../../Views/Results/LoadTestResults/LoadTestResultDetailsView';
-import { ComparesProvider } from '../../Providers/Compares/ComparesProvider';
 import { useState } from 'react';
 import { AnalyticsFilters } from '../../Components/Modals/Analytics/AnalyticsFiltersModal';
 import { getDefaultAnalyticsEndDatetime, getDefaultAnalyticsStartDatetime } from '../../Services/Analytics/Utils';
 import CompareResultWithAveragesView from '../../Views/Compares/CompareResultWithAverages/CompareResultWithAveragesView';
 import { CompareResultWithAveragesToolbarView } from '../../Views/Compares/CompareResultWithAverages/CompareResultWithAveragesToolbarView';
-import { IntegrationsProvider } from '../../Providers/Integrations/IntegrationsProvider';
+import { CompareResultWithAveragesProvider } from '../../Providers/Compares/CompareResultWithAveragesProvider';
 
 type Params = {
   loadTestResultId: string;
@@ -23,18 +22,16 @@ const CompareResultWithAveragesPage = () => {
 
   return (
     <MainLayout>
-      <IntegrationsProvider>
-        <CompareResultWithAveragesToolbarView filters={filters} setFilters={setFilters} />
-      </IntegrationsProvider>
+      <CompareResultWithAveragesToolbarView filters={filters} setFilters={setFilters} />
       {loadTestResultId && (
         <LoadTestResultsProvider>
           <ResultsSummaryDetailsView loadTestResultId={Number(loadTestResultId)} />
         </LoadTestResultsProvider>
       )}
       {loadTestResultId && (
-        <ComparesProvider>
+        <CompareResultWithAveragesProvider>
           <CompareResultWithAveragesView filters={filters} loadTestResultId={Number(loadTestResultId)} />
-        </ComparesProvider>
+        </CompareResultWithAveragesProvider>
       )}
     </MainLayout>
   );

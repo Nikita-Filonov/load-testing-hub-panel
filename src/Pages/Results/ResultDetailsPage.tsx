@@ -2,16 +2,15 @@ import { MainLayout } from '../../Components/Layouts/MainLayouts';
 import { useParams } from 'react-router-dom';
 import { LoadTestResultsProvider } from '../../Providers/Results/LoadTestResultsProvider';
 import LoadTestResultDetailsView from '../../Views/Results/LoadTestResults/LoadTestResultDetailsView';
-import MethodResultsTableView from '../../Views/Results/MethodResults/MethodResultsTableView';
-import { HistoryResultsProvider } from '../../Providers/Results/HistoryResultsProvider';
+import MethodResultsView from '../../Views/Results/MethodResults/MethodResultsView';
+import { LoadTestResultsHistoryProvider } from '../../Providers/Results/LoadTestResultsHistoryProvider';
 import { MethodResultsProvider } from '../../Providers/Results/MethodResultsProvider';
-import { HistoryResultsChartsView } from '../../Views/Results/HistoryResults/HistoryResultsChartsView';
+import LoadTestResultsHistoryChartsView from '../../Views/Results/LoadTestResultsHistory/LoadTestResultsHistoryChartsView';
 import { RatioResultsProvider } from '../../Providers/Results/RatioResultsProvider';
 import RatioResultsView from '../../Views/Results/RatioResults/RatioResultsView';
-import LoadTestResultDetailsToolbarView from '../../Views/Results/LoadTestResults/LoadTestResultDetailsToolbarView';
+import { LoadTestResultDetailsToolbarView } from '../../Views/Results/LoadTestResults/LoadTestResultDetailsToolbarView';
 import { ExceptionResultsProvider } from '../../Providers/Results/ExceptionResultsProvider';
-import ExceptionResultsTableView from '../../Views/Results/ExceptionResults/ExceptionResultsTableView';
-import { IntegrationsProvider } from '../../Providers/Integrations/IntegrationsProvider';
+import ExceptionResultsView from '../../Views/Results/ExceptionResults/ExceptionResultsView';
 
 type Params = {
   loadTestResultId: string;
@@ -22,11 +21,7 @@ const ResultDetailsPage = () => {
 
   return (
     <MainLayout>
-      {loadTestResultId && (
-        <IntegrationsProvider>
-          <LoadTestResultDetailsToolbarView />
-        </IntegrationsProvider>
-      )}
+      {loadTestResultId && <LoadTestResultDetailsToolbarView loadTestResultId={Number(loadTestResultId)} />}
       {loadTestResultId && (
         <LoadTestResultsProvider>
           <LoadTestResultDetailsView loadTestResultId={Number(loadTestResultId)} />
@@ -34,18 +29,18 @@ const ResultDetailsPage = () => {
       )}
       {loadTestResultId && (
         <MethodResultsProvider>
-          <MethodResultsTableView loadTestResultId={Number(loadTestResultId)} />
+          <MethodResultsView loadTestResultId={Number(loadTestResultId)} />
         </MethodResultsProvider>
       )}
       {loadTestResultId && (
         <ExceptionResultsProvider>
-          <ExceptionResultsTableView loadTestResultId={Number(loadTestResultId)} />
+          <ExceptionResultsView loadTestResultId={Number(loadTestResultId)} />
         </ExceptionResultsProvider>
       )}
       {loadTestResultId && (
-        <HistoryResultsProvider>
-          <HistoryResultsChartsView loadTestResultId={Number(loadTestResultId)} />
-        </HistoryResultsProvider>
+        <LoadTestResultsHistoryProvider>
+          <LoadTestResultsHistoryChartsView loadTestResultId={Number(loadTestResultId)} />
+        </LoadTestResultsHistoryProvider>
       )}
       {loadTestResultId && (
         <RatioResultsProvider>

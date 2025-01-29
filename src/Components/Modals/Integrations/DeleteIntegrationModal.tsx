@@ -15,8 +15,10 @@ export const DeleteIntegrationModal: FC<DeleteIntegrationModalProps> = (props) =
   const onClose = () => setModal(false);
 
   const onDelete = async () => {
-    const error = await deleteIntegration(integrationId);
-    !error && onClose();
+    const result = await deleteIntegration(integrationId);
+    if (!result.error) {
+      onClose();
+    }
   };
 
   return (

@@ -1,4 +1,3 @@
-import { useCompares } from '../../../Providers/Compares/ComparesProvider';
 import { FC, useEffect } from 'react';
 import { AnalyticsFilters } from '../../../Components/Modals/Analytics/AnalyticsFiltersModal';
 import { Scenario } from '../../../Models/Services/Scenarios';
@@ -8,6 +7,8 @@ import { ReduxState } from '../../../Redux/ReduxState';
 import { Service } from '../../../Models/Services/Services';
 import { MethodResultCompareView } from '../MethodResultCompareView';
 import { CompareWidgetType } from '../../../Models/Compares/CompareTableSettings';
+import { useCompareMethodWithScenario } from '../../../Providers/Compares/CompareMethodWithScenarioProvider';
+import { getMethodLabel } from '../../../Services/Methods/Utils';
 
 type CompareMethodWithScenarioViewProps = {
   method: string;
@@ -19,7 +20,7 @@ type CompareMethodWithScenarioViewProps = {
 
 const CompareMethodWithScenarioView: FC<CompareMethodWithScenarioViewProps> = (props) => {
   const { method, filters, compare, service, scenario } = props;
-  const { loading, getCompareMethodWithScenario } = useCompares();
+  const { loading, getCompareMethodWithScenario } = useCompareMethodWithScenario();
 
   if (!scenario.id) return null;
 
@@ -29,7 +30,8 @@ const CompareMethodWithScenarioView: FC<CompareMethodWithScenarioViewProps> = (p
 
   return (
     <MethodResultCompareView
-      title={`Compare method with scenario ${scenario.name}`}
+      sx={{ mt: 3 }}
+      title={`Compare ${getMethodLabel(method)} method with scenario ${scenario.name}`}
       loading={loading.getCompareMethodWithScenario}
       compare={compare}
       widgetType={CompareWidgetType.CompareMethodWithScenario}
@@ -38,7 +40,7 @@ const CompareMethodWithScenarioView: FC<CompareMethodWithScenarioViewProps> = (p
 };
 
 const getState = (state: ReduxState) => ({
-  compare: state.compares.compareMethodWithScenario,
+  compare: state.compareMethodWithScenario.compareMethodWithScenario,
   service: state.services.service,
   scenario: state.scenarios.scenario
 });

@@ -1,23 +1,29 @@
 import { FC, Fragment, useEffect } from 'react';
-import { RequestsPerSecondAnalyticsView } from '../Analytics/RequestsPerSecondAnalyticsView';
-import { ResponseTimesAnalyticsView } from '../Analytics/ResponseTimesAnalyticsView';
-import { NumberOfRequestsAnalyticsView } from '../Analytics/NumberOfRequestsAnalyticsView';
 import { connect } from 'react-redux';
 import { ReduxState } from '../../Redux/ReduxState';
 import { ResponseTimesAnalytics } from '../../Models/Analytics/ResponseTimesAnalytics';
 import { NumberOfRequestsAnalytics } from '../../Models/Analytics/NumberOfRequestsAnalytics';
 import { RequestsPerSecondAnalytics } from '../../Models/Analytics/RequestsPerSecondAnalytics';
-import { useMethodsAnalytics } from '../../Providers/Analytics/MethodsAnalyticsProvider';
-import { GetMethodsAnalyticsQuery } from '../../Models/Analytics/MethodsAnalytics';
 import { AnalyticsFilters } from '../../Components/Modals/Analytics/AnalyticsFiltersModal';
 import { Scenario } from '../../Models/Services/Scenarios';
 import { Service } from '../../Models/Services/Services';
+import { PercentilesAnalytics } from '../../Models/Analytics/PercentilesAnalytics';
+import { NumberOfRequestsBarChartView } from '../../Components/Charts/Metrics/NumberOfRequestsBarChartView';
+import { ResponseTimesBarChartView } from '../../Components/Charts/Metrics/ResponseTimesBarChartView';
+import { RequestsPerSecondBarChartView } from '../../Components/Charts/Metrics/RequestsPerSecondBarChartView';
+import { ChartType } from '../../Models/Core/ChartSettings';
+import { useMethods } from '../../Providers/Methods/MethodsProvider';
+import { GetMethodDetailsAnalyticsQuery } from '../../Models/Methods/Analytics';
+import { PercentilesBarChartView } from '../../Components/Charts/Metrics/PercentilesBarChartView';
+import { getMethodLabel } from '../../Services/Methods/Utils';
+import { MetricGroup } from '../../Models/Metrics/Base';
 
 type MethodChartsViewProps = {
   method: string;
   filters: AnalyticsFilters;
   service: Service;
   scenario: Scenario;
+  percentilesAnalytics: PercentilesAnalytics[];
   responseTimesAnalytics: ResponseTimesAnalytics[];
   numberOfRequestsAnalytics: NumberOfRequestsAnalytics[];
   requestsPerSecondAnalytics: RequestsPerSecondAnalytics[];
@@ -29,39 +35,60 @@ const MethodChartsView: FC<MethodChartsViewProps> = (props) => {
     filters,
     service,
     scenario,
+    percentilesAnalytics,
     responseTimesAnalytics,
     numberOfRequestsAnalytics,
     requestsPerSecondAnalytics
   } = props;
-  const { loading, getResponseTimesAnalytics, getNumberOfRequestsAnalytics, getRequestsPerSecondAnalytics } =
-    useMethodsAnalytics();
+  const {
+    loading,
+    getMethodDetailsPercentilesAnalytics,
+    getMethodDetailsResponseTimesAnalytics,
+    getMethodDetailsNumberOfRequestsAnalytics,
+    getMethodDetailsRequestsPerSecondAnalytics
+  } = useMethods();
 
   useEffect(() => {
-    const query: GetMethodsAnalyticsQuery = { method, ...filters, serviceId: service.id, scenarioId: scenario.id };
+    const query: GetMethodDetailsAnalyticsQuery = {
+      method,
+      ...filters,
+      serviceId: service.id,
+      scenarioId: scenario.id
+    };
 
     Promise.any([
-      getResponseTimesAnalytics(query),
-      getNumberOfRequestsAnalytics(query),
-      getRequestsPerSecondAnalytics(query)
+      getMethodDetailsPercentilesAnalytics(query),
+      getMethodDetailsResponseTimesAnalytics(query),
+      getMethodDetailsNumberOfRequestsAnalytics(query),
+      getMethodDetailsRequestsPerSecondAnalytics(query)
     ]);
   }, [filters, method, service.id, scenario.id]);
 
   return (
     <Fragment>
-      <RequestsPerSecondAnalyticsView
+      <PercentilesBarChartView
+        type={ChartType.MethodPercentilesBarChart}
+        data={percentilesAnalytics}
+        title={`${MetricGroup.Percentiles} of ${getMethodLabel(method)}`}
+        loading={loading.getMethodDetailsPercentilesAnalytics}
+      />
+      <RequestsPerSecondBarChartView
+        type={ChartType.MethodRequestsPerSecondBarChart}
+        data={requestsPerSecondAnalytics}
         title={'Total requests per second'}
-        loading={loading.getRequestsPerSecondAnalytics}
-        analytics={requestsPerSecondAnalytics}
+        loading={loading.getMethodDetailsResponseTimesAnalytics}
       />
-      <NumberOfRequestsAnalyticsView
+      <NumberOfRequestsBarChartView
+        type={ChartType.MethodNumberOfRequestsBarChart}
+        data={numberOfRequestsAnalytics}
         title={'Total requests'}
-        loading={loading.getNumberOfRequestsAnalytics}
-        analytics={numberOfRequestsAnalytics}
+        loading={loading.getMethodDetailsNumberOfRequestsAnalytics}
       />
-      <ResponseTimesAnalyticsView
-        title={'Response times (ms)'}
-        loading={loading.getResponseTimesAnalytics}
-        analytics={responseTimesAnalytics}
+      <ResponseTimesBarChartView
+        type={ChartType.MethodResponseTimesBarChart}
+        data={responseTimesAnalytics}
+        title={MetricGroup.ResponseTimes}
+        loading={loading.getMethodDetailsRequestsPerSecondAnalytics}
       />
     </Fragment>
   );
@@ -70,8 +97,9 @@ const MethodChartsView: FC<MethodChartsViewProps> = (props) => {
 const getState = (state: ReduxState) => ({
   service: state.services.service,
   scenario: state.scenarios.scenario,
-  responseTimesAnalytics: state.analytics.methodsResponseTimesAnalytics,
-  numberOfRequestsAnalytics: state.analytics.methodsNumberOfRequestsAnalytics,
-  requestsPerSecondAnalytics: state.analytics.methodsRequestsPerSecondAnalytics
+  percentilesAnalytics: state.methods.methodDetailsPercentilesAnalytics,
+  responseTimesAnalytics: state.methods.methodDetailsResponseTimesAnalytics,
+  numberOfRequestsAnalytics: state.methods.methodDetailsNumberOfRequestsAnalytics,
+  requestsPerSecondAnalytics: state.methods.methodDetailsRequestsPerSecondAnalytics
 });
 export default connect(getState)(MethodChartsView);

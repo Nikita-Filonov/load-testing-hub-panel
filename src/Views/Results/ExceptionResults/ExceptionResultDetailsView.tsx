@@ -18,7 +18,9 @@ const ExceptionResultDetailsView: FC<ExceptionResultDetailsViewProps> = (props) 
   const { loading, getExceptionResultDetails } = useExceptionResults();
 
   useEffect(() => {
-    exceptionResultId && getExceptionResultDetails(exceptionResultId);
+    if (exceptionResultId) {
+      getExceptionResultDetails(exceptionResultId);
+    }
   }, [exceptionResultId]);
 
   return (

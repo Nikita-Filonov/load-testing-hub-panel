@@ -13,7 +13,9 @@ export const OpenLoadTestsPipelineMenuItem: FC<OpenLoadTestsPipelineMenuItemProp
 
   const onOpenLoadTestsPipeline = () => {
     onClose();
-    result.loadTestsCIPipelineUrl && window.open(result.loadTestsCIPipelineUrl, '_blank');
+    if (result.loadTestsCIPipelineUrl) {
+      window.open(result.loadTestsCIPipelineUrl, '_blank');
+    }
   };
 
   return (

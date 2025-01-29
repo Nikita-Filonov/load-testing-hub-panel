@@ -30,7 +30,9 @@ const UpdateCompareSettingsWeightsView: FC<UpdateCompareSettingsViewProps> = (pr
   const [integrationDetailsModal, setIntegrationDetailsModal] = useState(false);
 
   useEffect(() => {
-    service.id && getIntegrations({ serviceId: service.id });
+    if (service.id) {
+      getIntegrations({ serviceId: service.id });
+    }
   }, [service.id]);
 
   const filteredIntegrations = useMemo(

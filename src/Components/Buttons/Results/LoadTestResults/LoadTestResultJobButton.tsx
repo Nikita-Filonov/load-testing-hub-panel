@@ -12,7 +12,9 @@ export const LoadTestResultJobButton: FC<LoadTestResultJobButtonProps> = ({ resu
   if (!result.loadTestsCIJobUrl) return null;
 
   const onOpenJob = () => {
-    result.loadTestsCIJobUrl && window.open(result.loadTestsCIJobUrl, '_blank');
+    if (result.loadTestsCIJobUrl) {
+      window.open(result.loadTestsCIJobUrl, '_blank');
+    }
   };
 
   return (

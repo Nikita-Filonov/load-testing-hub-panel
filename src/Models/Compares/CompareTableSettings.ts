@@ -1,5 +1,5 @@
-import { MetricName } from '../../Services/Constants/Metrics';
 import { BaseCompare, LoadTestResultCompare, MethodResultCompare } from './Compares';
+import { MetricName } from '../Metrics/Base';
 
 export enum CompareWidgetType {
   CompareResultWithResults = 'COMPARE_RESULTS_WITH_RESULTS',
@@ -14,7 +14,7 @@ export interface CompareTableRowSettings<T extends BaseCompare> {
   index: number;
   enabled: boolean;
   metricName: MetricName;
-  metricValue: keyof Omit<T, 'method' | 'compare' | 'highlight'>;
+  metricValue: keyof Omit<T, 'method' | 'compare' | 'highlight' | 'explanation'>;
 }
 
 export interface CompareTableSettings<T extends BaseCompare> {

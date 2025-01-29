@@ -2,8 +2,8 @@ import { BaseListItem } from '../BaseListItem';
 import { FC } from 'react';
 import HubOutlinedIcon from '@mui/icons-material/HubOutlined';
 import { Integration } from '../../../Models/Integrations/Integrations';
-import { IntegrationEnvironmentTypeLabel } from '../../Labels/Integrations/IntegrationEnvironmentTypeLabel';
 import { IntegrationListItemMenu } from '../../Menus/Integrations/IntegrationListItemMenu';
+import { IntegrationLabelsView } from '../../Labels/Integrations/IntegrationLabelsView';
 
 type IntegrationListItemProps = {
   integration: Integration;
@@ -27,8 +27,8 @@ export const IntegrationListItem: FC<IntegrationListItemProps> = (props) => {
       }
       icon={<HubOutlinedIcon fontSize={'small'} />}
       title={integration.name}
-      subtitle={`namespace: ${integration.namespace}`}
-      label={<IntegrationEnvironmentTypeLabel type={integration.environmentType} />}
+      subtitle={`Order index: ${integration.orderIndex}`}
+      label={<IntegrationLabelsView integration={integration} />}
       onClick={onDetails}
     />
   );

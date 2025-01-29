@@ -1,4 +1,4 @@
-import React, { FC, PropsWithChildren, useContext, useState } from 'react';
+import React, { FC, PropsWithChildren, useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import { IntegrationsHTTPClient } from '../../Services/Clients/Integrations/IntegrationsHTTPClient';
 import {
@@ -6,18 +6,25 @@ import {
   deleteIntegration,
   setIntegration,
   setIntegrations,
+  setShortIntegrations,
   updateIntegration
-} from '../../Redux/Integrations/IntegrationsSlice';
+} from '../../Redux/Integrations/Slice';
 import {
   CreateIntegrationRequest,
+  GetIntegrationResponse,
   GetIntegrationsQuery,
+  GetIntegrationsResponse,
+  GetShortIntegrationsResponse,
   UpdateIntegrationRequest
 } from '../../Models/Integrations/Integrations';
-import {
-  BuildGrafanaDashboardURLResponse,
-  BuildIntegrationURLRequest,
-  BuildKibanaDiscoverURLResponse
-} from '../../Models/Integrations/IntegrationBuilders';
+import { BuildIntegrationURLRequest, BuildIntegrationURLResponse } from '../../Models/Integrations/IntegrationBuilders';
+import { APIResponse } from '../../Services/Clients/Models';
+import { useAPIResponseHandler } from '../../Services/Clients/Hooks';
+
+export enum IntegrationsErrorKey {
+  CreateIntegration = 'IntegrationsProvider/createIntegration',
+  UpdateIntegration = 'IntegrationsProvider/updateIntegration'
+}
 
 interface Loading {
   getIntegration: boolean;
@@ -25,89 +32,95 @@ interface Loading {
   createIntegration: boolean;
   updateIntegration: boolean;
   deleteIntegration: boolean;
-  buildKibanaDiscoverURL: boolean;
-  buildGrafanaDiscoverURL: boolean;
+  buildIntegrationURL: boolean;
+  getShortIntegrations: boolean;
 }
 
 export type IntegrationsContextProps = {
   loading: Loading;
-  getIntegration: (integrationId: number) => Promise<void>;
-  getIntegrations: (query: GetIntegrationsQuery) => Promise<void>;
-  createIntegration: (request: CreateIntegrationRequest) => Promise<boolean>;
-  updateIntegration: (integrationId: number, request: UpdateIntegrationRequest) => Promise<boolean>;
-  deleteIntegration: (integrationId: number) => Promise<boolean>;
-  buildKibanaDiscoverURL: (request: BuildIntegrationURLRequest) => Promise<BuildKibanaDiscoverURLResponse | null>;
-  buildGrafanaDiscoverURL: (request: BuildIntegrationURLRequest) => Promise<BuildGrafanaDashboardURLResponse | null>;
+  getIntegration: (integrationId: number) => Promise<APIResponse<GetIntegrationResponse>>;
+  getIntegrations: (query: GetIntegrationsQuery) => Promise<APIResponse<GetIntegrationsResponse>>;
+  createIntegration: (request: CreateIntegrationRequest) => Promise<APIResponse<GetIntegrationResponse>>;
+  updateIntegration: (
+    integrationId: number,
+    request: UpdateIntegrationRequest
+  ) => Promise<APIResponse<GetIntegrationResponse>>;
+  deleteIntegration: (integrationId: number) => Promise<APIResponse>;
+  buildIntegrationURL: (request: BuildIntegrationURLRequest) => Promise<APIResponse<BuildIntegrationURLResponse>>;
+  getShortIntegrations: (query: GetIntegrationsQuery) => Promise<APIResponse<GetShortIntegrationsResponse>>;
 };
 
 const IntegrationsContext = React.createContext<IntegrationsContextProps | null>(null);
 
 const IntegrationsProvider: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();
-  const integrationsHTTPClient = new IntegrationsHTTPClient();
-  const [loading, setLoading] = useState<Loading>({
-    getIntegration: false,
-    getIntegrations: false,
-    createIntegration: false,
-    updateIntegration: false,
-    deleteIntegration: false,
-    buildKibanaDiscoverURL: false,
-    buildGrafanaDiscoverURL: false
+  const { loading, handleAPIResponse } = useAPIResponseHandler({
+    provider: IntegrationsProvider.name,
+    defaultLoading: {
+      getIntegration: false,
+      getIntegrations: false,
+      createIntegration: false,
+      updateIntegration: false,
+      deleteIntegration: false,
+      buildIntegrationURL: false,
+      getShortIntegrations: false
+    }
   });
+  const integrationsHTTPClient = new IntegrationsHTTPClient();
 
   const getIntegrationAPI = async (integrationId: number) => {
-    setLoading({ ...loading, getIntegration: true });
-    const response = await integrationsHTTPClient.getIntegration(integrationId);
-    response && dispatch(setIntegration(response.integration));
-    setLoading({ ...loading, getIntegration: false });
+    return await handleAPIResponse({
+      key: 'getIntegration',
+      call: integrationsHTTPClient.getIntegration(integrationId),
+      handler: (response) => dispatch(setIntegration(response.integration))
+    });
   };
 
   const getIntegrationsAPI = async (query: GetIntegrationsQuery) => {
-    setLoading({ ...loading, getIntegrations: true });
-    const response = await integrationsHTTPClient.getIntegrations(query);
-    response && dispatch(setIntegrations(response.integrations));
-    setLoading({ ...loading, getIntegrations: false });
+    return await handleAPIResponse({
+      key: 'getIntegrations',
+      call: integrationsHTTPClient.getIntegrations(query),
+      handler: (response) => dispatch(setIntegrations(response.integrations))
+    });
   };
 
   const createIntegrationAPI = async (request: CreateIntegrationRequest) => {
-    setLoading({ ...loading, createIntegration: true });
-    const response = await integrationsHTTPClient.createIntegration(request);
-    response && dispatch(createIntegration(response.integration));
-    setLoading({ ...loading, createIntegration: false });
-
-    return Boolean(!response);
+    return await handleAPIResponse({
+      key: 'createIntegration',
+      call: integrationsHTTPClient.createIntegration(request),
+      handler: (response) => dispatch(createIntegration(response.integration))
+    });
   };
 
   const updateIntegrationAPI = async (integrationId: number, request: UpdateIntegrationRequest) => {
-    setLoading({ ...loading, updateIntegration: true });
-    const response = await integrationsHTTPClient.updateIntegration(integrationId, request);
-    response && dispatch(updateIntegration(response.integration));
-    setLoading({ ...loading, updateIntegration: false });
-
-    return Boolean(!response);
+    return await handleAPIResponse({
+      key: 'updateIntegration',
+      call: integrationsHTTPClient.updateIntegration(integrationId, request),
+      handler: (response) => dispatch(updateIntegration(response.integration))
+    });
   };
 
   const deleteIntegrationAPI = async (integrationId: number) => {
-    setLoading({ ...loading, deleteIntegration: true });
-    const error = await integrationsHTTPClient.deleteIntegration(integrationId);
-    !error && dispatch(deleteIntegration({ integrationId }));
-    setLoading({ ...loading, deleteIntegration: false });
-
-    return error;
+    return await handleAPIResponse({
+      key: 'deleteIntegration',
+      call: integrationsHTTPClient.deleteIntegration(integrationId),
+      handler: () => dispatch(deleteIntegration({ integrationId }))
+    });
   };
 
-  const buildKibanaDiscoverURL = async (request: BuildIntegrationURLRequest) => {
-    setLoading({ ...loading, buildKibanaDiscoverURL: true });
-    const response = await integrationsHTTPClient.buildKibanaDiscoverURL(request);
-    setLoading({ ...loading, buildKibanaDiscoverURL: false });
-    return response;
+  const buildIntegrationURL = async (request: BuildIntegrationURLRequest) => {
+    return await handleAPIResponse({
+      key: 'buildIntegrationURL',
+      call: integrationsHTTPClient.buildIntegrationURL(request)
+    });
   };
 
-  const buildGrafanaDiscoverURL = async (request: BuildIntegrationURLRequest) => {
-    setLoading({ ...loading, buildGrafanaDiscoverURL: true });
-    const response = await integrationsHTTPClient.buildGrafanaDiscoverURL(request);
-    setLoading({ ...loading, buildGrafanaDiscoverURL: false });
-    return response;
+  const getShortIntegrationsAPI = async (query: GetIntegrationsQuery) => {
+    return await handleAPIResponse({
+      key: 'getShortIntegrations',
+      call: integrationsHTTPClient.getShortIntegrations(query),
+      handler: (response) => dispatch(setShortIntegrations(response.integrations))
+    });
   };
 
   return (
@@ -119,8 +132,8 @@ const IntegrationsProvider: FC<PropsWithChildren> = ({ children }) => {
         createIntegration: createIntegrationAPI,
         updateIntegration: updateIntegrationAPI,
         deleteIntegration: deleteIntegrationAPI,
-        buildKibanaDiscoverURL,
-        buildGrafanaDiscoverURL
+        buildIntegrationURL,
+        getShortIntegrations: getShortIntegrationsAPI
       }}>
       {children}
     </IntegrationsContext.Provider>

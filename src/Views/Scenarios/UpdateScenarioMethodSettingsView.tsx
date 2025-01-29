@@ -5,8 +5,8 @@ import { ScenarioMethodSettings } from '../../Models/Services/ScenarioSettings';
 import UpdateScenarioMethodSettingsModal from '../../Components/Modals/Scenarios/UpdateScenarioMethodSettingsModal';
 import { BoxView } from '../../Components/Views/BoxView';
 import AddIcon from '@mui/icons-material/Add';
-import { DEFAULT_SCENARIO_METHOD_SETTINGS } from '../../Redux/Services/Scenarios/InitialState';
-import { MethodsProvider } from '../../Providers/Results/MethodsProvider';
+import { MethodsProvider } from '../../Providers/Methods/MethodsProvider';
+import { getDefaultScenarioMethodSettings } from '../../Services/Scenarios/Utils';
 
 type UpdateScenarioMethodSettingsViewProps = {
   scenarioId: number;
@@ -39,7 +39,7 @@ export const UpdateScenarioMethodSettingsView: FC<UpdateScenarioMethodSettingsVi
   };
 
   const onNewMethodSettings = () => {
-    const updatedMethodsSettings = [...methodsSettings, DEFAULT_SCENARIO_METHOD_SETTINGS];
+    const updatedMethodsSettings = [...methodsSettings, getDefaultScenarioMethodSettings()];
     setMethodsSettings(updatedMethodsSettings);
   };
 

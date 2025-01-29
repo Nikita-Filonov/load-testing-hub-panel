@@ -3,7 +3,7 @@ import { CircularProgress, IconButton, InputAdornment } from '@mui/material';
 import { FC } from 'react';
 import { BaseTextField, BaseTextFieldProps } from './BaseTextField';
 
-type SearchTextFieldProps = {
+export type SearchTextFieldProps = {
   label?: string;
   loading?: boolean;
 } & Omit<BaseTextFieldProps, 'label' | 'endAdornment'>;

@@ -1,12 +1,10 @@
-import { FC } from 'react';
-import { BaseLabel, BaseLabelProps } from './BaseLabel';
+import { Children, FC, PropsWithChildren } from 'react';
 import { styled, SxProps, Theme } from '@mui/material';
 
 export type BaseLabelsViewProps = {
-  labels: BaseLabelProps[];
-  listItemSx?: SxProps<Theme>;
+  listItemSx?: (index: number) => SxProps<Theme>;
   containerSx?: SxProps<Theme>;
-};
+} & PropsWithChildren;
 
 const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5)
@@ -23,13 +21,13 @@ const Container = styled('ul')(() => ({
 }));
 
 export const BaseLabelsView: FC<BaseLabelsViewProps> = (props) => {
-  const { labels, listItemSx, containerSx } = props;
+  const { children, listItemSx, containerSx } = props;
 
   return (
     <Container sx={containerSx}>
-      {labels.map((label, index) => (
-        <ListItem key={index} sx={listItemSx}>
-          <BaseLabel {...label} />
+      {Children.toArray(children).map((label, index) => (
+        <ListItem key={index} sx={listItemSx?.(index)}>
+          {label}
         </ListItem>
       ))}
     </Container>

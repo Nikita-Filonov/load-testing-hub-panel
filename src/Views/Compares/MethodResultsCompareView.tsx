@@ -11,10 +11,11 @@ import { setCompareWidgetSettings } from '../../Redux/Compares/CompareSettings/C
 type MethodResultCompareViewProps = {
   compares: MethodResultCompare[];
   widgetType: CompareWidgetType;
+  onCompareMethodResultsHistory?: (compare: MethodResultCompare) => void;
 };
 
 export const MethodResultsCompareView: FC<MethodResultCompareViewProps> = (props) => {
-  const { compares, widgetType } = props;
+  const { compares, widgetType, onCompareMethodResultsHistory } = props;
   const dispatch = useDispatch();
 
   const settings = useSelector((state: ReduxState) => state.compareSettings.compareWidgetsSettings[widgetType]);
@@ -38,7 +39,11 @@ export const MethodResultsCompareView: FC<MethodResultCompareViewProps> = (props
         }
       ]}
       allowClose>
-      <MethodResultsCompareTable compares={compares} settings={settings.methodResultsCompareTable} />
+      <MethodResultsCompareTable
+        compares={compares}
+        settings={settings.methodResultsCompareTable}
+        onCompareMethodResultsHistory={onCompareMethodResultsHistory}
+      />
     </WidgetView>
   );
 };

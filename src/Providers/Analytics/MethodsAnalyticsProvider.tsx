@@ -1,56 +1,75 @@
-import React, { FC, PropsWithChildren, useContext, useState } from 'react';
+import React, { FC, PropsWithChildren, useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import { MethodsAnalyticsHTTPClient } from '../../Services/Clients/Analytics/MethodsAnalyticsHTTPClient';
 import {
   setMethodsNumberOfRequestsAnalytics,
   setMethodsRequestsPerSecondAnalytics,
   setMethodsResponseTimesAnalytics
-} from '../../Redux/Analytics/AnalyticsSlice';
-import { GetMethodsAnalyticsQuery } from '../../Models/Analytics/MethodsAnalytics';
+} from '../../Redux/Analytics/Slice';
+import {
+  GetMethodsAnalyticsQuery,
+  GetMethodsNumberOfRequestsAnalyticsResponse,
+  GetMethodsRequestsPerSecondAnalyticsResponse,
+  GetMethodsResponseTimesAnalyticsResponse
+} from '../../Models/Analytics/MethodsAnalytics';
+import { useAPIResponseHandler } from '../../Services/Clients/Hooks';
+import { APIResponse } from '../../Services/Clients/Models';
 
-interface Loading {
+export interface MethodsAnalyticsLoading {
   getResponseTimesAnalytics: boolean;
   getNumberOfRequestsAnalytics: boolean;
   getRequestsPerSecondAnalytics: boolean;
 }
 
 export type MethodsAnalyticsContextProps = {
-  loading: Loading;
-  getResponseTimesAnalytics: (query: GetMethodsAnalyticsQuery) => Promise<void>;
-  getNumberOfRequestsAnalytics: (query: GetMethodsAnalyticsQuery) => Promise<void>;
-  getRequestsPerSecondAnalytics: (query: GetMethodsAnalyticsQuery) => Promise<void>;
+  loading: MethodsAnalyticsLoading;
+  getResponseTimesAnalytics: (
+    query: GetMethodsAnalyticsQuery
+  ) => Promise<APIResponse<GetMethodsResponseTimesAnalyticsResponse>>;
+  getNumberOfRequestsAnalytics: (
+    query: GetMethodsAnalyticsQuery
+  ) => Promise<APIResponse<GetMethodsNumberOfRequestsAnalyticsResponse>>;
+  getRequestsPerSecondAnalytics: (
+    query: GetMethodsAnalyticsQuery
+  ) => Promise<APIResponse<GetMethodsRequestsPerSecondAnalyticsResponse>>;
 };
 
 const MethodsAnalyticsContext = React.createContext<MethodsAnalyticsContextProps | null>(null);
 
 const MethodsAnalyticsProvider: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();
-  const methodsAnalyticsHTTPClient = new MethodsAnalyticsHTTPClient();
-  const [loading, setLoading] = useState<Loading>({
-    getResponseTimesAnalytics: false,
-    getNumberOfRequestsAnalytics: false,
-    getRequestsPerSecondAnalytics: false
+  const { loading, handleAPIResponse } = useAPIResponseHandler({
+    provider: MethodsAnalyticsProvider.name,
+    defaultLoading: {
+      getResponseTimesAnalytics: false,
+      getNumberOfRequestsAnalytics: false,
+      getRequestsPerSecondAnalytics: false
+    }
   });
+  const methodsAnalyticsHTTPClient = new MethodsAnalyticsHTTPClient();
 
   const getResponseTimesAnalyticsAPI = async (query: GetMethodsAnalyticsQuery) => {
-    setLoading({ ...loading, getResponseTimesAnalytics: true });
-    const response = await methodsAnalyticsHTTPClient.getResponseTimesAnalytics(query);
-    response && dispatch(setMethodsResponseTimesAnalytics(response.analytics));
-    setLoading({ ...loading, getResponseTimesAnalytics: false });
+    return await handleAPIResponse({
+      key: 'getResponseTimesAnalytics',
+      call: methodsAnalyticsHTTPClient.getResponseTimesAnalytics(query),
+      handler: (response) => dispatch(setMethodsResponseTimesAnalytics(response.analytics))
+    });
   };
 
   const getNumberOfRequestsAnalyticsAPI = async (query: GetMethodsAnalyticsQuery) => {
-    setLoading({ ...loading, getNumberOfRequestsAnalytics: true });
-    const response = await methodsAnalyticsHTTPClient.getNumberOfRequestsAnalytics(query);
-    response && dispatch(setMethodsNumberOfRequestsAnalytics(response.analytics));
-    setLoading({ ...loading, getNumberOfRequestsAnalytics: false });
+    return await handleAPIResponse({
+      key: 'getNumberOfRequestsAnalytics',
+      call: methodsAnalyticsHTTPClient.getNumberOfRequestsAnalytics(query),
+      handler: (response) => dispatch(setMethodsNumberOfRequestsAnalytics(response.analytics))
+    });
   };
 
   const getRequestsPerSecondAnalyticsAPI = async (query: GetMethodsAnalyticsQuery) => {
-    setLoading({ ...loading, getRequestsPerSecondAnalytics: true });
-    const response = await methodsAnalyticsHTTPClient.getRequestsPerSecondAnalytics(query);
-    response && dispatch(setMethodsRequestsPerSecondAnalytics(response.analytics));
-    setLoading({ ...loading, getRequestsPerSecondAnalytics: false });
+    return await handleAPIResponse({
+      key: 'getRequestsPerSecondAnalytics',
+      call: methodsAnalyticsHTTPClient.getRequestsPerSecondAnalytics(query),
+      handler: (response) => dispatch(setMethodsRequestsPerSecondAnalytics(response.analytics))
+    });
   };
 
   return (

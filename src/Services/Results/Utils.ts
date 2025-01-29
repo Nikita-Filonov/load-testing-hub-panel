@@ -2,9 +2,9 @@ import { LoadTestResult, ShortLoadTestResult } from '../../Models/Results/LoadTe
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import { SettingsManager } from '../Config';
-import { AppRoutes } from '../Constants/Routing';
+import { AppRoutes } from '../Navigation/Routing';
 import { formatRouteTemplate } from '../Navigation/Utils';
-import { LoadTestResultsFilters } from '../../Components/Modals/Results/LoadTestResultsFiltersModal';
+import { LoadTestResultsFilters } from '../../Components/Modals/Results/LoadTestsResults/LoadTestResultsFiltersModal';
 
 dayjs.extend(duration);
 

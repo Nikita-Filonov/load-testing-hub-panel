@@ -1,19 +1,22 @@
 import { PaginationQuery, PaginationResponse } from '../Pagination';
-import { Service } from '../Services/Services';
+import { ShortService } from '../Services/Services';
 import { Scenario } from '../Services/Scenarios';
-import { BaseCompare } from '../Compares/Compares';
-
-export interface LoadTestResultCompare extends Pick<BaseCompare, 'compare' | 'highlight'> {}
+import { NumberOfUsers } from '../Metrics/NumberOfUsers';
+import { NumberOfRequests } from '../Metrics/NumberOfRequests';
+import { RequestsPerSecond } from '../Metrics/RequestsPerSecond';
+import { ResponseTimes } from '../Metrics/ResponseTimes';
+import { Percentiles } from '../Metrics/Percentiles';
+import { ResultCompare } from './ResultCompare';
 
 export interface LoadTestResultSummaryCompare {
   previousId: number | null;
-  compareWithAverage: LoadTestResultCompare;
-  compareWithPrevious: LoadTestResultCompare;
+  compareWithAverage: ResultCompare;
+  compareWithPrevious: ResultCompare;
 }
 
 export interface ShortLoadTestResult {
   id: number;
-  service: Service;
+  service: ShortService;
   scenario: Scenario;
   triggerCIJobUrl: string | null;
   triggerCIPipelineUrl: string | null;
@@ -22,25 +25,16 @@ export interface ShortLoadTestResult {
   loadTestsCIPipelineUrl: string | null;
 }
 
-export interface LoadTestResult extends ShortLoadTestResult {
+export interface LoadTestResult extends ShortLoadTestResult, NumberOfUsers, NumberOfRequests, RequestsPerSecond {
   comment: string | null;
   duration: number;
   startedAt: string;
   finishedAt: string;
-  totalRequests: number;
-  totalFailures: number;
-  numberOfUsers: number;
-  totalRequestsPerSecond: number;
 
   compare: LoadTestResultSummaryCompare | null;
 }
 
-export interface LoadTestResultDetails extends LoadTestResult {
-  totalFailuresPerSecond: number;
-  averageResponseTime: number;
-  maxResponseTime: number;
-  minResponseTime: number;
-}
+export interface LoadTestResultDetails extends LoadTestResult, Percentiles, ResponseTimes {}
 
 export interface GetLoadTestResultsQuery extends PaginationQuery {
   serviceId: number;
@@ -50,7 +44,7 @@ export interface GetLoadTestResultsQuery extends PaginationQuery {
   triggerCIProjectVersion: string | null;
 }
 
-export interface GetLoadTestResultsResponse extends PaginationResponse<LoadTestResult> {}
+export type GetLoadTestResultsResponse = PaginationResponse<LoadTestResult>;
 
 export interface GetLoadTestResultDetailsQuery {
   scenarioId: number | null;
@@ -60,7 +54,7 @@ export interface GetLoadTestResultDetailsResponse {
   details: LoadTestResultDetails;
 }
 
-export interface UpdateLoadTestResultQuery extends GetLoadTestResultDetailsQuery {}
+export type UpdateLoadTestResultQuery = GetLoadTestResultDetailsQuery;
 
 export interface UpdateLoadTestResultRequest {
   comment: string | null;

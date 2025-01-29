@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { BaseTableCell } from '../BaseTableCell';
-import { getMethodLabel } from '../../../Services/Charts/Utils';
 import { CompareLabel } from '../../Labels/Compares/CompareLabel';
 import { MethodResultCompare } from '../../../Models/Compares/Compares';
+import { getMethodLabel } from '../../../Services/Methods/Utils';
 
 type MethodCellProps = {
   compare: MethodResultCompare;

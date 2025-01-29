@@ -9,6 +9,8 @@ import { useAverageAnalytics } from '../../Providers/Analytics/AverageAnalyticsP
 import { AnalyticsFilters } from '../../Components/Modals/Analytics/AnalyticsFiltersModal';
 import { Service } from '../../Models/Services/Services';
 import { Scenario } from '../../Models/Services/Scenarios';
+import { PercentilesTable } from '../../Components/Tables/Percentiles/PercentilesTable';
+import { MetricName } from '../../Models/Metrics/Base';
 
 type AverageAnalyticsViewProps = {
   service: Service;
@@ -22,21 +24,25 @@ const AverageAnalyticsView: FC<AverageAnalyticsViewProps> = (props) => {
   const { loading, getAverageAnalytics } = useAverageAnalytics();
 
   useEffect(() => {
-    service.id && getAverageAnalytics({ serviceId: service.id, scenarioId: scenario.id, ...filters });
+    if (service.id) {
+      getAverageAnalytics({ serviceId: service.id, scenarioId: scenario.id, ...filters });
+    }
   }, [service.id, scenario.id, filters]);
 
   return (
     <WidgetView sx={{ mt: 3 }} title={'Average numbers'} loading={loading.getAverageAnalytics}>
       <WidgetInfoRowsView>
-        <BaseInfoRowView name={'Number of users'} value={analytics.numberOfUsers} />
-        <BaseInfoRowView name={'Total requests'} value={analytics.totalRequests} />
-        <BaseInfoRowView name={'Total failures'} value={analytics.totalFailures} />
-        <BaseInfoRowView name={'Total requests per second'} value={analytics.totalRequestsPerSecond} />
-        <BaseInfoRowView name={'Total failures per second'} value={analytics.totalFailuresPerSecond} />
-        <BaseInfoRowView name={'Max response time'} value={analytics.maxResponseTime} />
-        <BaseInfoRowView name={'Min response time'} value={analytics.minResponseTime} />
-        <BaseInfoRowView name={'Average response time'} value={analytics.averageResponseTime} />
+        <BaseInfoRowView name={MetricName.NumberOfUsers} value={analytics.numberOfUsers} />
+        <BaseInfoRowView name={MetricName.NumberOfRequests} value={analytics.numberOfRequests} />
+        <BaseInfoRowView name={MetricName.NumberOfFailures} value={analytics.numberOfFailures} />
+        <BaseInfoRowView name={MetricName.RequestsPerSecond} value={analytics.requestsPerSecond} />
+        <BaseInfoRowView name={MetricName.FailuresPerSecond} value={analytics.failuresPerSecond} />
+        <BaseInfoRowView name={MetricName.MaxResponseTime} value={analytics.maxResponseTime} />
+        <BaseInfoRowView name={MetricName.MinResponseTime} value={analytics.minResponseTime} />
+        <BaseInfoRowView name={MetricName.MedianResponseTime} value={analytics.medianResponseTime} />
+        <BaseInfoRowView name={MetricName.AverageResponseTime} value={analytics.averageResponseTime} />
       </WidgetInfoRowsView>
+      <PercentilesTable percentiles={analytics} />
     </WidgetView>
   );
 };

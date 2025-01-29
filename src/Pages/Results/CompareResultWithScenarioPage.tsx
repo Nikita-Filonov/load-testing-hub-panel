@@ -2,10 +2,9 @@ import { MainLayout } from '../../Components/Layouts/MainLayouts';
 import { useParams } from 'react-router-dom';
 import { LoadTestResultsProvider } from '../../Providers/Results/LoadTestResultsProvider';
 import LoadTestResultDetailsView from '../../Views/Results/LoadTestResults/LoadTestResultDetailsView';
-import { ComparesProvider } from '../../Providers/Compares/ComparesProvider';
 import CompareResultWithScenarioToolbarView from '../../Views/Compares/CompareResultWithScenario/CompareResultWithScenarioToolbarView';
 import CompareResultWithScenarioView from '../../Views/Compares/CompareResultWithScenario/CompareResultWithScenarioView';
-import { IntegrationsProvider } from '../../Providers/Integrations/IntegrationsProvider';
+import { CompareResultWithScenarioProvider } from '../../Providers/Compares/CompareResultWithScenarioProvider';
 
 type Params = {
   loadTestResultId: string;
@@ -16,18 +15,16 @@ const CompareResultWithScenarioPage = () => {
 
   return (
     <MainLayout>
-      <IntegrationsProvider>
-        <CompareResultWithScenarioToolbarView />
-      </IntegrationsProvider>
+      <CompareResultWithScenarioToolbarView />
       {loadTestResultId && (
         <LoadTestResultsProvider>
           <LoadTestResultDetailsView loadTestResultId={Number(loadTestResultId)} />
         </LoadTestResultsProvider>
       )}
       {loadTestResultId && (
-        <ComparesProvider>
+        <CompareResultWithScenarioProvider>
           <CompareResultWithScenarioView loadTestResultId={Number(loadTestResultId)} />
-        </ComparesProvider>
+        </CompareResultWithScenarioProvider>
       )}
     </MainLayout>
   );

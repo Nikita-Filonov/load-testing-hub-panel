@@ -5,19 +5,18 @@ import {
   GetExceptionResultsQuery,
   GetExceptionResultsResponse
 } from '../../../Models/Results/ExceptionResults';
+import { APIResponse } from '../Models';
 
 export class ExceptionResultsHTTPClient extends HTTPClient {
   constructor() {
     super({ baseUrl: SettingsManager.apiUrl });
   }
 
-  async getExceptionResults(query: GetExceptionResultsQuery): Promise<GetExceptionResultsResponse | null> {
-    const response = await this.get({ url: '/exception-results', query });
-    return response.json;
+  async getExceptionResults(query: GetExceptionResultsQuery): Promise<APIResponse<GetExceptionResultsResponse>> {
+    return await this.get({ url: '/exception-results', query });
   }
 
-  async getExceptionResultDetails(exceptionResultId: number): Promise<GetExceptionResultDetailsResponse | null> {
-    const response = await this.get({ url: `/exception-results/details/${exceptionResultId}` });
-    return response.json;
+  async getExceptionResultDetails(exceptionResultId: number): Promise<APIResponse<GetExceptionResultDetailsResponse>> {
+    return await this.get({ url: `/exception-results/details/${exceptionResultId}` });
   }
 }

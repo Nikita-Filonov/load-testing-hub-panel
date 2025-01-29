@@ -2,8 +2,9 @@ import { BaseModal } from '../BaseModal';
 import { FC, useEffect, useState } from 'react';
 import { CreateScenarioForm } from '../../Forms/Scenarios/CreateScenarioForm';
 import { CreateScenarioRequest } from '../../../Models/Services/Scenarios';
-import { useScenarios } from '../../../Providers/Services/ScenariosProvider';
+import { ScenariosErrorKey, useScenarios } from '../../../Providers/Services/ScenariosProvider';
 import { getDefaultCreateScenarioRequest } from '../../../Services/Scenarios/Utils';
+import { useValidationErrors } from '../../../Services/Clients/Hooks';
 
 type CreateScenarioModalProps = {
   modal: boolean;
@@ -14,17 +15,25 @@ type CreateScenarioModalProps = {
 export const CreateScenarioModal: FC<CreateScenarioModalProps> = (props) => {
   const { modal, setModal, serviceId } = props;
   const { loading, createScenario } = useScenarios();
+  const { validationErrors, clearValidationErrors } = useValidationErrors({ key: ScenariosErrorKey.CreateScenario });
   const [request, setRequest] = useState<CreateScenarioRequest>(getDefaultCreateScenarioRequest());
 
   useEffect(() => {
-    modal && setRequest(getDefaultCreateScenarioRequest());
+    if (modal) {
+      setRequest(getDefaultCreateScenarioRequest());
+    }
   }, [modal]);
 
-  const onClose = () => setModal(false);
+  const onClose = () => {
+    setModal(false);
+    clearValidationErrors();
+  };
 
   const onCreate = async () => {
-    const error = await createScenario({ ...request, serviceId });
-    !error && onClose();
+    const result = await createScenario({ ...request, serviceId });
+    if (!result.error) {
+      onClose();
+    }
   };
 
   return (
@@ -32,9 +41,10 @@ export const CreateScenarioModal: FC<CreateScenarioModalProps> = (props) => {
       title={'Create scenario'}
       modal={modal}
       setModal={setModal}
+      onCancel={onClose}
       onConfirm={onCreate}
       confirmLoading={loading.createScenario}>
-      <CreateScenarioForm request={request} setRequest={setRequest} />
+      <CreateScenarioForm request={request} setRequest={setRequest} validationErrors={validationErrors} />
     </BaseModal>
   );
 };

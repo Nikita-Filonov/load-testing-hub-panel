@@ -1,8 +1,10 @@
-import React, { FC, PropsWithChildren, useContext, useState } from 'react';
+import React, { FC, PropsWithChildren, useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import {
   GetLoadTestResultDetailsQuery,
+  GetLoadTestResultDetailsResponse,
   GetLoadTestResultsQuery,
+  GetLoadTestResultsResponse,
   UpdateLoadTestResultQuery,
   UpdateLoadTestResultRequest
 } from '../../Models/Results/LoadTestResults';
@@ -12,8 +14,14 @@ import {
   setLoadTestResults,
   setLoadTestResultsTotal,
   updateLoadTestResult
-} from '../../Redux/Results/LoadTestResults/LoadTestResultsSlice';
+} from '../../Redux/Results/LoadTestResults/Slice';
 import { LoadTestResultsHTTPClient } from '../../Services/Clients/Results/LoadTestResultsHTTPClient';
+import { APIResponse } from '../../Services/Clients/Models';
+import { useAPIResponseHandler } from '../../Services/Clients/Hooks';
+
+export enum LoadTestResultsErrorKey {
+  UpdateLoadTestResult = 'LoadTestResultsProvider/updateLoadTestResult'
+}
 
 interface Loading {
   getLoadTestResults: boolean;
@@ -24,38 +32,43 @@ interface Loading {
 
 export type LoadTestResultsContextProps = {
   loading: Loading;
-  getLoadTestResults: (query: GetLoadTestResultsQuery) => Promise<void>;
+  getLoadTestResults: (query: GetLoadTestResultsQuery) => Promise<APIResponse<GetLoadTestResultsResponse>>;
   updateLoadTestResult: (
     loadTestResultId: number,
     query: UpdateLoadTestResultQuery,
     request: UpdateLoadTestResultRequest
-  ) => Promise<boolean>;
-  deleteLoadTestResult: (loadTestResultId: number) => Promise<boolean>;
-  getLoadTestResultDetails: (loadTestResultId: number, query: GetLoadTestResultDetailsQuery) => Promise<void>;
+  ) => Promise<APIResponse<GetLoadTestResultDetailsResponse>>;
+  deleteLoadTestResult: (loadTestResultId: number) => Promise<APIResponse>;
+  getLoadTestResultDetails: (
+    loadTestResultId: number,
+    query: GetLoadTestResultDetailsQuery
+  ) => Promise<APIResponse<GetLoadTestResultDetailsResponse>>;
 };
 
 const LoadTestResultsContext = React.createContext<LoadTestResultsContextProps | null>(null);
 
 const LoadTestResultsProvider: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();
-  const loadTestResultsHTTPClient = new LoadTestResultsHTTPClient();
-  const [loading, setLoading] = useState<Loading>({
-    getLoadTestResults: false,
-    updateLoadTestResult: false,
-    deleteLoadTestResult: false,
-    getLoadTestResultDetails: false
+  const { loading, handleAPIResponse } = useAPIResponseHandler({
+    provider: LoadTestResultsProvider.name,
+    defaultLoading: {
+      getLoadTestResults: false,
+      updateLoadTestResult: false,
+      deleteLoadTestResult: false,
+      getLoadTestResultDetails: false
+    }
   });
+  const loadTestResultsHTTPClient = new LoadTestResultsHTTPClient();
 
   const getLoadTestResultsAPI = async (query: GetLoadTestResultsQuery) => {
-    setLoading({ ...loading, getLoadTestResults: true });
-    const response = await loadTestResultsHTTPClient.getLoadTestResults(query);
-
-    if (response) {
-      dispatch(setLoadTestResults(response.items));
-      dispatch(setLoadTestResultsTotal(response.total));
-    }
-
-    setLoading({ ...loading, getLoadTestResults: false });
+    return await handleAPIResponse({
+      key: 'getLoadTestResults',
+      call: loadTestResultsHTTPClient.getLoadTestResults(query),
+      handler: (response) => {
+        dispatch(setLoadTestResults(response.items));
+        dispatch(setLoadTestResultsTotal(response.total));
+      }
+    });
   };
 
   const updateLoadTestResultAPI = async (
@@ -63,32 +76,30 @@ const LoadTestResultsProvider: FC<PropsWithChildren> = ({ children }) => {
     query: UpdateLoadTestResultQuery,
     request: UpdateLoadTestResultRequest
   ) => {
-    setLoading({ ...loading, updateLoadTestResult: true });
-    const response = await loadTestResultsHTTPClient.updateLoadTestResult(loadTestResultId, query, request);
-
-    if (response) {
-      dispatch(updateLoadTestResult(response.details));
-      dispatch(setLoadTestResultDetails(response.details));
-    }
-
-    setLoading({ ...loading, updateLoadTestResult: false });
-    return Boolean(!response);
+    return await handleAPIResponse({
+      key: 'updateLoadTestResult',
+      call: loadTestResultsHTTPClient.updateLoadTestResult(loadTestResultId, query, request),
+      handler: (response) => {
+        dispatch(updateLoadTestResult(response.details));
+        dispatch(setLoadTestResultDetails(response.details));
+      }
+    });
   };
 
   const deleteLoadTestResultAPI = async (loadTestResultId: number) => {
-    setLoading({ ...loading, deleteLoadTestResult: true });
-    const error = await loadTestResultsHTTPClient.deleteLoadTestResult(loadTestResultId);
-    !error && dispatch(deleteLoadTestResult({ loadTestResultId }));
-    setLoading({ ...loading, deleteLoadTestResult: false });
-
-    return error;
+    return await handleAPIResponse({
+      key: 'deleteLoadTestResult',
+      call: loadTestResultsHTTPClient.deleteLoadTestResult(loadTestResultId),
+      handler: () => dispatch(deleteLoadTestResult({ loadTestResultId }))
+    });
   };
 
   const getLoadTestResultDetailsAPI = async (loadTestResultId: number, query: GetLoadTestResultDetailsQuery) => {
-    setLoading({ ...loading, getLoadTestResultDetails: true });
-    const response = await loadTestResultsHTTPClient.getLoadTestResultDetails(loadTestResultId, query);
-    response && dispatch(setLoadTestResultDetails(response.details));
-    setLoading({ ...loading, getLoadTestResultDetails: false });
+    return await handleAPIResponse({
+      key: 'getLoadTestResultDetails',
+      call: loadTestResultsHTTPClient.getLoadTestResultDetails(loadTestResultId, query),
+      handler: (response) => dispatch(setLoadTestResultDetails(response.details))
+    });
   };
 
   return (

@@ -2,13 +2,13 @@ import { connect } from 'react-redux';
 import { ReduxState } from '../../../Redux/ReduxState';
 import { LoadTestResultCompareView } from '../LoadTestResultCompareView';
 import { MethodResultsCompareView } from '../MethodResultsCompareView';
-import { useCompares } from '../../../Providers/Compares/ComparesProvider';
 import { FC, useEffect } from 'react';
 import { CompareResultWithScenario } from '../../../Models/Compares/CompareResultWithScenario';
 import { BoxView } from '../../../Components/Views/BoxView';
 import { CompareWidgetType } from '../../../Models/Compares/CompareTableSettings';
 import ScenarioDetailsView from '../../Scenarios/ScenarioDetailsView';
 import { ScenariosProvider } from '../../../Providers/Services/ScenariosProvider';
+import { useCompareResultWithScenario } from '../../../Providers/Compares/CompareResultWithScenarioProvider';
 
 type CompareResultWithScenarioViewProps = {
   compare: CompareResultWithScenario;
@@ -17,7 +17,7 @@ type CompareResultWithScenarioViewProps = {
 
 const CompareResultWithScenarioView: FC<CompareResultWithScenarioViewProps> = (props) => {
   const { compare, loadTestResultId } = props;
-  const { loading, getCompareResultWithScenario } = useCompares();
+  const { loading, getCompareResultWithScenario } = useCompareResultWithScenario();
 
   useEffect(() => {
     getCompareResultWithScenario({ loadTestResultId });
@@ -41,6 +41,6 @@ const CompareResultWithScenarioView: FC<CompareResultWithScenarioViewProps> = (p
 };
 
 const getState = (state: ReduxState) => ({
-  compare: state.compares.compareResultWithScenario
+  compare: state.compareResultWithScenario.compareResultWithScenario
 });
 export default connect(getState)(CompareResultWithScenarioView);
