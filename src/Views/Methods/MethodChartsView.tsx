@@ -75,19 +75,19 @@ const MethodChartsView: FC<MethodChartsViewProps> = (props) => {
       <RequestsPerSecondBarChartView
         type={ChartType.MethodRequestsPerSecondBarChart}
         data={requestsPerSecondAnalytics}
-        title={'Total requests per second'}
+        title={`Total requests per second of ${getMethodLabel(method)}`}
         loading={loading.getMethodDetailsResponseTimesAnalytics}
       />
       <NumberOfRequestsBarChartView
         type={ChartType.MethodNumberOfRequestsBarChart}
         data={numberOfRequestsAnalytics}
-        title={'Total requests'}
+        title={`Total requests of ${getMethodLabel(method)}`}
         loading={loading.getMethodDetailsNumberOfRequestsAnalytics}
       />
       <ResponseTimesBarChartView
         type={ChartType.MethodResponseTimesBarChart}
         data={responseTimesAnalytics}
-        title={MetricGroup.ResponseTimes}
+        title={`MetricGroup.ResponseTimes of ${getMethodLabel(method)}`}
         loading={loading.getMethodDetailsRequestsPerSecondAnalytics}
       />
     </Fragment>
