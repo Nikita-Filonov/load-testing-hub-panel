@@ -36,8 +36,8 @@ export const useAPIResponseHandler = <Loading extends BaseLoading>(props: UseAPI
     try {
       const result = await call;
 
-      if (result.response && handler) {
-        handler(result.response);
+      if (!result.error && handler) {
+        handler(result.response as Response);
       }
 
       if (result.validationErrors) {

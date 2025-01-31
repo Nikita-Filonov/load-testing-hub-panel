@@ -87,7 +87,7 @@ const MethodChartsView: FC<MethodChartsViewProps> = (props) => {
       <ResponseTimesBarChartView
         type={ChartType.MethodResponseTimesBarChart}
         data={responseTimesAnalytics}
-        title={`MetricGroup.ResponseTimes of ${getMethodLabel(method)}`}
+        title={`${MetricGroup.ResponseTimes} of ${getMethodLabel(method)}`}
         loading={loading.getMethodDetailsRequestsPerSecondAnalytics}
       />
     </Fragment>
