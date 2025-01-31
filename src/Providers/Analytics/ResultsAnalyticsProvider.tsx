@@ -41,7 +41,7 @@ const ResultsAnalyticsContext = React.createContext<ResultsAnalyticsContextProps
 const ResultsAnalyticsProvider: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();
   const { loading, handleAPIResponse } = useAPIResponseHandler({
-    provider: ResultsAnalyticsProvider.name,
+    provider: 'ResultsAnalyticsProvider',
     defaultLoading: {
       getPercentilesAnalytics: false,
       getResponseTimesAnalytics: false,

@@ -20,7 +20,7 @@ const RatioResultsContext = React.createContext<RatioResultsContextProps | null>
 const RatioResultsProvider: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();
   const { loading, handleAPIResponse } = useAPIResponseHandler({
-    provider: RatioResultsProvider.name,
+    provider: 'RatioResultsProvider',
     defaultLoading: { getRatioResults: false }
   });
   const ratioResultsHTTPClient = new RatioResultsHTTPClient();

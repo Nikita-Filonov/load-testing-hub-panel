@@ -26,7 +26,7 @@ const ExceptionResultsContext = React.createContext<ExceptionResultsContextProps
 const ExceptionResultsProvider: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();
   const { loading, handleAPIResponse } = useAPIResponseHandler({
-    provider: ExceptionResultsProvider.name,
+    provider: 'ExceptionResultsProvider',
     defaultLoading: {
       getExceptionResults: false,
       getExceptionResultDetails: false

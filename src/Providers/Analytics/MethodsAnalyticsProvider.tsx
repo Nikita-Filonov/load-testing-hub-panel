@@ -39,7 +39,7 @@ const MethodsAnalyticsContext = React.createContext<MethodsAnalyticsContextProps
 const MethodsAnalyticsProvider: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();
   const { loading, handleAPIResponse } = useAPIResponseHandler({
-    provider: MethodsAnalyticsProvider.name,
+    provider: 'MethodsAnalyticsProvider',
     defaultLoading: {
       getResponseTimesAnalytics: false,
       getNumberOfRequestsAnalytics: false,

@@ -55,7 +55,7 @@ const IntegrationsContext = React.createContext<IntegrationsContextProps | null>
 const IntegrationsProvider: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();
   const { loading, handleAPIResponse } = useAPIResponseHandler({
-    provider: IntegrationsProvider.name,
+    provider: 'IntegrationsProvider',
     defaultLoading: {
       getIntegration: false,
       getIntegrations: false,

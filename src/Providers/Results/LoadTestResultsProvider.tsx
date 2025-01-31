@@ -50,7 +50,7 @@ const LoadTestResultsContext = React.createContext<LoadTestResultsContextProps |
 const LoadTestResultsProvider: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();
   const { loading, handleAPIResponse } = useAPIResponseHandler({
-    provider: LoadTestResultsProvider.name,
+    provider: 'LoadTestResultsProvider',
     defaultLoading: {
       getLoadTestResults: false,
       updateLoadTestResult: false,

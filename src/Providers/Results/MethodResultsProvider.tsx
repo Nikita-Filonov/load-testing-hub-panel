@@ -30,7 +30,7 @@ const MethodResultsContext = React.createContext<MethodResultsContextProps | nul
 const MethodResultsProvider: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();
   const { loading, handleAPIResponse } = useAPIResponseHandler({
-    provider: MethodResultsProvider.name,
+    provider: 'MethodResultsProvider',
     defaultLoading: {
       getMethodResults: false,
       getMethodResultDetails: false

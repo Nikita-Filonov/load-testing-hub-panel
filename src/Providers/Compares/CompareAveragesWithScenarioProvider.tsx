@@ -25,7 +25,7 @@ const CompareAveragesWithScenarioContext = React.createContext<CompareAveragesWi
 const CompareAveragesWithScenarioProvider: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();
   const { loading, handleAPIResponse } = useAPIResponseHandler({
-    provider: CompareAveragesWithScenarioProvider.name,
+    provider: 'CompareAveragesWithScenarioProvider',
     defaultLoading: { getCompareAveragesWithScenario: false }
   });
   const compareAveragesWithScenarioHTTPClient = new CompareAveragesWithScenarioHTTPClient();

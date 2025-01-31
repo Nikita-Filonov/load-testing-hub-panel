@@ -60,7 +60,7 @@ const MethodsContext = React.createContext<MethodsContextProps | null>(null);
 const MethodsProvider: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();
   const { loading, handleAPIResponse } = useAPIResponseHandler({
-    provider: MethodsProvider.name,
+    provider: 'MethodsProvider',
     defaultLoading: {
       getMethods: false,
       getShortMethods: false,

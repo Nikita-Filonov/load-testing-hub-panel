@@ -45,7 +45,7 @@ const CompareMethodResultsHistoryContext = React.createContext<CompareMethodResu
 const CompareMethodResultsHistoryProvider: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();
   const { loading, handleAPIResponse } = useAPIResponseHandler({
-    provider: CompareMethodResultsHistoryProvider.name,
+    provider: 'CompareMethodResultsHistoryProvider',
     defaultLoading: {
       getCompareMethodResultsHistoryResponseTimes: false,
       getCompareMethodResultsHistoryNumberOfUsers: false,

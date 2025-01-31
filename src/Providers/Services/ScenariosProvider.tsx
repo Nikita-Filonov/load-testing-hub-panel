@@ -52,7 +52,7 @@ const ScenariosContext = React.createContext<ScenariosContextProps | null>(null)
 const ScenariosProvider: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();
   const { loading, handleAPIResponse } = useAPIResponseHandler({
-    provider: ScenariosProvider.name,
+    provider: 'ScenariosProvider',
     defaultLoading: {
       getScenario: false,
       getScenarios: false,

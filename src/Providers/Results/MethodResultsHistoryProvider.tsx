@@ -21,7 +21,7 @@ const MethodResultsHistoryContext = React.createContext<MethodResultsHistoryCont
 const MethodResultsHistoryProvider: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();
   const { loading, handleAPIResponse } = useAPIResponseHandler({
-    provider: MethodResultsHistoryProvider.name,
+    provider: 'MethodResultsHistoryProvider',
     defaultLoading: { getMethodResultsHistory: false }
   });
   const methodResultsHistoryHTTPClient = new MethodResultsHistoryHTTPClient();

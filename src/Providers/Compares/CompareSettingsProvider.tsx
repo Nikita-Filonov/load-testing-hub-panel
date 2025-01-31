@@ -29,7 +29,7 @@ const CompareSettingsContext = React.createContext<CompareSettingsContextProps |
 const CompareSettingsProvider: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();
   const { loading, handleAPIResponse } = useAPIResponseHandler({
-    provider: CompareSettingsProvider.name,
+    provider: 'CompareSettingsProvider',
     defaultLoading: {
       getCompareSettings: false,
       updateCompareSettings: false

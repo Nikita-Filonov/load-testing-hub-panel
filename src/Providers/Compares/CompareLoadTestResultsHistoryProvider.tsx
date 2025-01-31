@@ -47,7 +47,7 @@ const CompareLoadTestResultsHistoryContext = React.createContext<CompareLoadTest
 const CompareLoadTestResultsHistoryProvider: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();
   const { loading, handleAPIResponse } = useAPIResponseHandler({
-    provider: CompareLoadTestResultsHistoryProvider.name,
+    provider: 'CompareLoadTestResultsHistoryProvider',
     defaultLoading: {
       getCompareLoadTestResultsHistoryResponseTimes: false,
       getCompareLoadTestResultsHistoryNumberOfUsers: false,

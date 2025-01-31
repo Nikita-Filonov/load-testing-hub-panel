@@ -21,7 +21,7 @@ const AverageAnalyticsContext = React.createContext<AverageAnalyticsContextProps
 const AverageAnalyticsProvider: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();
   const { loading, handleAPIResponse } = useAPIResponseHandler({
-    provider: AverageAnalyticsProvider.name,
+    provider: 'AverageAnalyticsProvider',
     defaultLoading: { getAverageAnalytics: false }
   });
   const averageAnalyticsHTTPClient = new AverageAnalyticsHTTPClient();

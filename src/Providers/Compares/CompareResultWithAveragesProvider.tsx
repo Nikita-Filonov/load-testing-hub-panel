@@ -25,7 +25,7 @@ const CompareResultWithAveragesContext = React.createContext<CompareResultWithAv
 const CompareResultWithAveragesProvider: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();
   const { loading, handleAPIResponse } = useAPIResponseHandler({
-    provider: CompareResultWithAveragesProvider.name,
+    provider: 'CompareResultWithAveragesProvider',
     defaultLoading: { getCompareResultWithAverages: false }
   });
   const compareResultWithAveragesHTTPClient = new CompareResultWithAveragesHTTPClient();

@@ -21,7 +21,7 @@ const LoadTestResultsHistoryContext = React.createContext<LoadTestResultsHistory
 const LoadTestResultsHistoryProvider: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();
   const { loading, handleAPIResponse } = useAPIResponseHandler({
-    provider: LoadTestResultsHistoryProvider.name,
+    provider: 'LoadTestResultsHistoryProvider',
     defaultLoading: { getLoadTestResultsHistory: false }
   });
   const loadTestResultsHistoryHTTPClient = new LoadTestResultsHistoryHTTPClient();

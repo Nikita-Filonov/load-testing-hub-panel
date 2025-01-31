@@ -25,7 +25,7 @@ const CompareResultWithScenarioContext = React.createContext<CompareResultWithSc
 const CompareResultWithScenarioProvider: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();
   const { loading, handleAPIResponse } = useAPIResponseHandler({
-    provider: CompareResultWithScenarioProvider.name,
+    provider: 'CompareResultWithScenarioProvider',
     defaultLoading: { getCompareResultWithScenario: false }
   });
   const compareResultWithScenarioHTTPClient = new CompareResultWithScenarioHTTPClient();

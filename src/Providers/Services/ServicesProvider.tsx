@@ -48,7 +48,7 @@ const ServicesContext = React.createContext<ServicesContextProps | null>(null);
 const ServicesProvider: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();
   const { loading, handleAPIResponse } = useAPIResponseHandler({
-    provider: ServicesProvider.name,
+    provider: 'ServicesProvider',
     defaultLoading: {
       getService: false,
       getServices: false,

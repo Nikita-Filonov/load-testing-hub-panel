@@ -28,7 +28,7 @@ const CompareResultWithResultsContext = React.createContext<CompareResultWithRes
 const CompareResultWithResultsProvider: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();
   const { loading, handleAPIResponse } = useAPIResponseHandler({
-    provider: CompareResultWithResultsProvider.name,
+    provider: 'CompareResultWithResultsProvider',
     defaultLoading: { getCompareResultWithResults: false }
   });
   const compareResultWithResultsHTTPClient = new CompareResultWithResultsHTTPClient();

@@ -25,7 +25,7 @@ const CompareMethodWithScenarioContext = React.createContext<CompareMethodWithSc
 const CompareMethodWithScenarioProvider: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();
   const { loading, handleAPIResponse } = useAPIResponseHandler({
-    provider: CompareMethodWithScenarioProvider.name,
+    provider: 'CompareMethodWithScenarioProvider',
     defaultLoading: { getCompareMethodWithScenario: false }
   });
   const compareMethodWithScenarioHTTPClient = new CompareMethodWithScenarioHTTPClient();
