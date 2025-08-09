@@ -25,8 +25,9 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
-          context: .
           push: true
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/load-testing-hub-panel:latest
             ${{ secrets.DOCKER_USERNAME }}/load-testing-hub-panel:${{ github.ref_name }}
+          context: .
+          platforms: linux/amd64,linux/arm64
