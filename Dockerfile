@@ -1,54 +1,26 @@
-# ===== Stage 1: Build React application =====
-FROM node:20-alpine AS build
+FROM node:20-alpine
 
-# Set working directory inside the container
+# Set the working directory inside the container
 WORKDIR /app
 
-# Enable corepack (to manage Yarn versions)
+# Enable corepack (manages Yarn versions)
 RUN corepack enable
 
-# Copy dependency files
+# Copy dependency files first for better caching
 COPY package.json yarn.lock ./
 
-# Install dependencies (frozen lockfile to ensure reproducible builds)
-RUN yarn config set network-timeout 600000 -g
-RUN yarn install --frozen-lockfile --non-interactive
+# Install dependencies and production server packages in one layer
+RUN yarn install --frozen-lockfile --non-interactive \
+    && yarn add express express-favicon
 
 # Copy the rest of the application source code
 COPY . .
 
-# Build-time arguments with default values (can be overridden via --build-arg)
-ARG SERVER_URL="http://localhost:8000"
-ARG API_VERSION="/api/v1"
-ARG DURATION_FORMAT="m[m]s[s]"
-ARG API_DATE_FORMAT="YYYY-MM-DD"
-ARG API_TIME_FORMAT="HH:mm:ss"
-ARG PICKER_DATE_FORMAT="dd.MM.yyyy"
-ARG PICKER_TIME_FORMAT="HH:mm"
-
-# Set environment variables for CRA build
-ENV REACT_APP_SERVER_URL=${SERVER_URL}
-ENV REACT_APP_API_VERSION=${API_VERSION}
-ENV REACT_APP_DURATION_FORMAT=${DURATION_FORMAT}
-ENV REACT_APP_API_DATE_FORMAT=${API_DATE_FORMAT}
-ENV REACT_APP_API_TIME_FORMAT=${API_TIME_FORMAT}
-ENV REACT_APP_PICKER_DATE_FORMAT=${PICKER_DATE_FORMAT}
-ENV REACT_APP_PICKER_TIME_FORMAT=${PICKER_TIME_FORMAT}
-
-# Build the production version of the React app
+# Build the production-ready React application
 RUN DISABLE_ESLINT_PLUGIN=true yarn build
 
-# ===== Stage 2: Serve static files with Nginx =====
-FROM nginx:alpine
+# Expose the port defined in server.js (13100)
+EXPOSE 13100
 
-# Copy custom nginx configuration
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-# Copy the build output from the previous stage
-COPY --from=build /app/build /usr/share/nginx/html
-
-# Expose port 80 for HTTP traffic
-EXPOSE 80
-
-# Default command to run Nginx in the foreground
-CMD ["nginx", "-g", "daemon off;"]
+# Start the custom Express server
+CMD ["node", "server.js"]
