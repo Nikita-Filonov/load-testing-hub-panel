@@ -10,7 +10,8 @@ RUN corepack enable
 COPY package.json yarn.lock ./
 
 # Install dependencies and production server packages in one layer
-RUN yarn install --frozen-lockfile --non-interactive \
+RUN yarn config set network-timeout 1000000 -g \
+    && yarn install --frozen-lockfile --non-interactive \
     && yarn add express express-favicon
 
 # Copy the rest of the application source code
