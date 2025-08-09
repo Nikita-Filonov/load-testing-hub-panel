@@ -22,7 +22,7 @@ app.get('/config', function (_, res) {
   });
 });
 
-app.get('/*', function (req, res) {
+app.get('/*splat', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
