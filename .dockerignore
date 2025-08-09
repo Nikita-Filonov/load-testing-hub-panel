@@ -1,0 +1,10 @@
+node_modules
+build
+.git
+.gitignore
+Dockerfile*
+docker-compose*
+npm-debug.log
+pnpm-lock.yaml
+.vscode
+.DS_Store
