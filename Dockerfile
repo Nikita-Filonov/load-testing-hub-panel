@@ -11,6 +11,7 @@ RUN corepack enable
 COPY package.json yarn.lock ./
 
 # Install dependencies (frozen lockfile to ensure reproducible builds)
+RUN yarn config set network-timeout 600000 -g
 RUN yarn install --frozen-lockfile --non-interactive
 
 # Copy the rest of the application source code
