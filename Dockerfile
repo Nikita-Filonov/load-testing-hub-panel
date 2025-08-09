@@ -35,7 +35,7 @@ ENV REACT_APP_PICKER_DATE_FORMAT=${PICKER_DATE_FORMAT}
 ENV REACT_APP_PICKER_TIME_FORMAT=${PICKER_TIME_FORMAT}
 
 # Build the production version of the React app
-RUN yarn build
+RUN DISABLE_ESLINT_PLUGIN=true yarn build
 
 # ===== Stage 2: Serve static files with Nginx =====
 FROM nginx:alpine
