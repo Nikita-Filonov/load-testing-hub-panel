@@ -1,6 +1,7 @@
 export enum IntegrationSystemType {
   Kibana = 'KIBANA',
-  Grafana = 'GRAFANA'
+  Grafana = 'GRAFANA',
+  Kubernetes = 'KUBERNETES'
 }
 
 export enum IntegrationEnvironmentType {

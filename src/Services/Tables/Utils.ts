@@ -18,44 +18,48 @@ export const getDefaultCoreTableSettings = (): CoreTableSettings => ({
   },
   [TableType.MethodResultsStatisticsTable]: {
     rows: [
-      { index: 0, value: 'method', hidden: false },
-      { index: 1, value: MetricKey.MaxResponseTime, hidden: false },
-      { index: 2, value: MetricKey.MinResponseTime, hidden: false },
-      { index: 3, value: MetricKey.MedianResponseTime, hidden: false },
-      { index: 4, value: MetricKey.AverageResponseTime, hidden: false },
-      { index: 5, value: MetricKey.NumberOfRequests, hidden: false },
-      { index: 6, value: MetricKey.NumberOfFailures, hidden: false },
-      { index: 7, value: MetricKey.RequestsPerSecond, hidden: false },
-      { index: 8, value: MetricKey.FailuresPerSecond, hidden: false },
-      { index: 9, value: MetricKey.AverageContentLength, hidden: false }
+      { index: 0, value: MetricKey.Method, hidden: false },
+      { index: 1, value: MetricKey.Protocol, hidden: false },
+      { index: 2, value: MetricKey.MaxResponseTime, hidden: false },
+      { index: 3, value: MetricKey.MinResponseTime, hidden: false },
+      { index: 4, value: MetricKey.MedianResponseTime, hidden: false },
+      { index: 5, value: MetricKey.AverageResponseTime, hidden: false },
+      { index: 6, value: MetricKey.NumberOfRequests, hidden: false },
+      { index: 7, value: MetricKey.NumberOfFailures, hidden: false },
+      { index: 8, value: MetricKey.RequestsPerSecond, hidden: false },
+      { index: 9, value: MetricKey.FailuresPerSecond, hidden: false },
+      { index: 10, value: MetricKey.AverageContentLength, hidden: false }
     ],
     headers: [
-      { index: 0, value: 'Method', hidden: false, orderKey: 'method' },
-      { index: 1, value: MetricName.MaxResponseTime, hidden: false, orderKey: MetricKey.MaxResponseTime },
-      { index: 2, value: MetricName.MinResponseTime, hidden: false, orderKey: MetricKey.MinResponseTime },
-      { index: 3, value: MetricName.MedianResponseTime, hidden: false, orderKey: MetricKey.MedianResponseTime },
-      { index: 4, value: MetricName.AverageResponseTime, hidden: false, orderKey: MetricKey.AverageResponseTime },
-      { index: 5, value: MetricName.NumberOfRequests, hidden: false, orderKey: MetricKey.NumberOfRequests },
-      { index: 6, value: MetricName.NumberOfFailures, hidden: false, orderKey: MetricKey.NumberOfFailures },
-      { index: 7, value: MetricName.RequestsPerSecond, hidden: false, orderKey: MetricKey.RequestsPerSecond },
-      { index: 8, value: MetricName.FailuresPerSecond, hidden: false, orderKey: MetricKey.FailuresPerSecond },
-      { index: 9, value: MetricName.AverageContentLength, hidden: false, orderKey: MetricKey.AverageContentLength }
+      { index: 0, value: MetricName.Method, hidden: false, orderKey: MetricName.Method },
+      { index: 1, value: MetricName.Protocol, hidden: false, orderKey: MetricName.Protocol },
+      { index: 2, value: MetricName.MaxResponseTime, hidden: false, orderKey: MetricKey.MaxResponseTime },
+      { index: 3, value: MetricName.MinResponseTime, hidden: false, orderKey: MetricKey.MinResponseTime },
+      { index: 4, value: MetricName.MedianResponseTime, hidden: false, orderKey: MetricKey.MedianResponseTime },
+      { index: 5, value: MetricName.AverageResponseTime, hidden: false, orderKey: MetricKey.AverageResponseTime },
+      { index: 6, value: MetricName.NumberOfRequests, hidden: false, orderKey: MetricKey.NumberOfRequests },
+      { index: 7, value: MetricName.NumberOfFailures, hidden: false, orderKey: MetricKey.NumberOfFailures },
+      { index: 8, value: MetricName.RequestsPerSecond, hidden: false, orderKey: MetricKey.RequestsPerSecond },
+      { index: 9, value: MetricName.FailuresPerSecond, hidden: false, orderKey: MetricKey.FailuresPerSecond },
+      { index: 10, value: MetricName.AverageContentLength, hidden: false, orderKey: MetricKey.AverageContentLength }
     ]
   },
   [TableType.MethodResultsPercentilesTable]: {
     rows: [
-      { index: 0, value: 'method', hidden: false },
-      { index: 1, value: MetricKey.ResponseTimePercentile50, hidden: false },
-      { index: 2, value: MetricKey.ResponseTimePercentile60, hidden: false },
-      { index: 3, value: MetricKey.ResponseTimePercentile70, hidden: false },
-      { index: 4, value: MetricKey.ResponseTimePercentile80, hidden: false },
-      { index: 5, value: MetricKey.ResponseTimePercentile90, hidden: false },
-      { index: 6, value: MetricKey.ResponseTimePercentile95, hidden: false },
-      { index: 7, value: MetricKey.ResponseTimePercentile99, hidden: false },
-      { index: 8, value: MetricKey.ResponseTimePercentile100, hidden: false }
+      { index: 0, value: MetricKey.Method, hidden: false },
+      { index: 1, value: MetricKey.Protocol, hidden: false },
+      { index: 2, value: MetricKey.ResponseTimePercentile50, hidden: false },
+      { index: 3, value: MetricKey.ResponseTimePercentile60, hidden: false },
+      { index: 4, value: MetricKey.ResponseTimePercentile70, hidden: false },
+      { index: 5, value: MetricKey.ResponseTimePercentile80, hidden: false },
+      { index: 6, value: MetricKey.ResponseTimePercentile90, hidden: false },
+      { index: 7, value: MetricKey.ResponseTimePercentile95, hidden: false },
+      { index: 8, value: MetricKey.ResponseTimePercentile99, hidden: false },
+      { index: 9, value: MetricKey.ResponseTimePercentile100, hidden: false }
     ],
     headers: [
-      { index: 0, value: 'Method', hidden: false, orderKey: 'method' },
+      { index: 0, value: MetricName.Method, hidden: false, orderKey: MetricKey.Method },
+      { index: 1, value: MetricName.Protocol, hidden: false, orderKey: MetricKey.Protocol },
       {
         index: 1,
         value: MetricName.ResponseTimePercentile50,

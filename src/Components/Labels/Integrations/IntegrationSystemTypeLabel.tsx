@@ -3,6 +3,7 @@ import { FC, ReactElement } from 'react';
 import { IntegrationSystemType, ShortIntegration } from '../../../Models/Integrations/Integrations';
 import { GrafanaIcon } from '../../Icons/Integrations/GrafanaIcon';
 import { KibanaIcon } from '../../Icons/Integrations/KibanaIcon';
+import { KubernetesIcon } from '../../Icons/Integrations/KubernetesIcon';
 
 type Props = {
   integration: ShortIntegration;
@@ -10,7 +11,8 @@ type Props = {
 
 export const MAP_INTEGRATION_SYSTEM_TYPE_TO_ICON: Record<IntegrationSystemType, ReactElement> = {
   [IntegrationSystemType.Kibana]: <KibanaIcon />,
-  [IntegrationSystemType.Grafana]: <GrafanaIcon />
+  [IntegrationSystemType.Grafana]: <GrafanaIcon />,
+  [IntegrationSystemType.Kubernetes]: <KubernetesIcon />
 };
 
 export const IntegrationSystemTypeLabel: FC<Props> = ({ integration }) => {

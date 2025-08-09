@@ -4,6 +4,8 @@ import { RequestsPerSecond } from './RequestsPerSecond';
 import { NumberOfRequests } from './NumberOfRequests';
 
 export enum MetricKey {
+  Method = 'method',
+  Protocol = 'protocol',
   NumberOfUsers = 'numberOfUsers',
   MinResponseTime = 'minResponseTime',
   MaxResponseTime = 'maxResponseTime',
@@ -25,6 +27,8 @@ export enum MetricKey {
 }
 
 export enum MetricName {
+  Method = 'Method',
+  Protocol = 'Protocol',
   NumberOfUsers = 'Number of users',
   MinResponseTime = 'Min response time (ms)',
   MaxResponseTime = 'Max response time (ms)',

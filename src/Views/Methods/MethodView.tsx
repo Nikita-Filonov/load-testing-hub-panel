@@ -41,7 +41,7 @@ export const MethodView: FC<MethodViewProps> = ({ method }) => {
           </Typography>
         </Grid2>
         <Grid2 size={{ xs: 12 }}>
-          <MethodResultProtocolLabel />
+          <MethodResultProtocolLabel protocol={method.protocol} />
         </Grid2>
       </Grid2>
     </BasePaper>

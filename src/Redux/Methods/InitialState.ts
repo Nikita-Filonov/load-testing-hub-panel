@@ -5,6 +5,7 @@ import { PercentilesAnalytics } from '../../Models/Analytics/PercentilesAnalytic
 import { ResponseTimesAnalytics } from '../../Models/Analytics/ResponseTimesAnalytics';
 import { NumberOfRequestsAnalytics } from '../../Models/Analytics/NumberOfRequestsAnalytics';
 import { RequestsPerSecondAnalytics } from '../../Models/Analytics/RequestsPerSecondAnalytics';
+import { ProtocolType } from '../../Models/Results/MethodResults';
 
 export type MethodsInitialState = {
   methods: Method[];
@@ -21,6 +22,7 @@ export const INITIAL_METHODS: MethodsInitialState = {
   shortMethods: [],
   methodDetails: {
     method: '',
+    protocol: ProtocolType.GRPC,
     ...getDefaultMetrics(),
     ...getDefaultContentLength()
   },

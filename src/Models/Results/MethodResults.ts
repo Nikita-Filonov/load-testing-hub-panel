@@ -2,6 +2,12 @@ import { Metrics } from '../Metrics/Base';
 import { ContentLength } from '../Metrics/ContentLength';
 import { ResultCompare } from './ResultCompare';
 
+export enum ProtocolType {
+  HTTP = 'http',
+  GRPC = 'grpc',
+  KAFKA = 'kafka'
+}
+
 export interface MethodResultSummaryCompare {
   compareWithAverage: ResultCompare;
   compareWithPrevious: ResultCompare;
@@ -10,7 +16,7 @@ export interface MethodResultSummaryCompare {
 export interface MethodResult extends Metrics, ContentLength {
   id: number;
   method: string;
-  protocol: string;
+  protocol: ProtocolType;
 }
 
 export interface MethodResultDetails extends MethodResult {

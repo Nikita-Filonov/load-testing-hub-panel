@@ -29,7 +29,6 @@ const IntegrationsMenu: FC<Props> = (props) => {
 
   const onOpenIntegrationUrl = async (integration: ShortIntegration) => {
     const result = await buildIntegrationURL({
-      serviceId: service.id,
       systemType: integration.systemType,
       integrationId: integration.id,
       loadTestResultId

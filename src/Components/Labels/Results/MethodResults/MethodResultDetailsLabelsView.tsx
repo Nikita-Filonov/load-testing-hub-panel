@@ -11,7 +11,7 @@ type Props = {
 export const MethodResultDetailsLabelsView: FC<Props> = ({ details }) => {
   return (
     <BaseLabelsView listItemSx={(index) => ({ ml: index === 0 ? 0 : 0.5 })} containerSx={{ ml: 0 }}>
-      <MethodResultProtocolLabel />
+      <MethodResultProtocolLabel protocol={details.protocol} />
       {details.compare && <ResultCompareLabel compare={details.compare.compareWithAverage} context={'average'} />}
       {details.compare && <ResultCompareLabel compare={details.compare.compareWithPrevious} context={'previous'} />}
     </BaseLabelsView>

@@ -1,5 +1,5 @@
 {
-  "name": "load-testing-metrics-panel",
+  "name": "load-testing-hub-panel",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

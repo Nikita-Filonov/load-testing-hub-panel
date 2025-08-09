@@ -1,5 +1,11 @@
 import { BaseLabel } from '../../BaseLabel';
+import { ProtocolType } from '../../../../Models/Results/MethodResults';
+import { FC } from 'react';
 
-export const MethodResultProtocolLabel = () => {
-  return <BaseLabel label={'GRPC'} color={'info'} />;
+type Props = {
+  protocol: ProtocolType;
+};
+
+export const MethodResultProtocolLabel: FC<Props> = ({ protocol }) => {
+  return <BaseLabel label={protocol} color={'info'} />;
 };

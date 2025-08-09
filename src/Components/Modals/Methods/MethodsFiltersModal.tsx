@@ -4,8 +4,10 @@ import { BaseTextField } from '../../TextFields/BaseTextField';
 import { FiltersModal } from '../FiltersModal';
 import { BaseDateTimePicker } from '../../Pickers/BaseDateTimePicker';
 import { getDefaultMethodsFilters } from '../../../Services/Methods/Utils';
+import { ProtocolTypeSelect } from '../../Selects/Results/MethodResults/ProtocolTypeSelect';
+import { ProtocolType } from '../../../Models/Results/MethodResults';
 
-export type MethodsFilters = Pick<GetMethodsQuery, 'method' | 'endDatetime' | 'startDatetime'>;
+export type MethodsFilters = Pick<GetMethodsQuery, 'method' | 'protocol' | 'endDatetime' | 'startDatetime'>;
 
 type MethodsFiltersModalProps = {
   modal: boolean;
@@ -27,6 +29,8 @@ export const MethodsFiltersModal: FC<MethodsFiltersModalProps> = (props) => {
   const onClose = () => setModal(false);
 
   const onMethod = (method: string) => setFilters({ ...filters, method });
+
+  const onProtocol = (protocol: ProtocolType | null) => setFilters({ ...filters, protocol });
 
   const onStartDatetime = (startDatetime: string | null) => startDatetime && setFilters({ ...filters, startDatetime });
 
@@ -50,6 +54,7 @@ export const MethodsFiltersModal: FC<MethodsFiltersModalProps> = (props) => {
       onConfirm={onConfirm}
       onResetFilters={onResetFilters}>
       <BaseTextField sx={{ mt: 0 }} label={'Method'} value={filters.method || ''} onChange={onMethod} />
+      <ProtocolTypeSelect protocol={filters.protocol} onSelectProtocol={onProtocol} />
       <BaseDateTimePicker
         sx={{ mt: 3 }}
         label={'Start datetime'}

@@ -33,7 +33,7 @@ const MethodDetailsView: FC<MethodDetailsViewProps> = (props) => {
     <WidgetView
       sx={{ mt: 3 }}
       title={`Average values for ${getMethodLabel(details.method)} method`}
-      label={<MethodResultProtocolLabel />}
+      label={<MethodResultProtocolLabel protocol={details.protocol} />}
       loading={loading.getMethodDetails}>
       <BaseMethodResultDetailsView details={details} />
     </WidgetView>

@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { ShortMethod } from '../../../Models/Methods/Methods';
 import { BaseSelect } from '../BaseSelect';
+import { ShortMethodSelectItem } from './ShortMethodSelectItem';
 
 type ShortMethodSelectProps = {
   method: string;
@@ -18,7 +19,11 @@ export const ShortMethodSelect: FC<ShortMethodSelectProps> = (props) => {
       label={'Method'}
       value={method}
       onSelect={onSelect}
-      options={methods.map((method) => ({ value: method.method, title: method.method }))}
+      options={methods.map((method) => ({
+        value: method.method,
+        title: method.method,
+        content: <ShortMethodSelectItem method={method} />
+      }))}
     />
   );
 };

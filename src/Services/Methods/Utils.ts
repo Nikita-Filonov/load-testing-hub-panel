@@ -16,6 +16,7 @@ export const buildMethodURL = (method: string, serviceId: number): string => {
 
 export const getDefaultMethodsFilters = (): MethodsFilters => ({
   method: null,
+  protocol: null,
   endDatetime: getDefaultAnalyticsEndDatetime(),
   startDatetime: getDefaultAnalyticsStartDatetime()
 });

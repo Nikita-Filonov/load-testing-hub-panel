@@ -3,9 +3,11 @@ import { NumberOfRequests } from '../Metrics/NumberOfRequests';
 import { RequestsPerSecond } from '../Metrics/RequestsPerSecond';
 import { Percentiles } from '../Metrics/Percentiles';
 import { ContentLength } from '../Metrics/ContentLength';
+import { ProtocolType } from '../Results/MethodResults';
 
 export interface ShortMethod {
   method: string;
+  protocol: ProtocolType;
 }
 
 export interface Method extends ShortMethod, ResponseTimes, NumberOfRequests, RequestsPerSecond {}
@@ -14,6 +16,7 @@ export interface MethodDetails extends Method, Percentiles, ContentLength {}
 
 export interface GetMethodsQuery {
   method?: string | null;
+  protocol: ProtocolType | null;
   serviceId: number;
   scenarioId: number | null;
   endDatetime: string;

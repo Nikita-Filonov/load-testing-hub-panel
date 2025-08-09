@@ -1,4 +1,4 @@
-import { MethodResult, MethodResultDetails } from '../../../Models/Results/MethodResults';
+import { MethodResult, MethodResultDetails, ProtocolType } from '../../../Models/Results/MethodResults';
 import { getDefaultMetrics } from '../../../Services/Metrics/Base';
 import { getDefaultContentLength } from '../../../Services/Metrics/ContentLength';
 
@@ -13,7 +13,7 @@ export const INITIAL_METHOD_RESULTS: MethodResultsInitialState = {
     id: 0,
     method: '',
     compare: null,
-    protocol: '',
+    protocol: ProtocolType.GRPC,
     ...getDefaultMetrics(),
     ...getDefaultContentLength()
   }

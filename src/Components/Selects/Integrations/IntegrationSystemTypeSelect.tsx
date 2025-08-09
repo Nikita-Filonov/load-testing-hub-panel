@@ -20,7 +20,8 @@ export const IntegrationSystemTypeSelect: FC<Props> = (props) => {
       onSelect={onSelect}
       options={[
         { value: IntegrationSystemType.Kibana, title: 'Kibana' },
-        { value: IntegrationSystemType.Grafana, title: 'Grafana' }
+        { value: IntegrationSystemType.Grafana, title: 'Grafana' },
+        { value: IntegrationSystemType.Kubernetes, title: 'Kubernetes' }
       ]}
     />
   );
