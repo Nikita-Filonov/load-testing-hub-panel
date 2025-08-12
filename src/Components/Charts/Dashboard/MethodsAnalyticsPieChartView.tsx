@@ -25,7 +25,7 @@ export const MethodsAnalyticsPieChartView = <Data extends DataType>(props: Metho
   return (
     <BaseChartView title={title} loading={loading}>
       <BasePieChart
-        series={data.map((data) => ({ label: getMethodLabel(data.method), value: data[metric] as number }))}
+        series={data.map((data) => ({ label: getMethodLabel(data), value: data[metric] as number }))}
         valueFormatter={valueFormatter}
       />
     </BaseChartView>

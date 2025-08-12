@@ -17,12 +17,14 @@ import { GetMethodDetailsAnalyticsQuery } from '../../Models/Methods/Analytics';
 import { PercentilesBarChartView } from '../../Components/Charts/Metrics/PercentilesBarChartView';
 import { getMethodLabel } from '../../Services/Methods/Utils';
 import { MetricGroup } from '../../Models/Metrics/Base';
+import { ProtocolType } from '../../Models/Results/MethodResults';
 
 type MethodChartsViewProps = {
   method: string;
   filters: AnalyticsFilters;
   service: Service;
   scenario: Scenario;
+  protocol: ProtocolType;
   percentilesAnalytics: PercentilesAnalytics[];
   responseTimesAnalytics: ResponseTimesAnalytics[];
   numberOfRequestsAnalytics: NumberOfRequestsAnalytics[];
@@ -35,6 +37,7 @@ const MethodChartsView: FC<MethodChartsViewProps> = (props) => {
     filters,
     service,
     scenario,
+    protocol,
     percentilesAnalytics,
     responseTimesAnalytics,
     numberOfRequestsAnalytics,
@@ -69,25 +72,25 @@ const MethodChartsView: FC<MethodChartsViewProps> = (props) => {
       <PercentilesBarChartView
         type={ChartType.MethodPercentilesBarChart}
         data={percentilesAnalytics}
-        title={`${MetricGroup.Percentiles} of ${getMethodLabel(method)}`}
+        title={`${MetricGroup.Percentiles} of ${getMethodLabel({ method, protocol })}`}
         loading={loading.getMethodDetailsPercentilesAnalytics}
       />
       <RequestsPerSecondBarChartView
         type={ChartType.MethodRequestsPerSecondBarChart}
         data={requestsPerSecondAnalytics}
-        title={`Total requests per second of ${getMethodLabel(method)}`}
+        title={`Total requests per second of ${getMethodLabel({ method, protocol })}`}
         loading={loading.getMethodDetailsResponseTimesAnalytics}
       />
       <NumberOfRequestsBarChartView
         type={ChartType.MethodNumberOfRequestsBarChart}
         data={numberOfRequestsAnalytics}
-        title={`Total requests of ${getMethodLabel(method)}`}
+        title={`Total requests of ${getMethodLabel({ method, protocol })}`}
         loading={loading.getMethodDetailsNumberOfRequestsAnalytics}
       />
       <ResponseTimesBarChartView
         type={ChartType.MethodResponseTimesBarChart}
         data={responseTimesAnalytics}
-        title={`${MetricGroup.ResponseTimes} of ${getMethodLabel(method)}`}
+        title={`${MetricGroup.ResponseTimes} of ${getMethodLabel({ method, protocol })}`}
         loading={loading.getMethodDetailsRequestsPerSecondAnalytics}
       />
     </Fragment>

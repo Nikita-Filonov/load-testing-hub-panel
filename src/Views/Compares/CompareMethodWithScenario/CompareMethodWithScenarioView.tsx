@@ -9,6 +9,7 @@ import { MethodResultCompareView } from '../MethodResultCompareView';
 import { CompareWidgetType } from '../../../Models/Compares/CompareTableSettings';
 import { useCompareMethodWithScenario } from '../../../Providers/Compares/CompareMethodWithScenarioProvider';
 import { getMethodLabel } from '../../../Services/Methods/Utils';
+import { ProtocolType } from '../../../Models/Results/MethodResults';
 
 type CompareMethodWithScenarioViewProps = {
   method: string;
@@ -16,22 +17,23 @@ type CompareMethodWithScenarioViewProps = {
   compare: MethodResultCompare;
   service: Service;
   scenario: Scenario;
+  protocol: ProtocolType;
 };
 
 const CompareMethodWithScenarioView: FC<CompareMethodWithScenarioViewProps> = (props) => {
-  const { method, filters, compare, service, scenario } = props;
+  const { method, filters, compare, service, scenario, protocol } = props;
   const { loading, getCompareMethodWithScenario } = useCompareMethodWithScenario();
 
   if (!scenario.id) return null;
 
   useEffect(() => {
-    getCompareMethodWithScenario({ ...filters, method, serviceId: service.id, scenarioId: scenario.id });
-  }, [filters, method, service.id, scenario.id]);
+    getCompareMethodWithScenario({ ...filters, method, protocol, serviceId: service.id, scenarioId: scenario.id });
+  }, [filters, method, protocol, service.id, scenario.id]);
 
   return (
     <MethodResultCompareView
       sx={{ mt: 3 }}
-      title={`Compare ${getMethodLabel(method)} method with scenario ${scenario.name}`}
+      title={`Compare ${getMethodLabel({ method, protocol })} method with scenario ${scenario.name}`}
       loading={loading.getCompareMethodWithScenario}
       compare={compare}
       widgetType={CompareWidgetType.CompareMethodWithScenario}

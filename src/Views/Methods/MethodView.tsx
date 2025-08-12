@@ -17,10 +17,10 @@ export const MethodView: FC<MethodViewProps> = ({ method }) => {
     <BasePaper sx={{ mb: 3 }}>
       <Grid2 container spacing={2}>
         <Grid2 size={{ xs: 10 }} display={'flex'} alignItems={'center'}>
-          <MethodTitleLink method={method.method} />
+          <MethodTitleLink method={method.method} protocol={method.protocol} />
         </Grid2>
         <Grid2 size={{ xs: 2 }} display={'flex'} alignItems={'center'} justifyContent={'flex-end'}>
-          <MethodViewMenuItem method={method.method} />
+          <MethodViewMenuItem method={method.method} protocol={method.protocol} />
         </Grid2>
         <Grid2 size={{ xs: 6 }}>
           <Typography variant={'body2'}>

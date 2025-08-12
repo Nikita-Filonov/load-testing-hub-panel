@@ -11,7 +11,5 @@ type MethodCellProps = {
 export const MethodCell: FC<MethodCellProps> = (props) => {
   const { compare } = props;
 
-  return (
-    <BaseTableCell text={getMethodLabel(compare.method)} icon={<CompareLabel sx={{ ml: 1.5 }} compare={compare} />} />
-  );
+  return <BaseTableCell text={getMethodLabel(compare)} icon={<CompareLabel sx={{ ml: 1.5 }} compare={compare} />} />;
 };

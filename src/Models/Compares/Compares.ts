@@ -1,4 +1,5 @@
 import { CompareExplanationSummary } from './CompareExplanation';
+import { ProtocolType } from '../Results/MethodResults';
 
 export interface CompareMetric {
   actual: number;
@@ -30,6 +31,7 @@ export interface BaseCompare {
 
 export interface MethodResultCompare extends BaseCompare {
   method: string;
+  protocol: ProtocolType;
   averageContentLength: CompareMetric;
 }
 

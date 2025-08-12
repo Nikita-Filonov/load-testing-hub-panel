@@ -34,11 +34,11 @@ const MethodResultDetailsView: FC<MethodResultViewProps> = ({ details, scenario,
     };
   }, [methodResultId, scenario.id]);
 
-  const onMethodAnalytics = () => navigateMethodDetails(details.method);
+  const onMethodAnalytics = () => navigateMethodDetails(details);
 
   return (
     <WidgetView
-      title={`Values for ${getMethodLabel(details.method)} method`}
+      title={`Values for ${getMethodLabel(details)} method`}
       label={<MethodResultDetailsLabelsView details={details} />}
       loading={loading.getMethodResultDetails}
       actions={[{ icon: <WebhookIcon fontSize={'small'} />, onClick: onMethodAnalytics }]}>

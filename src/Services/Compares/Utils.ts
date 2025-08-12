@@ -4,6 +4,7 @@ import { BaseCompare, CompareMetric, LoadTestResultCompare, MethodResultCompare 
 import { getDefaultMetrics } from '../Metrics/Base';
 import { getDefaultContentLength } from '../Metrics/ContentLength';
 import { getDefaultNumberOfUsers } from '../Metrics/NumberOfUsers';
+import { ProtocolType } from '../../Models/Results/MethodResults';
 
 export const sumCompareSettingsWeights = (weights?: CompareSettingsWeights): number => {
   if (!weights) {
@@ -77,6 +78,7 @@ export const getDefaultBaseCompare = (): BaseCompare => {
 export const getDefaultMethodResultCompare = (): MethodResultCompare => ({
   ...getDefaultBaseCompare(),
   method: '',
+  protocol: ProtocolType.GRPC,
   averageContentLength: getDefaultCompareMetric()
 });
 

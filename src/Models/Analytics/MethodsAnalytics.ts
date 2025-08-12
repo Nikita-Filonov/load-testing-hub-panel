@@ -1,9 +1,11 @@
 import { ResponseTimes } from '../Metrics/ResponseTimes';
 import { NumberOfRequests } from '../Metrics/NumberOfRequests';
 import { RequestsPerSecond } from '../Metrics/RequestsPerSecond';
+import { ProtocolType } from '../Results/MethodResults';
 
 export interface MethodsAnalytics {
   method: string;
+  protocol: ProtocolType;
 }
 
 export interface MethodsResponseTimesAnalytics extends MethodsAnalytics, ResponseTimes {}

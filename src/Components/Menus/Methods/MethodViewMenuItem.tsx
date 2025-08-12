@@ -4,12 +4,14 @@ import { BaseMenu } from '../BaseMenu';
 import { FC, useState } from 'react';
 import { CopyDetailsURLMenuItem } from '../../MenuItems/CopyDetailsURLMenuItem';
 import { useMethodsNavigation } from '../../../Services/Methods/Hooks';
+import { ProtocolType } from '../../../Models/Results/MethodResults';
 
 type MethodViewMenuItemProps = {
   method: string;
+  protocol: ProtocolType;
 };
 
-export const MethodViewMenuItem: FC<MethodViewMenuItemProps> = ({ method }) => {
+export const MethodViewMenuItem: FC<MethodViewMenuItemProps> = ({ method, protocol }) => {
   const { getMethodURL, navigateMethodDetails } = useMethodsNavigation();
   const [menu, setMenu] = useState<null | HTMLElement>(null);
 
@@ -17,12 +19,12 @@ export const MethodViewMenuItem: FC<MethodViewMenuItemProps> = ({ method }) => {
 
   const onViewDetails = () => {
     onClose();
-    navigateMethodDetails(method);
+    navigateMethodDetails({ method, protocol });
   };
 
   const onCopyDetailsURL = async () => {
     onClose();
-    await navigator.clipboard.writeText(getMethodURL(method));
+    await navigator.clipboard.writeText(getMethodURL({ method, protocol }));
   };
 
   return (

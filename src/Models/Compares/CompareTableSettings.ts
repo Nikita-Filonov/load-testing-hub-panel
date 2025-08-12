@@ -14,7 +14,7 @@ export interface CompareTableRowSettings<T extends BaseCompare> {
   index: number;
   enabled: boolean;
   metricName: MetricName;
-  metricValue: keyof Omit<T, 'method' | 'compare' | 'highlight' | 'explanation'>;
+  metricValue: keyof Omit<T, 'method' | 'protocol' | 'compare' | 'highlight' | 'explanation'>;
 }
 
 export interface CompareTableSettings<T extends BaseCompare> {

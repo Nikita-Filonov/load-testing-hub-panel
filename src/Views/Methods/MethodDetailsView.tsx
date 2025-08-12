@@ -10,6 +10,7 @@ import { Service } from '../../Models/Services/Services';
 import { BaseMethodResultDetailsView } from '../Results/MethodResults/BaseMethodResultDetailsView';
 import { MethodResultProtocolLabel } from '../../Components/Labels/Results/MethodResults/MethodResultProtocolLabel';
 import { getMethodLabel } from '../../Services/Methods/Utils';
+import { ProtocolType } from '../../Models/Results/MethodResults';
 
 type MethodDetailsViewProps = {
   method: string;
@@ -17,22 +18,23 @@ type MethodDetailsViewProps = {
   filters: AnalyticsFilters;
   service: Service;
   scenario: Scenario;
+  protocol: ProtocolType;
 };
 
 const MethodDetailsView: FC<MethodDetailsViewProps> = (props) => {
-  const { method, details, filters, service, scenario } = props;
+  const { method, details, filters, service, scenario, protocol } = props;
   const { loading, getMethodDetails } = useMethods();
 
   useEffect(() => {
     if (method) {
-      getMethodDetails({ method, ...filters, serviceId: service.id, scenarioId: scenario.id });
+      getMethodDetails({ method, protocol, ...filters, serviceId: service.id, scenarioId: scenario.id });
     }
-  }, [method, filters, service.id, scenario.id]);
+  }, [method, filters, protocol, service.id, scenario.id]);
 
   return (
     <WidgetView
       sx={{ mt: 3 }}
-      title={`Average values for ${getMethodLabel(details.method)} method`}
+      title={`Average values for ${getMethodLabel(details)} method`}
       label={<MethodResultProtocolLabel protocol={details.protocol} />}
       loading={loading.getMethodDetails}>
       <BaseMethodResultDetailsView details={details} />

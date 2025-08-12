@@ -12,9 +12,11 @@ import {
   CompareMethodResultsHistoryLoading,
   useCompareMethodResultsHistory
 } from '../../../Providers/Compares/CompareMethodResultsHistoryProvider';
+import { ProtocolType } from '../../../Models/Results/MethodResults';
 
 type Props = {
   method: string;
+  protocol: ProtocolType;
   loadTestResultId: number;
   compareWithLoadTestResults: number[];
 };
@@ -53,7 +55,7 @@ const MAP_METRIC_KEY_TO_CHART_VIEW: MapKeyToChartViewProps<
 };
 
 export const CompareMethodResultsHistoryChartsView: FC<Props> = (props) => {
-  const { method, loadTestResultId, compareWithLoadTestResults } = props;
+  const { method, protocol, loadTestResultId, compareWithLoadTestResults } = props;
   const {
     loading,
     getCompareMethodResultsHistoryNumberOfUsers,
@@ -82,7 +84,7 @@ export const CompareMethodResultsHistoryChartsView: FC<Props> = (props) => {
   return (
     <ChartsWidgetView
       type={ChartWidgetType.CompareMethodResultsHistoryCharts}
-      title={`Comparison charts for ${getMethodLabel(method)} method`}
+      title={`Comparison charts for ${getMethodLabel({ method, protocol })} method`}
       extra={{ loading }}
       views={MAP_METRIC_KEY_TO_CHART_VIEW}
       allowClose

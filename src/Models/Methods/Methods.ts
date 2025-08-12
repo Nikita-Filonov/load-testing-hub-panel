@@ -29,6 +29,7 @@ export interface GetMethodsResponse {
 
 export interface GetMethodDetailsQuery {
   method: string;
+  protocol: ProtocolType;
   serviceId: number;
   scenarioId: number | null;
   endDatetime: string;

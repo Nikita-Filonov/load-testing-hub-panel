@@ -11,7 +11,7 @@ import CompareMethodWithScenarioView from '../../Views/Compares/CompareMethodWit
 import { CompareMethodWithScenarioProvider } from '../../Providers/Compares/CompareMethodWithScenarioProvider';
 
 const MethodDetailsPage = () => {
-  const { method } = useMethodDetailsNavigation();
+  const { method, protocol } = useMethodDetailsNavigation();
   const [filters, setFilters] = useState<AnalyticsFilters>({
     endDatetime: getDefaultAnalyticsEndDatetime(),
     startDatetime: getDefaultAnalyticsStartDatetime()
@@ -19,18 +19,20 @@ const MethodDetailsPage = () => {
 
   return (
     <MainLayout>
-      {method && <AnalyticsToolbarView title={'Method details'} filters={filters} setFilters={setFilters} />}
-      {method && (
+      {method && protocol && (
+        <AnalyticsToolbarView title={'Method details'} filters={filters} setFilters={setFilters} />
+      )}
+      {method && protocol && (
         <MethodsProvider>
-          <MethodDetailsView method={method} filters={filters} />
+          <MethodDetailsView method={method} filters={filters} protocol={protocol} />
           <CompareMethodWithScenarioProvider>
-            <CompareMethodWithScenarioView method={method} filters={filters} />
+            <CompareMethodWithScenarioView method={method} filters={filters} protocol={protocol} />
           </CompareMethodWithScenarioProvider>
         </MethodsProvider>
       )}
-      {method && (
+      {method && protocol && (
         <MethodsProvider>
-          <MethodChartsView method={method} filters={filters} />
+          <MethodChartsView method={method} filters={filters} protocol={protocol} />
         </MethodsProvider>
       )}
     </MainLayout>

@@ -15,7 +15,12 @@ type UpdateScenarioMethodSettingsFormProps = {
 export const UpdateScenarioMethodSettingsForm: FC<UpdateScenarioMethodSettingsFormProps> = (props) => {
   const { methods, settings, setSettings } = props;
 
-  const onMethod = (method: string) => setSettings({ ...settings, method });
+  const onMethod = (selectedMethod: string) => {
+    const method = methods.find((method) => method.method === selectedMethod);
+    if (method) {
+      setSettings({ ...settings, ...method });
+    }
+  };
 
   return (
     <Box>

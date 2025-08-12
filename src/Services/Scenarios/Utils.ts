@@ -7,6 +7,7 @@ import {
 import { getDefaultMetrics } from '../Metrics/Base';
 import { getDefaultNumberOfUsers } from '../Metrics/NumberOfUsers';
 import { getDefaultContentLength } from '../Metrics/ContentLength';
+import { ProtocolType } from '../../Models/Results/MethodResults';
 
 export const getDefaultUpdateScenarioRequest = (): UpdateScenarioRequest => ({
   name: '',
@@ -33,6 +34,7 @@ export const getDefaultScenarioResultSettings = (): ScenarioResultSettings => ({
 
 export const getDefaultScenarioMethodSettings = (): ScenarioMethodSettings => ({
   method: '',
+  protocol: ProtocolType.GRPC,
   ...getDefaultMetrics(),
   ...getDefaultContentLength()
 });

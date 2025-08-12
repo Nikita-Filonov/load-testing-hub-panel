@@ -20,7 +20,7 @@ export const ScenarioMethodSettingsListItem: FC<ScenarioMethodSettingsListItemPr
       menu={
         <ScenarioMethodSettingsListItemMenu onUpdateSettings={onUpdateSettings} onDeleteSettings={onDeleteSettings} />
       }
-      title={settings.method === '' ? 'unknown' : getMethodLabel(settings.method)}
+      title={settings.method === '' ? 'unknown' : getMethodLabel(settings)}
       onClick={onUpdateSettings}
     />
   );

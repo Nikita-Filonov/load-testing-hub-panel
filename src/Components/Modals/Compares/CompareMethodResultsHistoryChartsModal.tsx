@@ -22,13 +22,14 @@ export const CompareMethodResultsHistoryChartsModal: FC<Props> = (props) => {
     <BaseModal title={'Comparison charts'} modal={modal} setModal={setModal} maxWidth={'lg'}>
       <MethodResultCompareView
         sx={{ mt: 0 }}
-        title={`Comparison of ${getMethodLabel(compare.method)} method values`}
+        title={`Comparison of ${getMethodLabel(compare)} method values`}
         loading={false}
         compare={compare}
         widgetType={widgetType}
       />
       <CompareMethodResultsHistoryChartsView
         method={compare.method}
+        protocol={compare.protocol}
         loadTestResultId={loadTestResultId}
         compareWithLoadTestResults={compareWithLoadTestResults}
       />
