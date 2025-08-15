@@ -17,6 +17,8 @@ app.get('/config', function (_, res) {
     apiDateFormat: process.env.API_DATE_FORMAT,
     apiTimeFormat: process.env.API_TIME_FORMAT,
 
+    durationFormat: process.env.DURATION_FORMAT,
+
     pickerDateFormat: process.env.PICKER_DATE_FORMAT,
     pickerTimeFormat: process.env.PICKER_TIME_FORMAT
   });
