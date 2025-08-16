@@ -61,49 +61,49 @@ export const getDefaultCoreTableSettings = (): CoreTableSettings => ({
       { index: 0, value: MetricName.Method, hidden: false, orderKey: MetricKey.Method },
       { index: 1, value: MetricName.Protocol, hidden: false, orderKey: MetricKey.Protocol },
       {
-        index: 1,
+        index: 2,
         value: MetricName.ResponseTimePercentile50,
         hidden: false,
         orderKey: MetricKey.ResponseTimePercentile50
       },
       {
-        index: 2,
+        index: 3,
         value: MetricName.ResponseTimePercentile60,
         hidden: false,
         orderKey: MetricKey.ResponseTimePercentile60
       },
       {
-        index: 3,
+        index: 4,
         value: MetricName.ResponseTimePercentile70,
         hidden: false,
         orderKey: MetricKey.ResponseTimePercentile70
       },
       {
-        index: 4,
+        index: 5,
         value: MetricName.ResponseTimePercentile80,
         hidden: false,
         orderKey: MetricKey.ResponseTimePercentile80
       },
       {
-        index: 5,
+        index: 6,
         value: MetricName.ResponseTimePercentile90,
         hidden: false,
         orderKey: MetricKey.ResponseTimePercentile90
       },
       {
-        index: 6,
+        index: 7,
         value: MetricName.ResponseTimePercentile95,
         hidden: false,
         orderKey: MetricKey.ResponseTimePercentile95
       },
       {
-        index: 7,
+        index: 8,
         value: MetricName.ResponseTimePercentile99,
         hidden: false,
         orderKey: MetricKey.ResponseTimePercentile99
       },
       {
-        index: 8,
+        index: 9,
         value: MetricName.ResponseTimePercentile100,
         hidden: false,
         orderKey: MetricKey.ResponseTimePercentile100

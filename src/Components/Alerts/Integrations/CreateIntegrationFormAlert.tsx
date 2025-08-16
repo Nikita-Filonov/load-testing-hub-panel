@@ -12,12 +12,12 @@ export const CreateIntegrationFormAlert = () => {
           <b>host</b> — The host of the integration system. Use it in the template as: <code>{`{host}`}</code>;
         </li>
         <li>
-          <b>time_to</b> — The end time of the load testing result. Use it in the template as:{' '}
-          <code>{`{time_to}`}</code>;
+          <b>to_time</b> — The end time of the load testing result. Use it in the template as:{' '}
+          <code>{`{to_time}`}</code>;
         </li>
         <li>
-          <b>time_from</b> — The start time of the load testing result. Use it in the template as:{' '}
-          <code>{`{time_from}`}</code>.
+          <b>from_time</b> — The start time of the load testing result. Use it in the template as:{' '}
+          <code>{`{from_time}`}</code>.
         </li>
       </Box>
       <Box sx={{ mt: 2 }}>
