@@ -9,7 +9,8 @@ export const CreateIntegrationFormAlert = () => {
       added to the template:
       <Box sx={{ mt: 1 }}>
         <li>
-          <b>host</b> — The host of the integration system. Use it in the template as: <code>{`{host}`}</code>;
+          <b>base_url</b> — The base URL of the integration system. Use it in the template as:{' '}
+          <code>{`{base_url}`}</code>;
         </li>
         <li>
           <b>to_time</b> — The end time of the load testing result. Use it in the template as:{' '}
@@ -22,7 +23,7 @@ export const CreateIntegrationFormAlert = () => {
       </Box>
       <Box sx={{ mt: 2 }}>
         All variables are optional. Include them in the template only if needed. For example, you can use{' '}
-        <code>{`{host}`}</code> in the template using the templating mechanism.
+        <code>{`{base_url}`}</code> in the template using the templating mechanism.
       </Box>
     </Alert>
   );
