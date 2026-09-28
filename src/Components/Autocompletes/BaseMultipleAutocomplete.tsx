@@ -1,7 +1,7 @@
 import { Autocomplete, SxProps, TextField, Theme } from '@mui/material';
 import { HTMLAttributes, ReactNode, SyntheticEvent } from 'react';
-import { AutocompleteRenderGetTagProps, AutocompleteRenderOptionState } from '@mui/material/Autocomplete/Autocomplete';
-import { FilterOptionsState } from '@mui/base/useAutocomplete/useAutocomplete';
+import { AutocompleteRenderOptionState } from '@mui/material/Autocomplete';
+import { FilterOptionsState } from '@mui/material/useAutocomplete';
 
 export type BaseMultipleAutocompleteProps<T> = {
   sx?: SxProps<Theme>;
@@ -10,7 +10,6 @@ export type BaseMultipleAutocompleteProps<T> = {
   label: string;
   getOptionLabel: (option: T) => string;
   onChange: (entity: T[]) => void;
-  renderTags?: (value: T[], getTagProps: AutocompleteRenderGetTagProps) => ReactNode;
   renderOption?: (props: HTMLAttributes<HTMLLIElement>, option: T, selected: boolean) => ReactNode;
   filterOptions?: (options: T[], state: FilterOptionsState<T>) => T[];
   isOptionEqualToValue?: (option: T, value: T) => boolean;
@@ -23,7 +22,6 @@ export const BaseMultipleAutocomplete = <T,>(props: BaseMultipleAutocompleteProp
     label,
     options,
     onChange,
-    renderTags,
     renderOption,
     getOptionLabel,
     filterOptions,
@@ -51,7 +49,6 @@ export const BaseMultipleAutocomplete = <T,>(props: BaseMultipleAutocompleteProp
       options={options}
       onChange={safeOnChange}
       getOptionLabel={getOptionLabel}
-      renderTags={renderTags}
       renderInput={(params) => <TextField {...params} label={label} variant={'outlined'} />}
       renderOption={renderOption ? internalRenderOption : undefined}
       filterOptions={filterOptions}
