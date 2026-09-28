@@ -31,16 +31,16 @@ export class SettingsManager {
 
   private static getEnvConfig(): Config {
     return {
-      serverUrl: process.env.REACT_APP_SERVER_URL || '',
-      apiVersion: process.env.REACT_APP_API_VERSION || '',
+      serverUrl: import.meta.env.VITE_SERVER_URL || '',
+      apiVersion: import.meta.env.VITE_API_VERSION || '',
 
-      apiDateFormat: process.env.REACT_APP_API_DATE_FORMAT || '',
-      apiTimeFormat: process.env.REACT_APP_API_TIME_FORMAT || '',
+      apiDateFormat: import.meta.env.VITE_API_DATE_FORMAT || '',
+      apiTimeFormat: import.meta.env.VITE_API_TIME_FORMAT || '',
 
-      durationFormat: process.env.REACT_APP_DURATION_FORMAT || '',
+      durationFormat: import.meta.env.VITE_DURATION_FORMAT || '',
 
-      pickerDateFormat: process.env.REACT_APP_PICKER_DATE_FORMAT || '',
-      pickerTimeFormat: process.env.REACT_APP_PICKER_TIME_FORMAT || ''
+      pickerDateFormat: import.meta.env.VITE_PICKER_DATE_FORMAT || '',
+      pickerTimeFormat: import.meta.env.VITE_PICKER_TIME_FORMAT || ''
     };
   }
 

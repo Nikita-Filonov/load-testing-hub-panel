@@ -2,7 +2,7 @@ import Typography from '@mui/material/Typography';
 import { LoadingView } from './LoadingView';
 import Box from '@mui/material/Box';
 import { FC, PropsWithChildren, ReactNode } from 'react';
-import { Grid2, IconButton, SxProps, Theme } from '@mui/material';
+import { Grid, IconButton, SxProps, Theme } from '@mui/material';
 
 type BoxAction = {
   icon?: ReactNode;
@@ -22,14 +22,14 @@ export const BoxView: FC<BoxViewProps> = (props) => {
 
   return (
     <Box sx={{ mt: 3, ...containerSx }}>
-      <Grid2 container spacing={1} display={'flex'} alignItems={'center'}>
+      <Grid container spacing={1} sx={{ display: 'flex', alignItems: 'center' }}>
         {title && (
-          <Grid2>
-            <Typography fontWeight={'bold'}>{title}</Typography>
-          </Grid2>
+          <Grid>
+            <Typography sx={{ fontWeight: 'bold' }}>{title}</Typography>
+          </Grid>
         )}
-        {label && <Grid2>{label}</Grid2>}
-        <Grid2 sx={{ ml: 'auto', display: 'flex', alignItems: 'flex-end' }}>
+        {label && <Grid>{label}</Grid>}
+        <Grid sx={{ ml: 'auto', display: 'flex', alignItems: 'flex-end' }}>
           {actions?.map((action, index) => (
             <IconButton
               size={'small'}
@@ -39,8 +39,8 @@ export const BoxView: FC<BoxViewProps> = (props) => {
               {action.icon}
             </IconButton>
           ))}
-        </Grid2>
-      </Grid2>
+        </Grid>
+      </Grid>
       {loading ? <LoadingView height={300} /> : children}
     </Box>
   );

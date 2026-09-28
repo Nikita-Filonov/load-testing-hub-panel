@@ -5,7 +5,6 @@ import {
   MethodsRequestsPerSecondAnalytics,
   MethodsResponseTimesAnalytics
 } from '../../../Models/Analytics/MethodsAnalytics';
-import { MakeOptional } from '@mui/x-charts/internals';
 import { PieValueType } from '@mui/x-charts';
 import { getMethodLabel } from '../../../Services/Methods/Utils';
 
@@ -16,7 +15,7 @@ type MethodsAnalyticsPieChartViewProps<Data extends DataType> = {
   title: string;
   metric: keyof Omit<Data, 'method'>;
   loading: boolean;
-  valueFormatter?: (data: MakeOptional<PieValueType, 'id'>) => string | null;
+  valueFormatter?: (data: Omit<PieValueType, 'id'> & { id?: PieValueType['id'] }) => string | null;
 };
 
 export const MethodsAnalyticsPieChartView = <Data extends DataType>(props: MethodsAnalyticsPieChartViewProps<Data>) => {

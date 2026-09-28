@@ -5,7 +5,7 @@ import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import CodeIcon from '@mui/icons-material/Code';
 import { useServicesNavigation } from '../../../Services/Services/Hooks';
 import { AppRoutes } from '../../../Services/Navigation/Routing';
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutlineOutlined';
 import { formatRouteTemplate } from '../../../Services/Navigation/Utils';
 
 const ITEMS = [

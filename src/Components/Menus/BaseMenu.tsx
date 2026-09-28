@@ -1,5 +1,4 @@
-import { LoadingButton } from '@mui/lab';
-import { Badge, CircularProgress, IconButton, SxProps, Theme } from '@mui/material';
+import { Badge, Button, CircularProgress, IconButton, SxProps, Theme } from '@mui/material';
 import Menu from '@mui/material/Menu';
 import React, { FC } from 'react';
 
@@ -53,7 +52,7 @@ export const BaseMenu: FC<BaseMenuProps> = (props) => {
           )}
         </IconButton>
       ) : (
-        <LoadingButton
+        <Button
           loading={loading}
           variant={'outlined'}
           sx={buttonSx}
@@ -62,7 +61,7 @@ export const BaseMenu: FC<BaseMenuProps> = (props) => {
           startIcon={startIcon}
           endIcon={endIcon}>
           {buttonLabel}
-        </LoadingButton>
+        </Button>
       )}
       <Menu anchorEl={menu} open={Boolean(menu)} onClose={onClose} disableScrollLock={true}>
         {children}

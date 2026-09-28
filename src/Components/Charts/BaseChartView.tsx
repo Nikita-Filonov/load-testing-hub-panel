@@ -1,4 +1,4 @@
-import { Box, Grid2, IconButton, Paper, SxProps, Theme } from '@mui/material';
+import { Box, Grid, IconButton, Paper, SxProps, Theme } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { FC, PropsWithChildren, ReactNode } from 'react';
 import { LoadingView } from '../Views/LoadingView';
@@ -25,11 +25,11 @@ export const BaseChartView: FC<BaseChartViewProps> = (props) => {
 
   return (
     <Paper sx={{ width: '100%', height: '100%', p: 2, mt: 3, ...containerSx }}>
-      <Grid2 container spacing={1} display={'flex'} alignItems={'center'}>
-        <Grid2>
+      <Grid container spacing={1} sx={{ display: 'flex', alignItems: 'center' }}>
+        <Grid>
           <Typography variant={'h6'}>{title}</Typography>
-        </Grid2>
-        <Grid2 sx={{ ml: 'auto', display: 'flex', alignItems: 'flex-end' }}>
+        </Grid>
+        <Grid sx={{ ml: 'auto', display: 'flex', alignItems: 'flex-end' }}>
           {actions?.map((action, index) =>
             action.icon ? (
               <IconButton key={index} sx={{ mr: getMarginRight(index) }} size={'small'} onClick={action.onClick}>
@@ -41,8 +41,8 @@ export const BaseChartView: FC<BaseChartViewProps> = (props) => {
               </Box>
             )
           )}
-        </Grid2>
-      </Grid2>
+        </Grid>
+      </Grid>
       {loading ? <LoadingView height={300} /> : <Box sx={{ height: '100%', ...childrenSx }}>{children}</Box>}
     </Paper>
   );

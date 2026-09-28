@@ -24,11 +24,13 @@ const CompareMethodWithScenarioView: FC<CompareMethodWithScenarioViewProps> = (p
   const { method, filters, compare, service, scenario, protocol } = props;
   const { loading, getCompareMethodWithScenario } = useCompareMethodWithScenario();
 
-  if (!scenario.id) return null;
-
   useEffect(() => {
-    getCompareMethodWithScenario({ ...filters, method, protocol, serviceId: service.id, scenarioId: scenario.id });
+    if (scenario.id) {
+      getCompareMethodWithScenario({ ...filters, method, protocol, serviceId: service.id, scenarioId: scenario.id });
+    }
   }, [filters, method, protocol, service.id, scenario.id]);
+
+  if (!scenario.id) return null;
 
   return (
     <MethodResultCompareView

@@ -1,4 +1,4 @@
-import { Alert, Grid2 } from '@mui/material';
+import { Alert, Grid } from '@mui/material';
 import { FC, PropsWithChildren } from 'react';
 import { LoadingView } from './LoadingView';
 import { BaseToolbarView, ToolbarAction } from '../Toolbar/BaseToolbarView';
@@ -17,23 +17,23 @@ export const SettingsView: FC<SettingsViewProps> = (props) => {
   const { title, alert, actions, loading, children, validationErrors } = props;
 
   return (
-    <Grid2 container spacing={3}>
-      <Grid2 size={{ md: 12, xs: 12 }}>
+    <Grid container spacing={3}>
+      <Grid size={{ md: 12, xs: 12 }}>
         <BaseToolbarView title={title} actions={actions} />
-      </Grid2>
+      </Grid>
       {alert && (
-        <Grid2 size={{ md: 12, xs: 12 }}>
+        <Grid size={{ md: 12, xs: 12 }}>
           <Alert severity={'info'} variant={'outlined'}>
             {alert}
           </Alert>
-        </Grid2>
+        </Grid>
       )}
       {validationErrors && validationErrors?.length > 0 && (
-        <Grid2 size={{ md: 12, xs: 12 }}>
+        <Grid size={{ md: 12, xs: 12 }}>
           <ValidationErrorsView errors={validationErrors} />
-        </Grid2>
+        </Grid>
       )}
-      <Grid2 size={{ md: 12, xs: 12 }}>{loading ? <LoadingView height={400} /> : children}</Grid2>
-    </Grid2>
+      <Grid size={{ md: 12, xs: 12 }}>{loading ? <LoadingView height={400} /> : children}</Grid>
+    </Grid>
   );
 };

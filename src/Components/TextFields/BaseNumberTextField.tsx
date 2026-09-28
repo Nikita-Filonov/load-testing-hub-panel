@@ -28,8 +28,7 @@ export const BaseNumberTextField: FC<BaseNumberTextFieldProps> = (props) => {
       disabled={disabled}
       helperText={helperText}
       type="number"
-      InputLabelProps={{ shrink: true }}
-      InputProps={{ endAdornment, startAdornment }}
+      slotProps={{ inputLabel: { shrink: true }, input: { endAdornment, startAdornment } }}
     />
   );
 };

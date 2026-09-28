@@ -1,5 +1,5 @@
 import { BasePaper } from './BasePaper';
-import { Grid2, IconButton, Paper, SxProps, Theme, Typography } from '@mui/material';
+import { Grid, IconButton, Paper, SxProps, Theme, Typography } from '@mui/material';
 import { FC, PropsWithChildren, ReactNode, useState } from 'react';
 import { LoadingView } from './LoadingView';
 import Box from '@mui/material/Box';
@@ -68,12 +68,12 @@ export const WidgetView: FC<WidgetViewProps> = (props) => {
 
   return (
     <Container sx={sx} flat={flat}>
-      <Grid2 container spacing={1} display={'flex'} alignItems={'center'}>
-        <Grid2>
+      <Grid container spacing={1} sx={{ display: 'flex', alignItems: 'center' }}>
+        <Grid>
           <Typography variant={'h6'}>{title}</Typography>
-        </Grid2>
-        <Grid2>{label}</Grid2>
-        <Grid2 sx={{ ml: 'auto', display: 'flex', alignItems: 'flex-end' }}>
+        </Grid>
+        <Grid>{label}</Grid>
+        <Grid sx={{ ml: 'auto', display: 'flex', alignItems: 'flex-end' }}>
           {actions?.map((action, index) =>
             action.icon ? (
               <IconButton key={index} sx={{ mr: getMarginRight(index) }} size={'small'} onClick={action.onClick}>
@@ -90,8 +90,8 @@ export const WidgetView: FC<WidgetViewProps> = (props) => {
               {widgetHidden ? <AddIcon fontSize={'small'} /> : <CloseIcon fontSize={'small'} />}
             </IconButton>
           )}
-        </Grid2>
-      </Grid2>
+        </Grid>
+      </Grid>
       {widgetHidden ? null : loading ? <LoadingView height={height} /> : <Box sx={childrenSx}>{children}</Box>}
     </Container>
   );

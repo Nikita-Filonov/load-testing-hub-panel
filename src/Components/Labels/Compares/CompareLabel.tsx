@@ -3,7 +3,7 @@ import { FC, useState } from 'react';
 import { BaseLabel } from '../BaseLabel';
 import { getCompareColor, getCompareTitle } from '../../../Services/Compare/Utils';
 import { BaseCompare } from '../../../Models/Compares/Compares';
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutlineOutlined';
 import { CompareExplanationTooltipView } from '../../Tooltips/Compares/CompareExplainTooltipView';
 import { BaseTooltip } from '../../Tooltips/BaseTooltip';
 

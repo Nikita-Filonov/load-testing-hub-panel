@@ -11,7 +11,6 @@ import {
   Theme
 } from '@mui/material';
 import { FC, ReactNode } from 'react';
-import { LoadingButton } from '@mui/lab';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { LoadingView } from '../Views/LoadingView';
@@ -77,9 +76,9 @@ export const BaseModal: FC<BaseModalProps> = (props) => {
       <DialogActions>
         <Button onClick={onClose}>Cancel</Button>
         {onConfirm && (
-          <LoadingButton loading={confirmLoading} disabled={confirmDisabled} onClick={onConfirm}>
+          <Button loading={confirmLoading} disabled={confirmDisabled} onClick={onConfirm}>
             Confirm
-          </LoadingButton>
+          </Button>
         )}
       </DialogActions>
     </Dialog>

@@ -1,4 +1,4 @@
-import { AxisValueFormatterContext } from '@mui/x-charts/models/axis';
+import { AxisValueFormatterContext } from '@mui/x-charts/models';
 
 export interface LineChartYAxis {
   data: (null | number)[];

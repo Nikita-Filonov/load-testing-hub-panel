@@ -1,6 +1,6 @@
 import { Chip, SxProps, Theme } from '@mui/material';
 import { OverridableStringUnion } from '@mui/types';
-import { ChipPropsColorOverrides } from '@mui/material/Chip/Chip';
+import { ChipPropsColorOverrides } from '@mui/material/Chip';
 import { FC, MouseEvent, ReactElement } from 'react';
 
 export type LabelColor = OverridableStringUnion<

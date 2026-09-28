@@ -1,6 +1,5 @@
 import { BaseRangeSlider } from '../BaseRangeSlider';
 import { RangeSliderMinMaxView } from '../RangeSliderMinMaxView';
-import { useMemo } from 'react';
 import dayjs from 'dayjs';
 import { SettingsManager } from '../../../Services/Config';
 import { Datetime } from '../../../Models/Datetime';
@@ -16,7 +15,7 @@ type Props<Data extends Datetime> = {
 export const ChartTimeRangeSlider = <Data extends Datetime>({ data, range, onRange }: Props<Data>) => {
   if (data.length === 0) return null;
 
-  const { endTime, startTime, duration } = useMemo(() => getDurationFromDatetimeData(data), [data]);
+  const { endTime, startTime, duration } = getDurationFromDatetimeData(data);
 
   return (
     <Box>

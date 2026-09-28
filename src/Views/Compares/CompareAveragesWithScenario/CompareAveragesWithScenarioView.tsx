@@ -20,11 +20,13 @@ const CompareAveragesWithScenarioView: FC<CompareAveragesWithScenarioViewProps> 
   const { filters, compare, service, scenario } = props;
   const { loading, getCompareAveragesWithScenario } = useCompareAveragesWithScenario();
 
-  if (scenario.name === '') return null;
-
   useEffect(() => {
-    getCompareAveragesWithScenario({ ...filters, serviceId: service.id, scenarioId: scenario.id });
+    if (scenario.name !== '') {
+      getCompareAveragesWithScenario({ ...filters, serviceId: service.id, scenarioId: scenario.id });
+    }
   }, [filters, service.id, scenario.id]);
+
+  if (scenario.name === '') return null;
 
   return (
     <LoadTestResultCompareView

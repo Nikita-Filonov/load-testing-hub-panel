@@ -3,7 +3,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { enUS } from 'date-fns/locale/en-US';
 import { FC } from 'react';
 import { SxProps, Theme } from '@mui/material';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { SettingsManager } from '../../Services/Config';
 import dayjs from 'dayjs';
 
@@ -35,7 +35,7 @@ export const BaseDateTimePicker: FC<BaseDateTimePickerProps> = (props) => {
             error,
             fullWidth: true,
             helperText,
-            placeholder: '15.06.2022'
+            slotProps: { htmlInput: { placeholder: '15.06.2022' } }
           }
         }}
         value={value === null ? null : dayjs(value, SettingsManager.apiDateTimeFormat).toDate()}

@@ -1,6 +1,7 @@
 import { PieChart, PieValueType } from '@mui/x-charts';
 import { FC } from 'react';
-import { MakeOptional } from '@mui/x-charts/internals';
+
+type PieValue = Omit<PieValueType, 'id'> & { id?: PieValueType['id'] };
 
 type PieChartSeries = {
   value: number;
@@ -10,10 +11,10 @@ type PieChartSeries = {
 
 type BasePieChartProps = {
   series: PieChartSeries[];
-  valueFormatter?: (data: MakeOptional<PieValueType, 'id'>) => string | null;
+  valueFormatter?: (data: PieValue) => string | null;
 };
 
-const defaultValueFormatter = (data: MakeOptional<PieValueType, 'id'>) => `${data.value}`;
+const defaultValueFormatter = (data: PieValue) => `${data.value}`;
 
 export const BasePieChart: FC<BasePieChartProps> = ({ series, valueFormatter }) => {
   return (

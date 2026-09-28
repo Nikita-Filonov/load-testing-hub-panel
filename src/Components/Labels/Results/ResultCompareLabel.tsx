@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutlineOutlined';
 import { ResultCompare } from '../../../Models/Results/ResultCompare';
 import { BaseTooltip } from '../../Tooltips/BaseTooltip';
 import { BaseLabel } from '../BaseLabel';

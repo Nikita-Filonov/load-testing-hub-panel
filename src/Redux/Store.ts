@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import coreReducer from './Core/Slice';
 import ratioResultsReducer from './Results/RatioResults/Slice';
-import { persistStore } from 'redux-persist';
+import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistStore } from 'redux-persist';
 import analyticsReducer from './Analytics/Slice';
 import servicesReducer from './Services/Services/Slice';
 import methodReducer from './Methods/Slice';
@@ -43,7 +43,10 @@ export const store = configureStore({
     compareAveragesWithScenario: compareAveragesWithScenarioReducer,
     compareMethodResultsHistory: compareMethodResultsHistoryReducer,
     compareLoadTestResultsHistory: compareLoadTestResultsHistoryReducer
-  }
+  },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+    serializableCheck: { ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER] }
+  })
 });
 
 export const persistor = persistStore(store);

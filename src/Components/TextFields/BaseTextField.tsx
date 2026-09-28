@@ -63,8 +63,7 @@ export const BaseTextField: FC<BaseTextFieldProps> = (props) => {
         type={type}
         error={error}
         helperText={helperText}
-        InputProps={{ startAdornment, endAdornment }}
-        inputProps={{ maxLength }}
+        slotProps={{ input: { startAdornment, endAdornment }, htmlInput: { maxLength } }}
       />
       {actionTitle && (
         <Button sx={{ mt: 1 }} size={'small'} variant={'outlined'} onClick={onAction}>

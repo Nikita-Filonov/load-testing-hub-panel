@@ -1,6 +1,6 @@
 import { LoadTestResult } from '../../../Models/Results/LoadTestResults';
 import { FC } from 'react';
-import { Grid2, Typography } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import { getLoadTestResultDates, getLoadTestResultDuration } from '../../../Services/Results/Utils';
 import { NumberOfRequestsProgress } from '../../../Components/Progress/Results/NumberOfRequestsProgress';
 import { LoadTestResultTitleLink } from '../../../Components/Links/Results/LoadTestResults/LoadTestResultTitleLink';
@@ -21,50 +21,50 @@ export const LoadTestResultView: FC<LoadTestResultViewProps> = (props) => {
 
   return (
     <BasePaper sx={{ mb: 3 }}>
-      <Grid2 container spacing={2}>
-        <Grid2 size={{ xs: 10 }} display={'flex'} alignItems={'center'}>
+      <Grid container spacing={2}>
+        <Grid size={{ xs: 10 }} sx={{ display: 'flex', alignItems: 'center' }}>
           <LoadTestResultTitleLink result={result} />
-        </Grid2>
-        <Grid2 size={{ xs: 2 }} display={'flex'} alignItems={'center'} justifyContent={'flex-end'}>
+        </Grid>
+        <Grid size={{ xs: 2 }} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
           <LoadTestResultViewMenu result={result} onSetComment={onSetComment} onScenarioDetails={onScenarioDetails} />
-        </Grid2>
-        <Grid2 size={{ xs: 6 }}>
+        </Grid>
+        <Grid size={{ xs: 6 }}>
           <Typography variant={'body2'}>
             <b>{MetricName.RequestsPerSecond}:</b> {result.requestsPerSecond}
           </Typography>
-        </Grid2>
-        <Grid2 size={{ xs: 6 }} display={'flex'} justifyContent={'flex-end'}>
+        </Grid>
+        <Grid size={{ xs: 6 }} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
           <NumberOfRequestsProgress
             requests={result.numberOfRequests}
             failures={result.numberOfFailures}
             requestsTitle={MetricName.NumberOfRequests}
             failuresTitle={MetricName.NumberOfFailures}
           />
-        </Grid2>
-        <Grid2 size={{ xs: 6 }}>
+        </Grid>
+        <Grid size={{ xs: 6 }}>
           <Typography variant={'body2'}>
             <b>{MetricName.NumberOfUsers}:</b> {result.numberOfUsers}
           </Typography>
-        </Grid2>
-        <Grid2 size={{ xs: 6 }} display={'flex'} justifyContent={'flex-end'}>
+        </Grid>
+        <Grid size={{ xs: 6 }} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
           <Typography variant={'caption'}>
             {getLoadTestResultDates(result)}, {getLoadTestResultDuration(result)}
           </Typography>
-        </Grid2>
+        </Grid>
         {result.comment && (
-          <Grid2 size={{ xs: 12 }} display={'flex'}>
+          <Grid size={{ xs: 12 }} sx={{ display: 'flex' }}>
             <Typography variant={'body2'}>
               <b>Comment:</b> {result.comment}
             </Typography>
-          </Grid2>
+          </Grid>
         )}
-        <Grid2 size={{ xs: 10 }} display={'flex'} alignItems={'center'}>
+        <Grid size={{ xs: 10 }} sx={{ display: 'flex', alignItems: 'center' }}>
           <LoadTestResultLabelsView result={result} />
-        </Grid2>
-        <Grid2 size={{ xs: 2 }} display={'flex'} alignItems={'center'} justifyContent={'flex-end'}>
+        </Grid>
+        <Grid size={{ xs: 2 }} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
           <LoadTestResultJobButton result={result} />
-        </Grid2>
-      </Grid2>
+        </Grid>
+      </Grid>
     </BasePaper>
   );
 };
