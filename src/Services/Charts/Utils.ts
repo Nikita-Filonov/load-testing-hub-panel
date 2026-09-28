@@ -42,7 +42,11 @@ export const filterEnabledYAxisSettings = (header: YAxisSettings<never>) => head
 export const mapChartYAxisData = <Data>({ data, settings, valueFormatter }: MapChartYAxisDataProps<Data>) =>
   settings.yAxis
     .filter(filterEnabledYAxisSettings)
-    .map((axis) => ({ data: data.map((result) => result[axis.value]), valueFormatter, ...axis }));
+    .map((axis) => ({
+      data: data.map((result) => result[axis.value]),
+      ...axis,
+      ...(valueFormatter && { valueFormatter })
+    }));
 
 export const sortChartWidgetDisplaySettings = (
   a: ChartWidgetDisplaySettings<never>,

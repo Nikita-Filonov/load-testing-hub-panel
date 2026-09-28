@@ -49,6 +49,16 @@ describe('chart data helpers', () => {
 
     expect(axes).toHaveLength(1);
     expect(axes[0]).toMatchObject({ value: 'numberOfRequests', data: [100, 80] });
+    expect(axes[0].valueFormatter).toBeTypeOf('function');
+  });
+
+  it('omits an absent formatter so MUI X Charts can apply its bar-series default', () => {
+    const axes = mapChartYAxisData({
+      data: [{ numberOfRequests: 100, numberOfFailures: 2 }],
+      settings: getDefaultNumberOfRequestsLineChartSettings()
+    });
+
+    expect(axes.every((axis) => !Object.hasOwn(axis, 'valueFormatter'))).toBe(true);
   });
 
   it('keeps separate presets for dashboards and comparison histories', () => {
