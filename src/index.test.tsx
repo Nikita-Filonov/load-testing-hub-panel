@@ -1,5 +1,19 @@
-import { expect, it, vi } from 'vitest';
+import { afterEach, expect, it, vi } from 'vitest';
 import { act, screen } from '@testing-library/react';
+import { createRoot } from 'react-dom/client';
+import { SettingsManager } from './Services/Config';
+
+vi.mock('react-dom/client', async (importOriginal) => {
+  const client = await importOriginal<typeof import('react-dom/client')>();
+  return { ...client, createRoot: vi.fn(client.createRoot) };
+});
+
+afterEach(async () => {
+  const root = vi.mocked(createRoot).mock.results.find(({ type }) => type === 'return')?.value;
+  if (root) await act(async () => root.unmount());
+  vi.unstubAllGlobals();
+  SettingsManager.setup(null);
+});
 
 it('boots the application at the services route with runtime configuration', async () => {
   document.body.innerHTML = '<div id="root"></div>';
@@ -20,5 +34,4 @@ it('boots the application at the services route with runtime configuration', asy
 
   expect(await screen.findByText('#7 Checkout')).toBeInTheDocument();
   expect(fetchMock.mock.calls.map(([url]) => url)).toContain('https://api.example.com/api/v1/services');
-  vi.unstubAllGlobals();
 }, 15000);

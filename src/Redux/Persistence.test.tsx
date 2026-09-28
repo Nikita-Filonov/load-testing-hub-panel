@@ -170,6 +170,17 @@ describe('Redux Remember persistence', () => {
     expect(warn).toHaveBeenCalled();
   });
 
+  it.each(['null', '[]', '{"version":1,"state":{"theme":"dark"}}'])
+    ('recovers an invalid preference value: %s', async (saved) => {
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      const { driver } = createStorageFixture({ 'persist:core': saved });
+      const store = createAppStore(driver);
+      await vi.runAllTimersAsync();
+      expect(store.getState().core).toEqual(INITIAL_CORE);
+      expect(store.getState().rehydrated).toBe(true);
+      expect(warn).toHaveBeenCalled();
+    });
+
   it('completes startup when reading storage fails', async () => {
     vi.spyOn(console, 'warn').mockImplementation(() => {});
     const { driver } = createStorageFixture();

@@ -1,0 +1,3826 @@
+{
+  "/services": {
+    "services": [
+      {
+        "id": 3,
+        "url": "https://checkout.example.test/",
+        "name": "Demo - Checkout API",
+        "numberOfScenarios": 5,
+        "numberOfLoadTestResults": 120
+      },
+      {
+        "id": 4,
+        "url": "https://payments.example.test/",
+        "name": "Demo - Payments API",
+        "numberOfScenarios": 4,
+        "numberOfLoadTestResults": 119
+      },
+      {
+        "id": 5,
+        "url": "https://catalog.example.test/",
+        "name": "Demo - Catalog API",
+        "numberOfScenarios": 4,
+        "numberOfLoadTestResults": 120
+      }
+    ]
+  },
+  "/services/3": {
+    "service": {
+      "id": 3,
+      "url": "https://checkout.example.test/",
+      "name": "Demo - Checkout API",
+      "numberOfScenarios": 5,
+      "numberOfLoadTestResults": 120
+    }
+  },
+  "/services/details/3": {
+    "details": {
+      "id": 3,
+      "url": "https://checkout.example.test/",
+      "name": "Demo - Checkout API",
+      "numberOfScenarios": 5,
+      "numberOfLoadTestResults": 120,
+      "cluster": "local-demo",
+      "namespace": "load-testing-demo"
+    }
+  },
+  "/scenarios": {
+    "scenarios": [
+      {
+        "id": 5,
+        "name": "Baseline - stable load",
+        "tags": [
+          "LATEST"
+        ],
+        "version": "2.0.0"
+      },
+      {
+        "id": 6,
+        "name": "Regression - slow downstream",
+        "tags": [
+          "EXPERIMENT"
+        ],
+        "version": "2.0.0"
+      },
+      {
+        "id": 7,
+        "name": "Optimized - cache and indexes",
+        "tags": [
+          "LATEST"
+        ],
+        "version": "2.0.0"
+      }
+    ]
+  },
+  "/scenarios/5": {
+    "scenario": {
+      "id": 5,
+      "name": "Baseline - stable load",
+      "tags": [
+        "LATEST"
+      ],
+      "version": "2.0.0"
+    }
+  },
+  "/scenarios/details/5": {
+    "details": {
+      "id": 5,
+      "name": "Baseline - stable load",
+      "tags": [
+        "LATEST"
+      ],
+      "version": "2.0.0",
+      "file": "checkout/baseline.py",
+      "ratioTotal": [
+        {
+          "id": "24727b5f-6050-4920-9763-23aa1057f51a",
+          "name": "CustomerJourney",
+          "ratio": 0.8,
+          "tasks": [
+            {
+              "id": "52d44c03-cf40-4e0f-9d50-a3511984a9eb",
+              "name": "browse",
+              "ratio": 0.5,
+              "tasks": []
+            },
+            {
+              "id": "5f45ac1e-936f-49a9-87c4-c2733272cdb7",
+              "name": "submit",
+              "ratio": 0.3,
+              "tasks": []
+            }
+          ]
+        },
+        {
+          "id": "5e294a29-ade4-4765-8b69-7c51858cc0f8",
+          "name": "BackgroundJobs",
+          "ratio": 0.2,
+          "tasks": [
+            {
+              "id": "300fd946-775b-423f-b8c2-49d30a202284",
+              "name": "StatusCheck",
+              "ratio": 0.15,
+              "tasks": []
+            },
+            {
+              "id": "55ae59e6-22d3-4ee8-af56-aa582dfcb79b",
+              "name": "cleanup",
+              "ratio": 0.05,
+              "tasks": []
+            }
+          ]
+        }
+      ],
+      "ratioPerClass": [
+        {
+          "id": "10ed46a4-358c-4d5e-813f-2f318436b029",
+          "name": "CustomerJourney",
+          "ratio": 0.8,
+          "tasks": [
+            {
+              "id": "b8ed4a77-e0dc-4048-880d-ba6bb8460058",
+              "name": "browse",
+              "ratio": 0.5,
+              "tasks": []
+            },
+            {
+              "id": "c10260bf-37fc-4844-b2dd-16a47411b228",
+              "name": "submit",
+              "ratio": 0.3,
+              "tasks": []
+            }
+          ]
+        },
+        {
+          "id": "0f9651bb-2bd7-4455-8f40-52310acae0b9",
+          "name": "BackgroundJobs",
+          "ratio": 0.2,
+          "tasks": [
+            {
+              "id": "b341dfba-e9b0-4d99-963d-61c3cd7096b8",
+              "name": "StatusCheck",
+              "ratio": 0.15,
+              "tasks": []
+            },
+            {
+              "id": "e98c429f-d026-4e21-a201-a983e50373a0",
+              "name": "cleanup",
+              "ratio": 0.05,
+              "tasks": []
+            }
+          ]
+        }
+      ],
+      "numberOfUsers": 100,
+      "runtimeDuration": "15m"
+    }
+  },
+  "/scenario-settings/5": {
+    "settings": {
+      "scenario_id": 5,
+      "resultSettings": {
+        "numberOfUsers": 100.0,
+        "requestsPerSecond": 800.0,
+        "failuresPerSecond": 1.6,
+        "numberOfRequests": 720000.0,
+        "numberOfFailures": 1440.0,
+        "minResponseTime": 33.6,
+        "maxResponseTime": 456.0,
+        "medianResponseTime": 98.4,
+        "averageResponseTime": 120.0,
+        "responseTimePercentile50": 98.4,
+        "responseTimePercentile60": 114.0,
+        "responseTimePercentile70": 132.0,
+        "responseTimePercentile80": 156.0,
+        "responseTimePercentile90": 198.0,
+        "responseTimePercentile95": 246.0,
+        "responseTimePercentile99": 348.0,
+        "responseTimePercentile100": 456.0
+      },
+      "methodsSettings": [
+        {
+          "averageContentLength": 512.0,
+          "requestsPerSecond": 256.0,
+          "failuresPerSecond": 0.51,
+          "numberOfRequests": 230400.0,
+          "numberOfFailures": 460.8,
+          "minResponseTime": 20.16,
+          "maxResponseTime": 273.6,
+          "medianResponseTime": 59.04,
+          "averageResponseTime": 72.0,
+          "responseTimePercentile50": 59.04,
+          "responseTimePercentile60": 68.4,
+          "responseTimePercentile70": 79.2,
+          "responseTimePercentile80": 93.6,
+          "responseTimePercentile90": 118.8,
+          "responseTimePercentile95": 147.6,
+          "responseTimePercentile99": 208.8,
+          "responseTimePercentile100": 273.6,
+          "method": "GET /cart",
+          "protocol": "http"
+        },
+        {
+          "averageContentLength": 1362.0,
+          "requestsPerSecond": 192.0,
+          "failuresPerSecond": 0.38,
+          "numberOfRequests": 172800.0,
+          "numberOfFailures": 345.6,
+          "minResponseTime": 33.6,
+          "maxResponseTime": 456.0,
+          "medianResponseTime": 98.4,
+          "averageResponseTime": 120.0,
+          "responseTimePercentile50": 98.4,
+          "responseTimePercentile60": 114.0,
+          "responseTimePercentile70": 132.0,
+          "responseTimePercentile80": 156.0,
+          "responseTimePercentile90": 198.0,
+          "responseTimePercentile95": 246.0,
+          "responseTimePercentile99": 348.0,
+          "responseTimePercentile100": 456.0,
+          "method": "POST /cart/items",
+          "protocol": "http"
+        },
+        {
+          "averageContentLength": 2212.0,
+          "requestsPerSecond": 144.0,
+          "failuresPerSecond": 0.29,
+          "numberOfRequests": 129600.0,
+          "numberOfFailures": 259.2,
+          "minResponseTime": 60.48,
+          "maxResponseTime": 820.8,
+          "medianResponseTime": 177.12,
+          "averageResponseTime": 216.0,
+          "responseTimePercentile50": 177.12,
+          "responseTimePercentile60": 205.2,
+          "responseTimePercentile70": 237.6,
+          "responseTimePercentile80": 280.8,
+          "responseTimePercentile90": 356.4,
+          "responseTimePercentile95": 442.8,
+          "responseTimePercentile99": 626.4,
+          "responseTimePercentile100": 820.8,
+          "method": "POST /checkout",
+          "protocol": "http"
+        }
+      ]
+    }
+  },
+  "/integrations": {
+    "integrations": [
+      {
+        "id": 3,
+        "name": "Demo Grafana",
+        "systemType": "GRAFANA",
+        "environmentType": "PRODUCTION",
+        "orderIndex": 0,
+        "urlTemplate": "{base_url}/d/demo?from={from_time}&to={to_time}"
+      },
+      {
+        "id": 4,
+        "name": "Demo Kibana",
+        "systemType": "KIBANA",
+        "environmentType": "PRODUCTION",
+        "orderIndex": 1,
+        "urlTemplate": "{base_url}/app/discover?from={from_time}&to={to_time}"
+      },
+      {
+        "id": 5,
+        "name": "Demo Kubernetes",
+        "systemType": "KUBERNETES",
+        "environmentType": "INTERNAL",
+        "orderIndex": 2,
+        "urlTemplate": "{base_url}/#/workloads?namespace=load-testing-demo"
+      }
+    ]
+  },
+  "/integrations/short": {
+    "integrations": [
+      {
+        "id": 3,
+        "name": "Demo Grafana",
+        "systemType": "GRAFANA",
+        "environmentType": "PRODUCTION"
+      },
+      {
+        "id": 4,
+        "name": "Demo Kibana",
+        "systemType": "KIBANA",
+        "environmentType": "PRODUCTION"
+      },
+      {
+        "id": 5,
+        "name": "Demo Kubernetes",
+        "systemType": "KUBERNETES",
+        "environmentType": "INTERNAL"
+      }
+    ]
+  },
+  "/integrations/3": {
+    "integration": {
+      "id": 3,
+      "name": "Demo Grafana",
+      "systemType": "GRAFANA",
+      "environmentType": "PRODUCTION",
+      "orderIndex": 0,
+      "urlTemplate": "{base_url}/d/demo?from={from_time}&to={to_time}"
+    }
+  },
+  "/load-test-results": {
+    "items": [
+      {
+        "requestsPerSecond": 602.66,
+        "failuresPerSecond": 0.79,
+        "numberOfRequests": 1084784.0,
+        "numberOfFailures": 1426.0,
+        "numberOfUsers": 100.0,
+        "id": 64,
+        "service": {
+          "id": 3,
+          "url": "https://checkout.example.test/",
+          "name": "Demo - Checkout API"
+        },
+        "scenario": {
+          "id": 5,
+          "name": "Baseline - stable load",
+          "tags": [
+            "LATEST"
+          ],
+          "version": "2.0.0"
+        },
+        "triggerCIJobUrl": "https://ci.example.test/checkout/jobs/1059",
+        "triggerCIPipelineUrl": "https://ci.example.test/checkout/pipelines/559",
+        "triggerCIProjectVersion": "demo-checkout-baseline-060",
+        "loadTestsCIJobUrl": "https://ci.example.test/checkout/jobs/2059",
+        "loadTestsCIPipelineUrl": "https://ci.example.test/checkout/pipelines/559",
+        "comment": "Synthetic demo | baseline | build v2.5.9 | Stable traffic, repeated runs for pagination.",
+        "startedAt": "2026-09-28T17:06:39Z",
+        "finishedAt": "2026-09-28T17:36:39Z",
+        "compare": {
+          "previousId": 62,
+          "compareWithAverage": {
+            "compare": -0.01,
+            "explanation": {
+              "explanations": [
+                {
+                  "metric": "Requests per second",
+                  "weight": 0.5,
+                  "compare": -8.19
+                },
+                {
+                  "metric": "Average response time (ms)",
+                  "weight": 0.5,
+                  "compare": 8.17
+                }
+              ],
+              "formula": "(0.5 \u22c5 -8.19%) + (0.5 \u22c5 8.17%) = -0.01%"
+            },
+            "highlight": false
+          },
+          "compareWithPrevious": {
+            "compare": -0.02,
+            "explanation": {
+              "explanations": [
+                {
+                  "metric": "Requests per second",
+                  "weight": 0.5,
+                  "compare": -1.72
+                },
+                {
+                  "metric": "Average response time (ms)",
+                  "weight": 0.5,
+                  "compare": 1.69
+                }
+              ],
+              "formula": "(0.5 \u22c5 -1.72%) + (0.5 \u22c5 1.69%) = -0.02%"
+            },
+            "highlight": false
+          }
+        },
+        "duration": 1800.0
+      },
+      {
+        "requestsPerSecond": 613.19,
+        "failuresPerSecond": 0.8,
+        "numberOfRequests": 551869.0,
+        "numberOfFailures": 724.0,
+        "numberOfUsers": 100.0,
+        "id": 62,
+        "service": {
+          "id": 3,
+          "url": "https://checkout.example.test/",
+          "name": "Demo - Checkout API"
+        },
+        "scenario": {
+          "id": 5,
+          "name": "Baseline - stable load",
+          "tags": [
+            "LATEST"
+          ],
+          "version": "2.0.0"
+        },
+        "triggerCIJobUrl": "https://ci.example.test/checkout/jobs/1058",
+        "triggerCIPipelineUrl": "https://ci.example.test/checkout/pipelines/558",
+        "triggerCIProjectVersion": "demo-checkout-baseline-059",
+        "loadTestsCIJobUrl": "https://ci.example.test/checkout/jobs/2058",
+        "loadTestsCIPipelineUrl": "https://ci.example.test/checkout/pipelines/558",
+        "comment": "Synthetic demo | baseline | build v2.5.8 | Stable traffic, repeated runs for pagination.",
+        "startedAt": "2026-09-28T07:06:39Z",
+        "finishedAt": "2026-09-28T07:21:39Z",
+        "compare": {
+          "previousId": 61,
+          "compareWithAverage": {
+            "compare": 0.0,
+            "explanation": {
+              "explanations": [
+                {
+                  "metric": "Requests per second",
+                  "weight": 0.5,
+                  "compare": -6.58
+                },
+                {
+                  "metric": "Average response time (ms)",
+                  "weight": 0.5,
+                  "compare": 6.59
+                }
+              ],
+              "formula": "(0.5 \u22c5 -6.58%) + (0.5 \u22c5 6.59%) = 0.0%"
+            },
+            "highlight": false
+          },
+          "compareWithPrevious": {
+            "compare": 0.14,
+            "explanation": {
+              "explanations": [
+                {
+                  "metric": "Requests per second",
+                  "weight": 0.5,
+                  "compare": -4.81
+                },
+                {
+                  "metric": "Average response time (ms)",
+                  "weight": 0.5,
+                  "compare": 5.08
+                }
+              ],
+              "formula": "(0.5 \u22c5 -4.81%) + (0.5 \u22c5 5.08%) = 0.14%"
+            },
+            "highlight": false
+          }
+        },
+        "duration": 900.0
+      },
+      {
+        "requestsPerSecond": 644.17,
+        "failuresPerSecond": 0.82,
+        "numberOfRequests": 193251.0,
+        "numberOfFailures": 245.0,
+        "numberOfUsers": 100.0,
+        "id": 61,
+        "service": {
+          "id": 3,
+          "url": "https://checkout.example.test/",
+          "name": "Demo - Checkout API"
+        },
+        "scenario": {
+          "id": 5,
+          "name": "Baseline - stable load",
+          "tags": [
+            "LATEST"
+          ],
+          "version": "2.0.0"
+        },
+        "triggerCIJobUrl": null,
+        "triggerCIPipelineUrl": null,
+        "triggerCIProjectVersion": "demo-checkout-baseline-058",
+        "loadTestsCIJobUrl": "https://ci.example.test/checkout/jobs/2057",
+        "loadTestsCIPipelineUrl": "https://ci.example.test/checkout/pipelines/557",
+        "comment": "Synthetic demo | baseline | build v2.5.7 | Stable traffic, repeated runs for pagination.",
+        "startedAt": "2026-09-27T21:06:39Z",
+        "finishedAt": "2026-09-27T21:11:39Z",
+        "compare": {
+          "previousId": 60,
+          "compareWithAverage": {
+            "compare": -0.14,
+            "explanation": {
+              "explanations": [
+                {
+                  "metric": "Requests per second",
+                  "weight": 0.5,
+                  "compare": -1.86
+                },
+                {
+                  "metric": "Average response time (ms)",
+                  "weight": 0.5,
+                  "compare": 1.59
+                }
+              ],
+              "formula": "(0.5 \u22c5 -1.86%) + (0.5 \u22c5 1.59%) = -0.14%"
+            },
+            "highlight": false
+          },
+          "compareWithPrevious": {
+            "compare": -0.1,
+            "explanation": {
+              "explanations": [
+                {
+                  "metric": "Requests per second",
+                  "weight": 0.5,
+                  "compare": -5.53
+                },
+                {
+                  "metric": "Average response time (ms)",
+                  "weight": 0.5,
+                  "compare": 5.33
+                }
+              ],
+              "formula": "(0.5 \u22c5 -5.53%) + (0.5 \u22c5 5.33%) = -0.1%"
+            },
+            "highlight": false
+          }
+        },
+        "duration": 300.0
+      }
+    ],
+    "total": 60,
+    "limit": 20,
+    "offset": 0
+  },
+  "/load-test-results/details/64": {
+    "details": {
+      "minResponseTime": 15.96,
+      "maxResponseTime": 860.88,
+      "medianResponseTime": 91.01,
+      "averageResponseTime": 110.99,
+      "responseTimePercentile50": 91.01,
+      "responseTimePercentile60": 105.44,
+      "responseTimePercentile70": 122.09,
+      "responseTimePercentile80": 144.28,
+      "responseTimePercentile90": 183.13,
+      "responseTimePercentile95": 227.53,
+      "responseTimePercentile99": 321.87,
+      "responseTimePercentile100": 860.88,
+      "requestsPerSecond": 602.66,
+      "failuresPerSecond": 0.79,
+      "numberOfRequests": 1084784.0,
+      "numberOfFailures": 1426.0,
+      "numberOfUsers": 100.0,
+      "id": 64,
+      "service": {
+        "id": 3,
+        "url": "https://checkout.example.test/",
+        "name": "Demo - Checkout API"
+      },
+      "scenario": {
+        "id": 5,
+        "name": "Baseline - stable load",
+        "tags": [
+          "LATEST"
+        ],
+        "version": "2.0.0"
+      },
+      "triggerCIJobUrl": "https://ci.example.test/checkout/jobs/1059",
+      "triggerCIPipelineUrl": "https://ci.example.test/checkout/pipelines/559",
+      "triggerCIProjectVersion": "demo-checkout-baseline-060",
+      "loadTestsCIJobUrl": "https://ci.example.test/checkout/jobs/2059",
+      "loadTestsCIPipelineUrl": "https://ci.example.test/checkout/pipelines/559",
+      "comment": "Synthetic demo | baseline | build v2.5.9 | Stable traffic, repeated runs for pagination.",
+      "startedAt": "2026-09-28T17:06:39Z",
+      "finishedAt": "2026-09-28T17:36:39Z",
+      "compare": {
+        "previousId": 63,
+        "compareWithAverage": {
+          "compare": 2.11,
+          "explanation": {
+            "explanations": [
+              {
+                "metric": "Requests per second",
+                "weight": 0.5,
+                "compare": -26.15
+              },
+              {
+                "metric": "Average response time (ms)",
+                "weight": 0.5,
+                "compare": 30.37
+              }
+            ],
+            "formula": "(0.5 \u22c5 -26.15%) + (0.5 \u22c5 30.37%) = 2.11%"
+          },
+          "highlight": false
+        },
+        "compareWithPrevious": {
+          "compare": 45.69,
+          "explanation": {
+            "explanations": [
+              {
+                "metric": "Requests per second",
+                "weight": 0.5,
+                "compare": 31.35
+              },
+              {
+                "metric": "Average response time (ms)",
+                "weight": 0.5,
+                "compare": 60.03
+              }
+            ],
+            "formula": "(0.5 \u22c5 31.35%) + (0.5 \u22c5 60.03%) = 45.69%"
+          },
+          "highlight": false
+        }
+      },
+      "duration": 1800.0
+    }
+  },
+  "/method-results": {
+    "results": [
+      {
+        "averageContentLength": 512.0,
+        "requestsPerSecond": 193.07,
+        "failuresPerSecond": 0.19,
+        "numberOfRequests": 347524.0,
+        "numberOfFailures": 348.0,
+        "minResponseTime": 15.96,
+        "maxResponseTime": 286.96,
+        "medianResponseTime": 54.37,
+        "averageResponseTime": 66.31,
+        "responseTimePercentile50": 54.37,
+        "responseTimePercentile60": 62.99,
+        "responseTimePercentile70": 72.94,
+        "responseTimePercentile80": 86.2,
+        "responseTimePercentile90": 109.41,
+        "responseTimePercentile95": 135.93,
+        "responseTimePercentile99": 192.29,
+        "responseTimePercentile100": 286.96,
+        "id": 358,
+        "method": "GET /cart",
+        "protocol": "http"
+      },
+      {
+        "averageContentLength": 3062.0,
+        "requestsPerSecond": 72.97,
+        "failuresPerSecond": 0.12,
+        "numberOfRequests": 131353.0,
+        "numberOfFailures": 208.0,
+        "minResponseTime": 19.95,
+        "maxResponseTime": 358.7,
+        "medianResponseTime": 67.96,
+        "averageResponseTime": 82.88,
+        "responseTimePercentile50": 67.96,
+        "responseTimePercentile60": 78.74,
+        "responseTimePercentile70": 91.17,
+        "responseTimePercentile80": 107.75,
+        "responseTimePercentile90": 136.76,
+        "responseTimePercentile95": 169.91,
+        "responseTimePercentile99": 240.36,
+        "responseTimePercentile100": 358.7,
+        "id": 365,
+        "method": "GET /orders/{id}",
+        "protocol": "http"
+      },
+      {
+        "averageContentLength": 4762.0,
+        "requestsPerSecond": 30.52,
+        "failuresPerSecond": 0.06,
+        "numberOfRequests": 54936.0,
+        "numberOfFailures": 113.0,
+        "minResponseTime": 22.62,
+        "maxResponseTime": 406.53,
+        "medianResponseTime": 77.02,
+        "averageResponseTime": 93.93,
+        "responseTimePercentile50": 77.02,
+        "responseTimePercentile60": 89.24,
+        "responseTimePercentile70": 103.33,
+        "responseTimePercentile80": 122.11,
+        "responseTimePercentile90": 154.99,
+        "responseTimePercentile95": 192.56,
+        "responseTimePercentile99": 272.41,
+        "responseTimePercentile100": 406.53,
+        "id": 369,
+        "method": "GET /shipping/rates",
+        "protocol": "http"
+      }
+    ]
+  },
+  "/method-results/details/358": {
+    "details": {
+      "averageContentLength": 512.0,
+      "requestsPerSecond": 193.07,
+      "failuresPerSecond": 0.19,
+      "numberOfRequests": 347524.0,
+      "numberOfFailures": 348.0,
+      "minResponseTime": 15.96,
+      "maxResponseTime": 286.96,
+      "medianResponseTime": 54.37,
+      "averageResponseTime": 66.31,
+      "responseTimePercentile50": 54.37,
+      "responseTimePercentile60": 62.99,
+      "responseTimePercentile70": 72.94,
+      "responseTimePercentile80": 86.2,
+      "responseTimePercentile90": 109.41,
+      "responseTimePercentile95": 135.93,
+      "responseTimePercentile99": 192.29,
+      "responseTimePercentile100": 286.96,
+      "id": 358,
+      "method": "GET /cart",
+      "protocol": "http",
+      "compare": {
+        "compareWithAverage": {
+          "method": "GET /cart",
+          "protocol": "http",
+          "compare": 2.18,
+          "explanation": {
+            "explanations": [
+              {
+                "metric": "Requests per second",
+                "weight": 0.5,
+                "compare": -25.92
+              },
+              {
+                "metric": "Average response time (ms)",
+                "weight": 0.5,
+                "compare": 30.29
+              }
+            ],
+            "formula": "(0.5 \u22c5 -25.92%) + (0.5 \u22c5 30.29%) = 2.18%"
+          },
+          "highlight": false
+        },
+        "compareWithPrevious": {
+          "method": "GET /cart",
+          "protocol": "http",
+          "compare": 0.05,
+          "explanation": {
+            "explanations": [
+              {
+                "metric": "Requests per second",
+                "weight": 0.5,
+                "compare": -1.62
+              },
+              {
+                "metric": "Average response time (ms)",
+                "weight": 0.5,
+                "compare": 1.72
+              }
+            ],
+            "formula": "(0.5 \u22c5 -1.62%) + (0.5 \u22c5 1.72%) = 0.05%"
+          },
+          "highlight": false
+        }
+      }
+    }
+  },
+  "/load-test-results-history": {
+    "results": [
+      {
+        "numberOfUsers": 10.0,
+        "averageContentLength": 1846.5,
+        "requestsPerSecond": 0.0,
+        "failuresPerSecond": 0.0,
+        "numberOfRequests": 0.0,
+        "numberOfFailures": 0.0,
+        "minResponseTime": 31.09,
+        "maxResponseTime": 421.91,
+        "medianResponseTime": 91.04,
+        "averageResponseTime": 111.03,
+        "responseTimePercentile50": 91.04,
+        "responseTimePercentile60": 105.48,
+        "responseTimePercentile70": 122.13,
+        "responseTimePercentile80": 144.34,
+        "responseTimePercentile90": 183.2,
+        "responseTimePercentile95": 227.61,
+        "responseTimePercentile99": 321.98,
+        "responseTimePercentile100": 421.91,
+        "datetime": "2026-09-28T17:06:39Z"
+      },
+      {
+        "numberOfUsers": 17.0,
+        "averageContentLength": 1846.5,
+        "requestsPerSecond": 127.69,
+        "failuresPerSecond": 0.17,
+        "numberOfRequests": 7662.0,
+        "numberOfFailures": 10.0,
+        "minResponseTime": 33.55,
+        "maxResponseTime": 455.26,
+        "medianResponseTime": 98.24,
+        "averageResponseTime": 119.81,
+        "responseTimePercentile50": 98.24,
+        "responseTimePercentile60": 113.82,
+        "responseTimePercentile70": 131.79,
+        "responseTimePercentile80": 155.75,
+        "responseTimePercentile90": 197.68,
+        "responseTimePercentile95": 245.6,
+        "responseTimePercentile99": 347.44,
+        "responseTimePercentile100": 455.26,
+        "datetime": "2026-09-28T17:07:39Z"
+      },
+      {
+        "numberOfUsers": 33.0,
+        "averageContentLength": 1846.5,
+        "requestsPerSecond": 253.93,
+        "failuresPerSecond": 0.34,
+        "numberOfRequests": 22898.0,
+        "numberOfFailures": 31.0,
+        "minResponseTime": 35.15,
+        "maxResponseTime": 476.97,
+        "medianResponseTime": 102.93,
+        "averageResponseTime": 125.52,
+        "responseTimePercentile50": 102.93,
+        "responseTimePercentile60": 119.24,
+        "responseTimePercentile70": 138.07,
+        "responseTimePercentile80": 163.17,
+        "responseTimePercentile90": 207.11,
+        "responseTimePercentile95": 257.31,
+        "responseTimePercentile99": 364.0,
+        "responseTimePercentile100": 476.97,
+        "datetime": "2026-09-28T17:08:39Z"
+      }
+    ]
+  },
+  "/method-results-history": {
+    "results": [
+      {
+        "numberOfUsers": 10.0,
+        "averageContentLength": 512.0,
+        "requestsPerSecond": 0.0,
+        "failuresPerSecond": 0.0,
+        "numberOfRequests": 0.0,
+        "numberOfFailures": 0.0,
+        "minResponseTime": 18.55,
+        "maxResponseTime": 251.76,
+        "medianResponseTime": 54.33,
+        "averageResponseTime": 66.25,
+        "responseTimePercentile50": 54.33,
+        "responseTimePercentile60": 62.94,
+        "responseTimePercentile70": 72.88,
+        "responseTimePercentile80": 86.13,
+        "responseTimePercentile90": 109.32,
+        "responseTimePercentile95": 135.82,
+        "responseTimePercentile99": 192.14,
+        "responseTimePercentile100": 251.76,
+        "datetime": "2026-09-28T17:06:39Z"
+      },
+      {
+        "numberOfUsers": 17.0,
+        "averageContentLength": 512.0,
+        "requestsPerSecond": 41.95,
+        "failuresPerSecond": 0.05,
+        "numberOfRequests": 2517.0,
+        "numberOfFailures": 3.0,
+        "minResponseTime": 20.02,
+        "maxResponseTime": 271.67,
+        "medianResponseTime": 58.62,
+        "averageResponseTime": 71.49,
+        "responseTimePercentile50": 58.62,
+        "responseTimePercentile60": 67.92,
+        "responseTimePercentile70": 78.64,
+        "responseTimePercentile80": 92.94,
+        "responseTimePercentile90": 117.96,
+        "responseTimePercentile95": 146.56,
+        "responseTimePercentile99": 207.32,
+        "responseTimePercentile100": 271.67,
+        "datetime": "2026-09-28T17:07:39Z"
+      },
+      {
+        "numberOfUsers": 33.0,
+        "averageContentLength": 512.0,
+        "requestsPerSecond": 88.97,
+        "failuresPerSecond": 0.08,
+        "numberOfRequests": 7855.0,
+        "numberOfFailures": 8.0,
+        "minResponseTime": 20.97,
+        "maxResponseTime": 284.61,
+        "medianResponseTime": 61.42,
+        "averageResponseTime": 74.9,
+        "responseTimePercentile50": 61.42,
+        "responseTimePercentile60": 71.15,
+        "responseTimePercentile70": 82.39,
+        "responseTimePercentile80": 97.37,
+        "responseTimePercentile90": 123.58,
+        "responseTimePercentile95": 153.54,
+        "responseTimePercentile99": 217.21,
+        "responseTimePercentile100": 284.61,
+        "datetime": "2026-09-28T17:08:39Z"
+      }
+    ]
+  },
+  "/exception-results": {
+    "results": [
+      {
+        "id": 137,
+        "message": "TimeoutError: downstream deadline exceeded",
+        "numberOfExceptions": 855
+      },
+      {
+        "id": 138,
+        "message": "ServiceUnavailable: upstream overloaded",
+        "numberOfExceptions": 427
+      },
+      {
+        "id": 139,
+        "message": "ResourceExhausted: rate limit exceeded",
+        "numberOfExceptions": 144
+      }
+    ]
+  },
+  "/ratio-results/64": {
+    "ratioTotal": [
+      {
+        "id": "5a9326a0-8986-48c2-858b-5d2c897805ca",
+        "name": "CustomerJourney",
+        "ratio": 0.8,
+        "tasks": [
+          {
+            "id": "31dd8544-f6d0-403c-a16a-e3d740b623e4",
+            "name": "browse",
+            "ratio": 0.5,
+            "tasks": []
+          },
+          {
+            "id": "bc9f6412-dcb0-4382-b9cb-2bcaf5d958b8",
+            "name": "submit",
+            "ratio": 0.3,
+            "tasks": []
+          }
+        ]
+      },
+      {
+        "id": "abf6029f-27b5-4df7-a490-5700a06851f4",
+        "name": "BackgroundJobs",
+        "ratio": 0.2,
+        "tasks": [
+          {
+            "id": "13ccb1b4-4058-4059-989c-a5bc6b123bcf",
+            "name": "StatusCheck",
+            "ratio": 0.15,
+            "tasks": []
+          },
+          {
+            "id": "dd115441-7b3d-4b5b-a8c0-68e0baf110f9",
+            "name": "cleanup",
+            "ratio": 0.05,
+            "tasks": []
+          }
+        ]
+      }
+    ],
+    "ratioPerClass": [
+      {
+        "id": "80fc1d5a-3275-45ea-8afc-056bb35b4686",
+        "name": "CustomerJourney",
+        "ratio": 0.8,
+        "tasks": [
+          {
+            "id": "097b7ee7-1c7e-47d0-9c75-fd22edcca451",
+            "name": "browse",
+            "ratio": 0.5,
+            "tasks": []
+          },
+          {
+            "id": "85e3273d-be7e-453a-a397-f4a23a1d4f4e",
+            "name": "submit",
+            "ratio": 0.3,
+            "tasks": []
+          }
+        ]
+      },
+      {
+        "id": "29f675e4-06c4-45f0-968e-4816fcbbb7d1",
+        "name": "BackgroundJobs",
+        "ratio": 0.2,
+        "tasks": [
+          {
+            "id": "a61ae967-3e1b-4297-9ea3-60b45e3984e8",
+            "name": "StatusCheck",
+            "ratio": 0.15,
+            "tasks": []
+          },
+          {
+            "id": "3b2ce26e-3cb3-4d26-a73c-ccbdf144e86d",
+            "name": "cleanup",
+            "ratio": 0.05,
+            "tasks": []
+          }
+        ]
+      }
+    ]
+  },
+  "/compare-settings/3": {
+    "settings": {
+      "serviceId": 3,
+      "weights": {
+        "numberOfUsers": 0.0,
+        "averageContentLength": 0.0,
+        "requestsPerSecond": 0.5,
+        "failuresPerSecond": 0.0,
+        "numberOfRequests": 0.0,
+        "numberOfFailures": 0.0,
+        "minResponseTime": 0.0,
+        "maxResponseTime": 0.0,
+        "medianResponseTime": 0.0,
+        "averageResponseTime": 0.5,
+        "responseTimePercentile50": 0.0,
+        "responseTimePercentile60": 0.0,
+        "responseTimePercentile70": 0.0,
+        "responseTimePercentile80": 0.0,
+        "responseTimePercentile90": 0.0,
+        "responseTimePercentile95": 0.0,
+        "responseTimePercentile99": 0.0,
+        "responseTimePercentile100": 0.0
+      },
+      "highlightThreshold": {
+        "compareWithAverage": -50.0,
+        "compareWithPrevious": -50.0,
+        "compareResultWithResults": -50.0,
+        "compareResultWithAverages": -50.0,
+        "compareResultWithScenario": -50.0,
+        "compareMethodWithScenario": -50.0,
+        "compareAveragesWithScenario": -50.0
+      }
+    }
+  },
+  "/methods": {
+    "methods": [
+      {
+        "requestsPerSecond": 260.61,
+        "failuresPerSecond": 4.05,
+        "numberOfRequests": 254201.08,
+        "numberOfFailures": 3891.28,
+        "minResponseTime": 21.32,
+        "maxResponseTime": 492.91,
+        "medianResponseTime": 78.0,
+        "averageResponseTime": 95.12,
+        "method": "GET /cart",
+        "protocol": "http"
+      },
+      {
+        "requestsPerSecond": 98.63,
+        "failuresPerSecond": 2.48,
+        "numberOfRequests": 96272.74,
+        "numberOfFailures": 2381.79,
+        "minResponseTime": 26.65,
+        "maxResponseTime": 616.14,
+        "medianResponseTime": 97.5,
+        "averageResponseTime": 118.9,
+        "method": "GET /orders/{id}",
+        "protocol": "http"
+      },
+      {
+        "requestsPerSecond": 41.24,
+        "failuresPerSecond": 1.3,
+        "numberOfRequests": 40226.78,
+        "numberOfFailures": 1246.09,
+        "minResponseTime": 30.2,
+        "maxResponseTime": 698.29,
+        "medianResponseTime": 110.5,
+        "averageResponseTime": 134.75,
+        "method": "GET /shipping/rates",
+        "protocol": "http"
+      }
+    ]
+  },
+  "/methods/short": {
+    "methods": [
+      {
+        "method": "GET /cart",
+        "protocol": "http"
+      },
+      {
+        "method": "GET /orders/{id}",
+        "protocol": "http"
+      },
+      {
+        "method": "GET /shipping/rates",
+        "protocol": "http"
+      }
+    ]
+  },
+  "/methods/details": {
+    "details": {
+      "averageContentLength": 512.0,
+      "responseTimePercentile50": 59.14,
+      "responseTimePercentile60": 68.52,
+      "responseTimePercentile70": 79.34,
+      "responseTimePercentile80": 93.77,
+      "responseTimePercentile90": 119.01,
+      "responseTimePercentile95": 147.86,
+      "responseTimePercentile99": 209.17,
+      "responseTimePercentile100": 312.16,
+      "requestsPerSecond": 209.85,
+      "failuresPerSecond": 0.16,
+      "numberOfRequests": 209723.1,
+      "numberOfFailures": 156.97,
+      "minResponseTime": 17.37,
+      "maxResponseTime": 312.16,
+      "medianResponseTime": 59.14,
+      "averageResponseTime": 72.13,
+      "method": "GET /cart",
+      "protocol": "http"
+    }
+  },
+  "/average-analytics": {
+    "analytics": {
+      "numberOfUsers": 183.33,
+      "requestsPerSecond": 816.07,
+      "failuresPerSecond": 16.77,
+      "numberOfRequests": 796172.12,
+      "numberOfFailures": 16108.07,
+      "minResponseTime": 21.32,
+      "maxResponseTime": 1478.73,
+      "medianResponseTime": 130.71,
+      "averageResponseTime": 159.4,
+      "responseTimePercentile50": 130.71,
+      "responseTimePercentile60": 151.43,
+      "responseTimePercentile70": 175.34,
+      "responseTimePercentile80": 207.22,
+      "responseTimePercentile90": 263.01,
+      "responseTimePercentile95": 326.77,
+      "responseTimePercentile99": 462.26,
+      "responseTimePercentile100": 1478.73
+    }
+  },
+  "/compares/compare-result-with-results": {
+    "summary": {
+      "methodResultCompares": [
+        {
+          "minResponseTime": {
+            "actual": 15.96,
+            "expected": 16.24,
+            "compare": 1.72
+          },
+          "maxResponseTime": {
+            "actual": 286.96,
+            "expected": 292.01,
+            "compare": 1.73
+          },
+          "numberOfRequests": {
+            "actual": 347524.0,
+            "expected": 176616.0,
+            "compare": 96.77
+          },
+          "numberOfFailures": {
+            "actual": 348.0,
+            "expected": 177.0,
+            "compare": -96.61
+          },
+          "requestsPerSecond": {
+            "actual": 193.07,
+            "expected": 196.24,
+            "compare": -1.62
+          },
+          "failuresPerSecond": {
+            "actual": 0.19,
+            "expected": 0.2,
+            "compare": 5.0
+          },
+          "medianResponseTime": {
+            "actual": 54.37,
+            "expected": 55.33,
+            "compare": 1.74
+          },
+          "averageResponseTime": {
+            "actual": 66.31,
+            "expected": 67.47,
+            "compare": 1.72
+          },
+          "responseTimePercentile50": {
+            "actual": 54.37,
+            "expected": 55.33,
+            "compare": 1.74
+          },
+          "responseTimePercentile60": {
+            "actual": 62.99,
+            "expected": 64.1,
+            "compare": 1.73
+          },
+          "responseTimePercentile70": {
+            "actual": 72.94,
+            "expected": 74.22,
+            "compare": 1.72
+          },
+          "responseTimePercentile80": {
+            "actual": 86.2,
+            "expected": 87.71,
+            "compare": 1.72
+          },
+          "responseTimePercentile90": {
+            "actual": 109.41,
+            "expected": 111.33,
+            "compare": 1.72
+          },
+          "responseTimePercentile95": {
+            "actual": 135.93,
+            "expected": 138.32,
+            "compare": 1.73
+          },
+          "responseTimePercentile99": {
+            "actual": 192.29,
+            "expected": 195.67,
+            "compare": 1.73
+          },
+          "responseTimePercentile100": {
+            "actual": 286.96,
+            "expected": 292.01,
+            "compare": 1.73
+          },
+          "method": "GET /cart",
+          "protocol": "http",
+          "averageContentLength": {
+            "actual": 512.0,
+            "expected": 512.0,
+            "compare": 0.0
+          },
+          "compare": 0.05,
+          "explanation": {
+            "explanations": [
+              {
+                "metric": "Requests per second",
+                "weight": 0.5,
+                "compare": -1.62
+              },
+              {
+                "metric": "Average response time (ms)",
+                "weight": 0.5,
+                "compare": 1.72
+              }
+            ],
+            "formula": "(0.5 \u22c5 -1.62%) + (0.5 \u22c5 1.72%) = 0.05%"
+          },
+          "highlight": false
+        },
+        {
+          "minResponseTime": {
+            "actual": 19.95,
+            "expected": 20.31,
+            "compare": 1.77
+          },
+          "maxResponseTime": {
+            "actual": 358.7,
+            "expected": 365.01,
+            "compare": 1.73
+          },
+          "numberOfRequests": {
+            "actual": 131353.0,
+            "expected": 66595.0,
+            "compare": 97.24
+          },
+          "numberOfFailures": {
+            "actual": 208.0,
+            "expected": 111.0,
+            "compare": -87.39
+          },
+          "requestsPerSecond": {
+            "actual": 72.97,
+            "expected": 73.99,
+            "compare": -1.38
+          },
+          "failuresPerSecond": {
+            "actual": 0.12,
+            "expected": 0.12,
+            "compare": -0.0
+          },
+          "medianResponseTime": {
+            "actual": 67.96,
+            "expected": 69.16,
+            "compare": 1.74
+          },
+          "averageResponseTime": {
+            "actual": 82.88,
+            "expected": 84.34,
+            "compare": 1.73
+          },
+          "responseTimePercentile50": {
+            "actual": 67.96,
+            "expected": 69.16,
+            "compare": 1.74
+          },
+          "responseTimePercentile60": {
+            "actual": 78.74,
+            "expected": 80.12,
+            "compare": 1.72
+          },
+          "responseTimePercentile70": {
+            "actual": 91.17,
+            "expected": 92.77,
+            "compare": 1.72
+          },
+          "responseTimePercentile80": {
+            "actual": 107.75,
+            "expected": 109.64,
+            "compare": 1.72
+          },
+          "responseTimePercentile90": {
+            "actual": 136.76,
+            "expected": 139.16,
+            "compare": 1.72
+          },
+          "responseTimePercentile95": {
+            "actual": 169.91,
+            "expected": 172.9,
+            "compare": 1.73
+          },
+          "responseTimePercentile99": {
+            "actual": 240.36,
+            "expected": 244.59,
+            "compare": 1.73
+          },
+          "responseTimePercentile100": {
+            "actual": 358.7,
+            "expected": 365.01,
+            "compare": 1.73
+          },
+          "method": "GET /orders/{id}",
+          "protocol": "http",
+          "averageContentLength": {
+            "actual": 3062.0,
+            "expected": 3062.0,
+            "compare": 0.0
+          },
+          "compare": 0.18,
+          "explanation": {
+            "explanations": [
+              {
+                "metric": "Requests per second",
+                "weight": 0.5,
+                "compare": -1.38
+              },
+              {
+                "metric": "Average response time (ms)",
+                "weight": 0.5,
+                "compare": 1.73
+              }
+            ],
+            "formula": "(0.5 \u22c5 -1.38%) + (0.5 \u22c5 1.73%) = 0.18%"
+          },
+          "highlight": false
+        },
+        {
+          "minResponseTime": {
+            "actual": 22.62,
+            "expected": 23.01,
+            "compare": 1.69
+          },
+          "maxResponseTime": {
+            "actual": 406.53,
+            "expected": 413.68,
+            "compare": 1.73
+          },
+          "numberOfRequests": {
+            "actual": 54936.0,
+            "expected": 27893.0,
+            "compare": 96.95
+          },
+          "numberOfFailures": {
+            "actual": 113.0,
+            "expected": 52.0,
+            "compare": -117.31
+          },
+          "requestsPerSecond": {
+            "actual": 30.52,
+            "expected": 30.99,
+            "compare": -1.52
+          },
+          "failuresPerSecond": {
+            "actual": 0.06,
+            "expected": 0.06,
+            "compare": -0.0
+          },
+          "medianResponseTime": {
+            "actual": 77.02,
+            "expected": 78.38,
+            "compare": 1.74
+          },
+          "averageResponseTime": {
+            "actual": 93.93,
+            "expected": 95.59,
+            "compare": 1.74
+          },
+          "responseTimePercentile50": {
+            "actual": 77.02,
+            "expected": 78.38,
+            "compare": 1.74
+          },
+          "responseTimePercentile60": {
+            "actual": 89.24,
+            "expected": 90.81,
+            "compare": 1.73
+          },
+          "responseTimePercentile70": {
+            "actual": 103.33,
+            "expected": 105.14,
+            "compare": 1.72
+          },
+          "responseTimePercentile80": {
+            "actual": 122.11,
+            "expected": 124.26,
+            "compare": 1.73
+          },
+          "responseTimePercentile90": {
+            "actual": 154.99,
+            "expected": 157.72,
+            "compare": 1.73
+          },
+          "responseTimePercentile95": {
+            "actual": 192.56,
+            "expected": 195.95,
+            "compare": 1.73
+          },
+          "responseTimePercentile99": {
+            "actual": 272.41,
+            "expected": 277.2,
+            "compare": 1.73
+          },
+          "responseTimePercentile100": {
+            "actual": 406.53,
+            "expected": 413.68,
+            "compare": 1.73
+          },
+          "method": "GET /shipping/rates",
+          "protocol": "http",
+          "averageContentLength": {
+            "actual": 4762.0,
+            "expected": 4762.0,
+            "compare": 0.0
+          },
+          "compare": 0.11,
+          "explanation": {
+            "explanations": [
+              {
+                "metric": "Requests per second",
+                "weight": 0.5,
+                "compare": -1.52
+              },
+              {
+                "metric": "Average response time (ms)",
+                "weight": 0.5,
+                "compare": 1.74
+              }
+            ],
+            "formula": "(0.5 \u22c5 -1.52%) + (0.5 \u22c5 1.74%) = 0.11%"
+          },
+          "highlight": false
+        }
+      ],
+      "loadTestResultCompare": {
+        "minResponseTime": {
+          "actual": 15.96,
+          "expected": 16.24,
+          "compare": 1.72
+        },
+        "maxResponseTime": {
+          "actual": 860.88,
+          "expected": 876.03,
+          "compare": 1.73
+        },
+        "numberOfRequests": {
+          "actual": 1084784.0,
+          "expected": 551869.0,
+          "compare": 96.57
+        },
+        "numberOfFailures": {
+          "actual": 1426.0,
+          "expected": 724.0,
+          "compare": -96.96
+        },
+        "requestsPerSecond": {
+          "actual": 602.66,
+          "expected": 613.19,
+          "compare": -1.72
+        },
+        "failuresPerSecond": {
+          "actual": 0.79,
+          "expected": 0.8,
+          "compare": 1.25
+        },
+        "medianResponseTime": {
+          "actual": 91.01,
+          "expected": 92.58,
+          "compare": 1.7
+        },
+        "averageResponseTime": {
+          "actual": 110.99,
+          "expected": 112.9,
+          "compare": 1.69
+        },
+        "responseTimePercentile50": {
+          "actual": 91.01,
+          "expected": 92.58,
+          "compare": 1.7
+        },
+        "responseTimePercentile60": {
+          "actual": 105.44,
+          "expected": 107.26,
+          "compare": 1.7
+        },
+        "responseTimePercentile70": {
+          "actual": 122.09,
+          "expected": 124.19,
+          "compare": 1.69
+        },
+        "responseTimePercentile80": {
+          "actual": 144.28,
+          "expected": 146.77,
+          "compare": 1.7
+        },
+        "responseTimePercentile90": {
+          "actual": 183.13,
+          "expected": 186.29,
+          "compare": 1.7
+        },
+        "responseTimePercentile95": {
+          "actual": 227.53,
+          "expected": 231.45,
+          "compare": 1.69
+        },
+        "responseTimePercentile99": {
+          "actual": 321.87,
+          "expected": 327.41,
+          "compare": 1.69
+        },
+        "responseTimePercentile100": {
+          "actual": 860.88,
+          "expected": 876.03,
+          "compare": 1.73
+        },
+        "numberOfUsers": {
+          "actual": 100.0,
+          "expected": 100.0,
+          "compare": 0.0
+        },
+        "compare": -0.02,
+        "explanation": {
+          "explanations": [
+            {
+              "metric": "Requests per second",
+              "weight": 0.5,
+              "compare": -1.72
+            },
+            {
+              "metric": "Average response time (ms)",
+              "weight": 0.5,
+              "compare": 1.69
+            }
+          ],
+          "formula": "(0.5 \u22c5 -1.72%) + (0.5 \u22c5 1.69%) = -0.02%"
+        },
+        "highlight": false
+      }
+    },
+    "compares": [
+      {
+        "methodResultCompares": [
+          {
+            "minResponseTime": {
+              "actual": 15.96,
+              "expected": 16.24,
+              "compare": 1.72
+            },
+            "maxResponseTime": {
+              "actual": 286.96,
+              "expected": 292.01,
+              "compare": 1.73
+            },
+            "numberOfRequests": {
+              "actual": 347524.0,
+              "expected": 176616.0,
+              "compare": 96.77
+            },
+            "numberOfFailures": {
+              "actual": 348.0,
+              "expected": 177.0,
+              "compare": -96.61
+            },
+            "requestsPerSecond": {
+              "actual": 193.07,
+              "expected": 196.24,
+              "compare": -1.62
+            },
+            "failuresPerSecond": {
+              "actual": 0.19,
+              "expected": 0.2,
+              "compare": 5.0
+            },
+            "medianResponseTime": {
+              "actual": 54.37,
+              "expected": 55.33,
+              "compare": 1.74
+            },
+            "averageResponseTime": {
+              "actual": 66.31,
+              "expected": 67.47,
+              "compare": 1.72
+            },
+            "responseTimePercentile50": {
+              "actual": 54.37,
+              "expected": 55.33,
+              "compare": 1.74
+            },
+            "responseTimePercentile60": {
+              "actual": 62.99,
+              "expected": 64.1,
+              "compare": 1.73
+            },
+            "responseTimePercentile70": {
+              "actual": 72.94,
+              "expected": 74.22,
+              "compare": 1.72
+            },
+            "responseTimePercentile80": {
+              "actual": 86.2,
+              "expected": 87.71,
+              "compare": 1.72
+            },
+            "responseTimePercentile90": {
+              "actual": 109.41,
+              "expected": 111.33,
+              "compare": 1.72
+            },
+            "responseTimePercentile95": {
+              "actual": 135.93,
+              "expected": 138.32,
+              "compare": 1.73
+            },
+            "responseTimePercentile99": {
+              "actual": 192.29,
+              "expected": 195.67,
+              "compare": 1.73
+            },
+            "responseTimePercentile100": {
+              "actual": 286.96,
+              "expected": 292.01,
+              "compare": 1.73
+            },
+            "method": "GET /cart",
+            "protocol": "http",
+            "averageContentLength": {
+              "actual": 512.0,
+              "expected": 512.0,
+              "compare": 0.0
+            },
+            "compare": 0.05,
+            "explanation": {
+              "explanations": [
+                {
+                  "metric": "Requests per second",
+                  "weight": 0.5,
+                  "compare": -1.62
+                },
+                {
+                  "metric": "Average response time (ms)",
+                  "weight": 0.5,
+                  "compare": 1.72
+                }
+              ],
+              "formula": "(0.5 \u22c5 -1.62%) + (0.5 \u22c5 1.72%) = 0.05%"
+            },
+            "highlight": false
+          },
+          {
+            "minResponseTime": {
+              "actual": 19.95,
+              "expected": 20.31,
+              "compare": 1.77
+            },
+            "maxResponseTime": {
+              "actual": 358.7,
+              "expected": 365.01,
+              "compare": 1.73
+            },
+            "numberOfRequests": {
+              "actual": 131353.0,
+              "expected": 66595.0,
+              "compare": 97.24
+            },
+            "numberOfFailures": {
+              "actual": 208.0,
+              "expected": 111.0,
+              "compare": -87.39
+            },
+            "requestsPerSecond": {
+              "actual": 72.97,
+              "expected": 73.99,
+              "compare": -1.38
+            },
+            "failuresPerSecond": {
+              "actual": 0.12,
+              "expected": 0.12,
+              "compare": -0.0
+            },
+            "medianResponseTime": {
+              "actual": 67.96,
+              "expected": 69.16,
+              "compare": 1.74
+            },
+            "averageResponseTime": {
+              "actual": 82.88,
+              "expected": 84.34,
+              "compare": 1.73
+            },
+            "responseTimePercentile50": {
+              "actual": 67.96,
+              "expected": 69.16,
+              "compare": 1.74
+            },
+            "responseTimePercentile60": {
+              "actual": 78.74,
+              "expected": 80.12,
+              "compare": 1.72
+            },
+            "responseTimePercentile70": {
+              "actual": 91.17,
+              "expected": 92.77,
+              "compare": 1.72
+            },
+            "responseTimePercentile80": {
+              "actual": 107.75,
+              "expected": 109.64,
+              "compare": 1.72
+            },
+            "responseTimePercentile90": {
+              "actual": 136.76,
+              "expected": 139.16,
+              "compare": 1.72
+            },
+            "responseTimePercentile95": {
+              "actual": 169.91,
+              "expected": 172.9,
+              "compare": 1.73
+            },
+            "responseTimePercentile99": {
+              "actual": 240.36,
+              "expected": 244.59,
+              "compare": 1.73
+            },
+            "responseTimePercentile100": {
+              "actual": 358.7,
+              "expected": 365.01,
+              "compare": 1.73
+            },
+            "method": "GET /orders/{id}",
+            "protocol": "http",
+            "averageContentLength": {
+              "actual": 3062.0,
+              "expected": 3062.0,
+              "compare": 0.0
+            },
+            "compare": 0.18,
+            "explanation": {
+              "explanations": [
+                {
+                  "metric": "Requests per second",
+                  "weight": 0.5,
+                  "compare": -1.38
+                },
+                {
+                  "metric": "Average response time (ms)",
+                  "weight": 0.5,
+                  "compare": 1.73
+                }
+              ],
+              "formula": "(0.5 \u22c5 -1.38%) + (0.5 \u22c5 1.73%) = 0.18%"
+            },
+            "highlight": false
+          },
+          {
+            "minResponseTime": {
+              "actual": 22.62,
+              "expected": 23.01,
+              "compare": 1.69
+            },
+            "maxResponseTime": {
+              "actual": 406.53,
+              "expected": 413.68,
+              "compare": 1.73
+            },
+            "numberOfRequests": {
+              "actual": 54936.0,
+              "expected": 27893.0,
+              "compare": 96.95
+            },
+            "numberOfFailures": {
+              "actual": 113.0,
+              "expected": 52.0,
+              "compare": -117.31
+            },
+            "requestsPerSecond": {
+              "actual": 30.52,
+              "expected": 30.99,
+              "compare": -1.52
+            },
+            "failuresPerSecond": {
+              "actual": 0.06,
+              "expected": 0.06,
+              "compare": -0.0
+            },
+            "medianResponseTime": {
+              "actual": 77.02,
+              "expected": 78.38,
+              "compare": 1.74
+            },
+            "averageResponseTime": {
+              "actual": 93.93,
+              "expected": 95.59,
+              "compare": 1.74
+            },
+            "responseTimePercentile50": {
+              "actual": 77.02,
+              "expected": 78.38,
+              "compare": 1.74
+            },
+            "responseTimePercentile60": {
+              "actual": 89.24,
+              "expected": 90.81,
+              "compare": 1.73
+            },
+            "responseTimePercentile70": {
+              "actual": 103.33,
+              "expected": 105.14,
+              "compare": 1.72
+            },
+            "responseTimePercentile80": {
+              "actual": 122.11,
+              "expected": 124.26,
+              "compare": 1.73
+            },
+            "responseTimePercentile90": {
+              "actual": 154.99,
+              "expected": 157.72,
+              "compare": 1.73
+            },
+            "responseTimePercentile95": {
+              "actual": 192.56,
+              "expected": 195.95,
+              "compare": 1.73
+            },
+            "responseTimePercentile99": {
+              "actual": 272.41,
+              "expected": 277.2,
+              "compare": 1.73
+            },
+            "responseTimePercentile100": {
+              "actual": 406.53,
+              "expected": 413.68,
+              "compare": 1.73
+            },
+            "method": "GET /shipping/rates",
+            "protocol": "http",
+            "averageContentLength": {
+              "actual": 4762.0,
+              "expected": 4762.0,
+              "compare": 0.0
+            },
+            "compare": 0.11,
+            "explanation": {
+              "explanations": [
+                {
+                  "metric": "Requests per second",
+                  "weight": 0.5,
+                  "compare": -1.52
+                },
+                {
+                  "metric": "Average response time (ms)",
+                  "weight": 0.5,
+                  "compare": 1.74
+                }
+              ],
+              "formula": "(0.5 \u22c5 -1.52%) + (0.5 \u22c5 1.74%) = 0.11%"
+            },
+            "highlight": false
+          }
+        ],
+        "loadTestResultCompare": {
+          "minResponseTime": {
+            "actual": 15.96,
+            "expected": 16.24,
+            "compare": 1.72
+          },
+          "maxResponseTime": {
+            "actual": 860.88,
+            "expected": 876.03,
+            "compare": 1.73
+          },
+          "numberOfRequests": {
+            "actual": 1084784.0,
+            "expected": 551869.0,
+            "compare": 96.57
+          },
+          "numberOfFailures": {
+            "actual": 1426.0,
+            "expected": 724.0,
+            "compare": -96.96
+          },
+          "requestsPerSecond": {
+            "actual": 602.66,
+            "expected": 613.19,
+            "compare": -1.72
+          },
+          "failuresPerSecond": {
+            "actual": 0.79,
+            "expected": 0.8,
+            "compare": 1.25
+          },
+          "medianResponseTime": {
+            "actual": 91.01,
+            "expected": 92.58,
+            "compare": 1.7
+          },
+          "averageResponseTime": {
+            "actual": 110.99,
+            "expected": 112.9,
+            "compare": 1.69
+          },
+          "responseTimePercentile50": {
+            "actual": 91.01,
+            "expected": 92.58,
+            "compare": 1.7
+          },
+          "responseTimePercentile60": {
+            "actual": 105.44,
+            "expected": 107.26,
+            "compare": 1.7
+          },
+          "responseTimePercentile70": {
+            "actual": 122.09,
+            "expected": 124.19,
+            "compare": 1.69
+          },
+          "responseTimePercentile80": {
+            "actual": 144.28,
+            "expected": 146.77,
+            "compare": 1.7
+          },
+          "responseTimePercentile90": {
+            "actual": 183.13,
+            "expected": 186.29,
+            "compare": 1.7
+          },
+          "responseTimePercentile95": {
+            "actual": 227.53,
+            "expected": 231.45,
+            "compare": 1.69
+          },
+          "responseTimePercentile99": {
+            "actual": 321.87,
+            "expected": 327.41,
+            "compare": 1.69
+          },
+          "responseTimePercentile100": {
+            "actual": 860.88,
+            "expected": 876.03,
+            "compare": 1.73
+          },
+          "numberOfUsers": {
+            "actual": 100.0,
+            "expected": 100.0,
+            "compare": 0.0
+          },
+          "compare": -0.02,
+          "explanation": {
+            "explanations": [
+              {
+                "metric": "Requests per second",
+                "weight": 0.5,
+                "compare": -1.72
+              },
+              {
+                "metric": "Average response time (ms)",
+                "weight": 0.5,
+                "compare": 1.69
+              }
+            ],
+            "formula": "(0.5 \u22c5 -1.72%) + (0.5 \u22c5 1.69%) = -0.02%"
+          },
+          "highlight": false
+        },
+        "compareWithLoadTestResult": {
+          "id": 62,
+          "service": {
+            "id": 3,
+            "url": "https://checkout.example.test/",
+            "name": "Demo - Checkout API"
+          },
+          "scenario": {
+            "id": 5,
+            "name": "Baseline - stable load",
+            "tags": [
+              "LATEST"
+            ],
+            "version": "2.0.0"
+          },
+          "triggerCIJobUrl": "https://ci.example.test/checkout/jobs/1058",
+          "triggerCIPipelineUrl": "https://ci.example.test/checkout/pipelines/558",
+          "triggerCIProjectVersion": "demo-checkout-baseline-059",
+          "loadTestsCIJobUrl": "https://ci.example.test/checkout/jobs/2058",
+          "loadTestsCIPipelineUrl": "https://ci.example.test/checkout/pipelines/558"
+        }
+      }
+    ]
+  },
+  "/compares/compare-result-with-averages": {
+    "compare": {
+      "methodResultCompares": [
+        {
+          "minResponseTime": {
+            "actual": 15.96,
+            "expected": 21.32,
+            "compare": 25.14
+          },
+          "maxResponseTime": {
+            "actual": 286.96,
+            "expected": 492.91,
+            "compare": 41.78
+          },
+          "numberOfRequests": {
+            "actual": 347524.0,
+            "expected": 254201.08,
+            "compare": 36.71
+          },
+          "numberOfFailures": {
+            "actual": 348.0,
+            "expected": 3891.28,
+            "compare": 91.06
+          },
+          "requestsPerSecond": {
+            "actual": 193.07,
+            "expected": 260.61,
+            "compare": -25.92
+          },
+          "failuresPerSecond": {
+            "actual": 0.19,
+            "expected": 4.05,
+            "compare": 95.31
+          },
+          "medianResponseTime": {
+            "actual": 54.37,
+            "expected": 78.0,
+            "compare": 30.29
+          },
+          "averageResponseTime": {
+            "actual": 66.31,
+            "expected": 95.12,
+            "compare": 30.29
+          },
+          "responseTimePercentile50": {
+            "actual": 54.37,
+            "expected": 78.0,
+            "compare": 30.29
+          },
+          "responseTimePercentile60": {
+            "actual": 62.99,
+            "expected": 90.36,
+            "compare": 30.29
+          },
+          "responseTimePercentile70": {
+            "actual": 72.94,
+            "expected": 104.63,
+            "compare": 30.29
+          },
+          "responseTimePercentile80": {
+            "actual": 86.2,
+            "expected": 123.66,
+            "compare": 30.29
+          },
+          "responseTimePercentile90": {
+            "actual": 109.41,
+            "expected": 156.95,
+            "compare": 30.29
+          },
+          "responseTimePercentile95": {
+            "actual": 135.93,
+            "expected": 195.0,
+            "compare": 30.29
+          },
+          "responseTimePercentile99": {
+            "actual": 192.29,
+            "expected": 275.85,
+            "compare": 30.29
+          },
+          "responseTimePercentile100": {
+            "actual": 286.96,
+            "expected": 492.91,
+            "compare": 41.78
+          },
+          "method": "GET /cart",
+          "protocol": "http",
+          "averageContentLength": {
+            "actual": 512.0,
+            "expected": 512.0,
+            "compare": 0.0
+          },
+          "compare": 2.18,
+          "explanation": {
+            "explanations": [
+              {
+                "metric": "Requests per second",
+                "weight": 0.5,
+                "compare": -25.92
+              },
+              {
+                "metric": "Average response time (ms)",
+                "weight": 0.5,
+                "compare": 30.29
+              }
+            ],
+            "formula": "(0.5 \u22c5 -25.92%) + (0.5 \u22c5 30.29%) = 2.18%"
+          },
+          "highlight": false
+        },
+        {
+          "minResponseTime": {
+            "actual": 19.95,
+            "expected": 26.65,
+            "compare": 25.14
+          },
+          "maxResponseTime": {
+            "actual": 358.7,
+            "expected": 616.14,
+            "compare": 41.78
+          },
+          "numberOfRequests": {
+            "actual": 131353.0,
+            "expected": 96272.74,
+            "compare": 36.44
+          },
+          "numberOfFailures": {
+            "actual": 208.0,
+            "expected": 2381.79,
+            "compare": 91.27
+          },
+          "requestsPerSecond": {
+            "actual": 72.97,
+            "expected": 98.63,
+            "compare": -26.02
+          },
+          "failuresPerSecond": {
+            "actual": 0.12,
+            "expected": 2.48,
+            "compare": 95.16
+          },
+          "medianResponseTime": {
+            "actual": 67.96,
+            "expected": 97.5,
+            "compare": 30.3
+          },
+          "averageResponseTime": {
+            "actual": 82.88,
+            "expected": 118.9,
+            "compare": 30.29
+          },
+          "responseTimePercentile50": {
+            "actual": 67.96,
+            "expected": 97.5,
+            "compare": 30.3
+          },
+          "responseTimePercentile60": {
+            "actual": 78.74,
+            "expected": 112.95,
+            "compare": 30.29
+          },
+          "responseTimePercentile70": {
+            "actual": 91.17,
+            "expected": 130.79,
+            "compare": 30.29
+          },
+          "responseTimePercentile80": {
+            "actual": 107.75,
+            "expected": 154.57,
+            "compare": 30.29
+          },
+          "responseTimePercentile90": {
+            "actual": 136.76,
+            "expected": 196.19,
+            "compare": 30.29
+          },
+          "responseTimePercentile95": {
+            "actual": 169.91,
+            "expected": 243.75,
+            "compare": 30.29
+          },
+          "responseTimePercentile99": {
+            "actual": 240.36,
+            "expected": 344.81,
+            "compare": 30.29
+          },
+          "responseTimePercentile100": {
+            "actual": 358.7,
+            "expected": 616.14,
+            "compare": 41.78
+          },
+          "method": "GET /orders/{id}",
+          "protocol": "http",
+          "averageContentLength": {
+            "actual": 3062.0,
+            "expected": 3062.0,
+            "compare": 0.0
+          },
+          "compare": 2.13,
+          "explanation": {
+            "explanations": [
+              {
+                "metric": "Requests per second",
+                "weight": 0.5,
+                "compare": -26.02
+              },
+              {
+                "metric": "Average response time (ms)",
+                "weight": 0.5,
+                "compare": 30.29
+              }
+            ],
+            "formula": "(0.5 \u22c5 -26.02%) + (0.5 \u22c5 30.29%) = 2.13%"
+          },
+          "highlight": false
+        },
+        {
+          "minResponseTime": {
+            "actual": 22.62,
+            "expected": 30.2,
+            "compare": 25.1
+          },
+          "maxResponseTime": {
+            "actual": 406.53,
+            "expected": 698.29,
+            "compare": 41.78
+          },
+          "numberOfRequests": {
+            "actual": 54936.0,
+            "expected": 40226.78,
+            "compare": 36.57
+          },
+          "numberOfFailures": {
+            "actual": 113.0,
+            "expected": 1246.09,
+            "compare": 90.93
+          },
+          "requestsPerSecond": {
+            "actual": 30.52,
+            "expected": 41.24,
+            "compare": -25.99
+          },
+          "failuresPerSecond": {
+            "actual": 0.06,
+            "expected": 1.3,
+            "compare": 95.38
+          },
+          "medianResponseTime": {
+            "actual": 77.02,
+            "expected": 110.5,
+            "compare": 30.3
+          },
+          "averageResponseTime": {
+            "actual": 93.93,
+            "expected": 134.75,
+            "compare": 30.29
+          },
+          "responseTimePercentile50": {
+            "actual": 77.02,
+            "expected": 110.5,
+            "compare": 30.3
+          },
+          "responseTimePercentile60": {
+            "actual": 89.24,
+            "expected": 128.02,
+            "compare": 30.29
+          },
+          "responseTimePercentile70": {
+            "actual": 103.33,
+            "expected": 148.23,
+            "compare": 30.29
+          },
+          "responseTimePercentile80": {
+            "actual": 122.11,
+            "expected": 175.18,
+            "compare": 30.29
+          },
+          "responseTimePercentile90": {
+            "actual": 154.99,
+            "expected": 222.34,
+            "compare": 30.29
+          },
+          "responseTimePercentile95": {
+            "actual": 192.56,
+            "expected": 276.25,
+            "compare": 30.3
+          },
+          "responseTimePercentile99": {
+            "actual": 272.41,
+            "expected": 390.79,
+            "compare": 30.29
+          },
+          "responseTimePercentile100": {
+            "actual": 406.53,
+            "expected": 698.29,
+            "compare": 41.78
+          },
+          "method": "GET /shipping/rates",
+          "protocol": "http",
+          "averageContentLength": {
+            "actual": 4762.0,
+            "expected": 4762.0,
+            "compare": 0.0
+          },
+          "compare": 2.15,
+          "explanation": {
+            "explanations": [
+              {
+                "metric": "Requests per second",
+                "weight": 0.5,
+                "compare": -25.99
+              },
+              {
+                "metric": "Average response time (ms)",
+                "weight": 0.5,
+                "compare": 30.29
+              }
+            ],
+            "formula": "(0.5 \u22c5 -25.99%) + (0.5 \u22c5 30.29%) = 2.15%"
+          },
+          "highlight": false
+        }
+      ],
+      "loadTestResultCompare": {
+        "minResponseTime": {
+          "actual": 15.96,
+          "expected": 21.32,
+          "compare": 25.14
+        },
+        "maxResponseTime": {
+          "actual": 860.88,
+          "expected": 1478.73,
+          "compare": 41.78
+        },
+        "numberOfRequests": {
+          "actual": 1084784.0,
+          "expected": 796172.12,
+          "compare": 36.25
+        },
+        "numberOfFailures": {
+          "actual": 1426.0,
+          "expected": 16108.07,
+          "compare": 91.15
+        },
+        "requestsPerSecond": {
+          "actual": 602.66,
+          "expected": 816.07,
+          "compare": -26.15
+        },
+        "failuresPerSecond": {
+          "actual": 0.79,
+          "expected": 16.77,
+          "compare": 95.29
+        },
+        "medianResponseTime": {
+          "actual": 91.01,
+          "expected": 130.71,
+          "compare": 30.37
+        },
+        "averageResponseTime": {
+          "actual": 110.99,
+          "expected": 159.4,
+          "compare": 30.37
+        },
+        "responseTimePercentile50": {
+          "actual": 91.01,
+          "expected": 130.71,
+          "compare": 30.37
+        },
+        "responseTimePercentile60": {
+          "actual": 105.44,
+          "expected": 151.43,
+          "compare": 30.37
+        },
+        "responseTimePercentile70": {
+          "actual": 122.09,
+          "expected": 175.34,
+          "compare": 30.37
+        },
+        "responseTimePercentile80": {
+          "actual": 144.28,
+          "expected": 207.22,
+          "compare": 30.37
+        },
+        "responseTimePercentile90": {
+          "actual": 183.13,
+          "expected": 263.01,
+          "compare": 30.37
+        },
+        "responseTimePercentile95": {
+          "actual": 227.53,
+          "expected": 326.77,
+          "compare": 30.37
+        },
+        "responseTimePercentile99": {
+          "actual": 321.87,
+          "expected": 462.26,
+          "compare": 30.37
+        },
+        "responseTimePercentile100": {
+          "actual": 860.88,
+          "expected": 1478.73,
+          "compare": 41.78
+        },
+        "numberOfUsers": {
+          "actual": 100.0,
+          "expected": 183.33,
+          "compare": -45.45
+        },
+        "compare": 2.11,
+        "explanation": {
+          "explanations": [
+            {
+              "metric": "Requests per second",
+              "weight": 0.5,
+              "compare": -26.15
+            },
+            {
+              "metric": "Average response time (ms)",
+              "weight": 0.5,
+              "compare": 30.37
+            }
+          ],
+          "formula": "(0.5 \u22c5 -26.15%) + (0.5 \u22c5 30.37%) = 2.11%"
+        },
+        "highlight": false
+      }
+    }
+  },
+  "/compares/compare-result-with-scenario": {
+    "compare": {
+      "scenario": {
+        "id": 5,
+        "name": "Baseline - stable load",
+        "tags": [
+          "LATEST"
+        ],
+        "version": "2.0.0"
+      },
+      "methodResultCompares": [
+        {
+          "minResponseTime": {
+            "actual": 15.96,
+            "expected": 20.16,
+            "compare": 20.83
+          },
+          "maxResponseTime": {
+            "actual": 286.96,
+            "expected": 273.6,
+            "compare": -4.88
+          },
+          "numberOfRequests": {
+            "actual": 347524.0,
+            "expected": 230400.0,
+            "compare": 50.84
+          },
+          "numberOfFailures": {
+            "actual": 348.0,
+            "expected": 460.8,
+            "compare": 24.48
+          },
+          "requestsPerSecond": {
+            "actual": 193.07,
+            "expected": 256.0,
+            "compare": -24.58
+          },
+          "failuresPerSecond": {
+            "actual": 0.19,
+            "expected": 0.51,
+            "compare": 62.75
+          },
+          "medianResponseTime": {
+            "actual": 54.37,
+            "expected": 59.04,
+            "compare": 7.91
+          },
+          "averageResponseTime": {
+            "actual": 66.31,
+            "expected": 72.0,
+            "compare": 7.9
+          },
+          "responseTimePercentile50": {
+            "actual": 54.37,
+            "expected": 59.04,
+            "compare": 7.91
+          },
+          "responseTimePercentile60": {
+            "actual": 62.99,
+            "expected": 68.4,
+            "compare": 7.91
+          },
+          "responseTimePercentile70": {
+            "actual": 72.94,
+            "expected": 79.2,
+            "compare": 7.9
+          },
+          "responseTimePercentile80": {
+            "actual": 86.2,
+            "expected": 93.6,
+            "compare": 7.91
+          },
+          "responseTimePercentile90": {
+            "actual": 109.41,
+            "expected": 118.8,
+            "compare": 7.9
+          },
+          "responseTimePercentile95": {
+            "actual": 135.93,
+            "expected": 147.6,
+            "compare": 7.91
+          },
+          "responseTimePercentile99": {
+            "actual": 192.29,
+            "expected": 208.8,
+            "compare": 7.91
+          },
+          "responseTimePercentile100": {
+            "actual": 286.96,
+            "expected": 273.6,
+            "compare": -4.88
+          },
+          "method": "GET /cart",
+          "protocol": "http",
+          "averageContentLength": {
+            "actual": 512.0,
+            "expected": 512.0,
+            "compare": 0.0
+          },
+          "compare": -8.34,
+          "explanation": {
+            "explanations": [
+              {
+                "metric": "Requests per second",
+                "weight": 0.5,
+                "compare": -24.58
+              },
+              {
+                "metric": "Average response time (ms)",
+                "weight": 0.5,
+                "compare": 7.9
+              }
+            ],
+            "formula": "(0.5 \u22c5 -24.58%) + (0.5 \u22c5 7.9%) = -8.34%"
+          },
+          "highlight": false
+        },
+        {
+          "minResponseTime": {
+            "actual": 19.95,
+            "expected": 25.2,
+            "compare": 20.83
+          },
+          "maxResponseTime": {
+            "actual": 358.7,
+            "expected": 342.0,
+            "compare": -4.88
+          },
+          "numberOfRequests": {
+            "actual": 131353.0,
+            "expected": 86400.0,
+            "compare": 52.03
+          },
+          "numberOfFailures": {
+            "actual": 208.0,
+            "expected": 172.8,
+            "compare": -20.37
+          },
+          "requestsPerSecond": {
+            "actual": 72.97,
+            "expected": 96.0,
+            "compare": -23.99
+          },
+          "failuresPerSecond": {
+            "actual": 0.12,
+            "expected": 0.19,
+            "compare": 36.84
+          },
+          "medianResponseTime": {
+            "actual": 67.96,
+            "expected": 73.8,
+            "compare": 7.91
+          },
+          "averageResponseTime": {
+            "actual": 82.88,
+            "expected": 90.0,
+            "compare": 7.91
+          },
+          "responseTimePercentile50": {
+            "actual": 67.96,
+            "expected": 73.8,
+            "compare": 7.91
+          },
+          "responseTimePercentile60": {
+            "actual": 78.74,
+            "expected": 85.5,
+            "compare": 7.91
+          },
+          "responseTimePercentile70": {
+            "actual": 91.17,
+            "expected": 99.0,
+            "compare": 7.91
+          },
+          "responseTimePercentile80": {
+            "actual": 107.75,
+            "expected": 117.0,
+            "compare": 7.91
+          },
+          "responseTimePercentile90": {
+            "actual": 136.76,
+            "expected": 148.5,
+            "compare": 7.91
+          },
+          "responseTimePercentile95": {
+            "actual": 169.91,
+            "expected": 184.5,
+            "compare": 7.91
+          },
+          "responseTimePercentile99": {
+            "actual": 240.36,
+            "expected": 261.0,
+            "compare": 7.91
+          },
+          "responseTimePercentile100": {
+            "actual": 358.7,
+            "expected": 342.0,
+            "compare": -4.88
+          },
+          "method": "GET /orders/{id}",
+          "protocol": "http",
+          "averageContentLength": {
+            "actual": 3062.0,
+            "expected": 3062.0,
+            "compare": 0.0
+          },
+          "compare": -8.04,
+          "explanation": {
+            "explanations": [
+              {
+                "metric": "Requests per second",
+                "weight": 0.5,
+                "compare": -23.99
+              },
+              {
+                "metric": "Average response time (ms)",
+                "weight": 0.5,
+                "compare": 7.91
+              }
+            ],
+            "formula": "(0.5 \u22c5 -23.99%) + (0.5 \u22c5 7.91%) = -8.04%"
+          },
+          "highlight": false
+        },
+        {
+          "minResponseTime": {
+            "actual": 22.62,
+            "expected": 28.56,
+            "compare": 20.8
+          },
+          "maxResponseTime": {
+            "actual": 406.53,
+            "expected": 387.6,
+            "compare": -4.88
+          },
+          "numberOfRequests": {
+            "actual": 54936.0,
+            "expected": 36000.0,
+            "compare": 52.6
+          },
+          "numberOfFailures": {
+            "actual": 113.0,
+            "expected": 72.0,
+            "compare": -56.94
+          },
+          "requestsPerSecond": {
+            "actual": 30.52,
+            "expected": 40.0,
+            "compare": -23.7
+          },
+          "failuresPerSecond": {
+            "actual": 0.06,
+            "expected": 0.08,
+            "compare": 25.0
+          },
+          "medianResponseTime": {
+            "actual": 77.02,
+            "expected": 83.64,
+            "compare": 7.91
+          },
+          "averageResponseTime": {
+            "actual": 93.93,
+            "expected": 102.0,
+            "compare": 7.91
+          },
+          "responseTimePercentile50": {
+            "actual": 77.02,
+            "expected": 83.64,
+            "compare": 7.91
+          },
+          "responseTimePercentile60": {
+            "actual": 89.24,
+            "expected": 96.9,
+            "compare": 7.91
+          },
+          "responseTimePercentile70": {
+            "actual": 103.33,
+            "expected": 112.2,
+            "compare": 7.91
+          },
+          "responseTimePercentile80": {
+            "actual": 122.11,
+            "expected": 132.6,
+            "compare": 7.91
+          },
+          "responseTimePercentile90": {
+            "actual": 154.99,
+            "expected": 168.3,
+            "compare": 7.91
+          },
+          "responseTimePercentile95": {
+            "actual": 192.56,
+            "expected": 209.1,
+            "compare": 7.91
+          },
+          "responseTimePercentile99": {
+            "actual": 272.41,
+            "expected": 295.8,
+            "compare": 7.91
+          },
+          "responseTimePercentile100": {
+            "actual": 406.53,
+            "expected": 387.6,
+            "compare": -4.88
+          },
+          "method": "GET /shipping/rates",
+          "protocol": "http",
+          "averageContentLength": {
+            "actual": 4762.0,
+            "expected": 4762.0,
+            "compare": 0.0
+          },
+          "compare": -7.89,
+          "explanation": {
+            "explanations": [
+              {
+                "metric": "Requests per second",
+                "weight": 0.5,
+                "compare": -23.7
+              },
+              {
+                "metric": "Average response time (ms)",
+                "weight": 0.5,
+                "compare": 7.91
+              }
+            ],
+            "formula": "(0.5 \u22c5 -23.7%) + (0.5 \u22c5 7.91%) = -7.89%"
+          },
+          "highlight": false
+        }
+      ],
+      "loadTestResultCompare": {
+        "minResponseTime": {
+          "actual": 15.96,
+          "expected": 33.6,
+          "compare": 52.5
+        },
+        "maxResponseTime": {
+          "actual": 860.88,
+          "expected": 456.0,
+          "compare": -88.79
+        },
+        "numberOfRequests": {
+          "actual": 1084784.0,
+          "expected": 720000.0,
+          "compare": 50.66
+        },
+        "numberOfFailures": {
+          "actual": 1426.0,
+          "expected": 1440.0,
+          "compare": 0.97
+        },
+        "requestsPerSecond": {
+          "actual": 602.66,
+          "expected": 800.0,
+          "compare": -24.67
+        },
+        "failuresPerSecond": {
+          "actual": 0.79,
+          "expected": 1.6,
+          "compare": 50.62
+        },
+        "medianResponseTime": {
+          "actual": 91.01,
+          "expected": 98.4,
+          "compare": 7.51
+        },
+        "averageResponseTime": {
+          "actual": 110.99,
+          "expected": 120.0,
+          "compare": 7.51
+        },
+        "responseTimePercentile50": {
+          "actual": 91.01,
+          "expected": 98.4,
+          "compare": 7.51
+        },
+        "responseTimePercentile60": {
+          "actual": 105.44,
+          "expected": 114.0,
+          "compare": 7.51
+        },
+        "responseTimePercentile70": {
+          "actual": 122.09,
+          "expected": 132.0,
+          "compare": 7.51
+        },
+        "responseTimePercentile80": {
+          "actual": 144.28,
+          "expected": 156.0,
+          "compare": 7.51
+        },
+        "responseTimePercentile90": {
+          "actual": 183.13,
+          "expected": 198.0,
+          "compare": 7.51
+        },
+        "responseTimePercentile95": {
+          "actual": 227.53,
+          "expected": 246.0,
+          "compare": 7.51
+        },
+        "responseTimePercentile99": {
+          "actual": 321.87,
+          "expected": 348.0,
+          "compare": 7.51
+        },
+        "responseTimePercentile100": {
+          "actual": 860.88,
+          "expected": 456.0,
+          "compare": -88.79
+        },
+        "numberOfUsers": {
+          "actual": 100.0,
+          "expected": 100.0,
+          "compare": 0.0
+        },
+        "compare": -8.58,
+        "explanation": {
+          "explanations": [
+            {
+              "metric": "Requests per second",
+              "weight": 0.5,
+              "compare": -24.67
+            },
+            {
+              "metric": "Average response time (ms)",
+              "weight": 0.5,
+              "compare": 7.51
+            }
+          ],
+          "formula": "(0.5 \u22c5 -24.67%) + (0.5 \u22c5 7.51%) = -8.58%"
+        },
+        "highlight": false
+      }
+    }
+  },
+  "/compares/compare-averages-with-scenario": {
+    "compare": {
+      "minResponseTime": {
+        "actual": 17.37,
+        "expected": 33.6,
+        "compare": 48.3
+      },
+      "maxResponseTime": {
+        "actual": 936.47,
+        "expected": 456.0,
+        "compare": -105.37
+      },
+      "numberOfRequests": {
+        "actual": 656055.58,
+        "expected": 720000.0,
+        "compare": -8.88
+      },
+      "numberOfFailures": {
+        "actual": 645.15,
+        "expected": 1440.0,
+        "compare": 55.2
+      },
+      "requestsPerSecond": {
+        "actual": 656.39,
+        "expected": 800.0,
+        "compare": -17.95
+      },
+      "failuresPerSecond": {
+        "actual": 0.64,
+        "expected": 1.6,
+        "compare": 60.0
+      },
+      "medianResponseTime": {
+        "actual": 99.1,
+        "expected": 98.4,
+        "compare": -0.71
+      },
+      "averageResponseTime": {
+        "actual": 120.86,
+        "expected": 120.0,
+        "compare": -0.72
+      },
+      "responseTimePercentile50": {
+        "actual": 99.1,
+        "expected": 98.4,
+        "compare": -0.71
+      },
+      "responseTimePercentile60": {
+        "actual": 114.82,
+        "expected": 114.0,
+        "compare": -0.72
+      },
+      "responseTimePercentile70": {
+        "actual": 132.94,
+        "expected": 132.0,
+        "compare": -0.71
+      },
+      "responseTimePercentile80": {
+        "actual": 157.12,
+        "expected": 156.0,
+        "compare": -0.72
+      },
+      "responseTimePercentile90": {
+        "actual": 199.42,
+        "expected": 198.0,
+        "compare": -0.72
+      },
+      "responseTimePercentile95": {
+        "actual": 247.76,
+        "expected": 246.0,
+        "compare": -0.72
+      },
+      "responseTimePercentile99": {
+        "actual": 350.49,
+        "expected": 348.0,
+        "compare": -0.72
+      },
+      "responseTimePercentile100": {
+        "actual": 936.47,
+        "expected": 456.0,
+        "compare": -105.37
+      },
+      "numberOfUsers": {
+        "actual": 100.0,
+        "expected": 100.0,
+        "compare": 0.0
+      },
+      "compare": -9.33,
+      "explanation": {
+        "explanations": [
+          {
+            "metric": "Requests per second",
+            "weight": 0.5,
+            "compare": -17.95
+          },
+          {
+            "metric": "Average response time (ms)",
+            "weight": 0.5,
+            "compare": -0.72
+          }
+        ],
+        "formula": "(0.5 \u22c5 -17.95%) + (0.5 \u22c5 -0.72%) = -9.33%"
+      },
+      "highlight": false
+    }
+  },
+  "/compares/compare-method-with-scenario": {
+    "compare": {
+      "minResponseTime": {
+        "actual": 17.37,
+        "expected": 20.16,
+        "compare": 13.84
+      },
+      "maxResponseTime": {
+        "actual": 312.16,
+        "expected": 273.6,
+        "compare": -14.09
+      },
+      "numberOfRequests": {
+        "actual": 209723.1,
+        "expected": 230400.0,
+        "compare": -8.97
+      },
+      "numberOfFailures": {
+        "actual": 156.97,
+        "expected": 460.8,
+        "compare": 65.94
+      },
+      "requestsPerSecond": {
+        "actual": 209.85,
+        "expected": 256.0,
+        "compare": -18.03
+      },
+      "failuresPerSecond": {
+        "actual": 0.16,
+        "expected": 0.51,
+        "compare": 68.63
+      },
+      "medianResponseTime": {
+        "actual": 59.14,
+        "expected": 59.04,
+        "compare": -0.17
+      },
+      "averageResponseTime": {
+        "actual": 72.13,
+        "expected": 72.0,
+        "compare": -0.18
+      },
+      "responseTimePercentile50": {
+        "actual": 59.14,
+        "expected": 59.04,
+        "compare": -0.17
+      },
+      "responseTimePercentile60": {
+        "actual": 68.52,
+        "expected": 68.4,
+        "compare": -0.18
+      },
+      "responseTimePercentile70": {
+        "actual": 79.34,
+        "expected": 79.2,
+        "compare": -0.18
+      },
+      "responseTimePercentile80": {
+        "actual": 93.77,
+        "expected": 93.6,
+        "compare": -0.18
+      },
+      "responseTimePercentile90": {
+        "actual": 119.01,
+        "expected": 118.8,
+        "compare": -0.18
+      },
+      "responseTimePercentile95": {
+        "actual": 147.86,
+        "expected": 147.6,
+        "compare": -0.18
+      },
+      "responseTimePercentile99": {
+        "actual": 209.17,
+        "expected": 208.8,
+        "compare": -0.18
+      },
+      "responseTimePercentile100": {
+        "actual": 312.16,
+        "expected": 273.6,
+        "compare": -14.09
+      },
+      "method": "GET /cart",
+      "protocol": "http",
+      "averageContentLength": {
+        "actual": 512.0,
+        "expected": 512.0,
+        "compare": 0.0
+      },
+      "compare": -9.11,
+      "explanation": {
+        "explanations": [
+          {
+            "metric": "Requests per second",
+            "weight": 0.5,
+            "compare": -18.03
+          },
+          {
+            "metric": "Average response time (ms)",
+            "weight": 0.5,
+            "compare": -0.18
+          }
+        ],
+        "formula": "(0.5 \u22c5 -18.03%) + (0.5 \u22c5 -0.18%) = -9.11%"
+      },
+      "highlight": false
+    }
+  },
+  "/results-analytics/percentiles": {
+    "analytics": [
+      {
+        "responseTimePercentile50": 192.68,
+        "responseTimePercentile60": 223.22,
+        "responseTimePercentile70": 258.47,
+        "responseTimePercentile80": 305.46,
+        "responseTimePercentile90": 387.7,
+        "responseTimePercentile95": 481.69,
+        "responseTimePercentile99": 681.41,
+        "responseTimePercentile100": 3274.41,
+        "datetime": "2026-08-31T04:11:39Z"
+      },
+      {
+        "responseTimePercentile50": 64.39,
+        "responseTimePercentile60": 74.6,
+        "responseTimePercentile70": 86.38,
+        "responseTimePercentile80": 102.09,
+        "responseTimePercentile90": 129.57,
+        "responseTimePercentile95": 160.99,
+        "responseTimePercentile99": 227.74,
+        "responseTimePercentile100": 608.1,
+        "datetime": "2026-08-31T04:31:39Z"
+      },
+      {
+        "responseTimePercentile50": 227.72,
+        "responseTimePercentile60": 263.82,
+        "responseTimePercentile70": 305.47,
+        "responseTimePercentile80": 361.01,
+        "responseTimePercentile90": 458.21,
+        "responseTimePercentile95": 569.29,
+        "responseTimePercentile99": 805.33,
+        "responseTimePercentile100": 2151.75,
+        "datetime": "2026-08-31T04:51:39Z"
+      }
+    ]
+  },
+  "/results-analytics/number-of-requests": {
+    "analytics": [
+      {
+        "numberOfRequests": 470183.0,
+        "numberOfFailures": 23043.0,
+        "datetime": "2026-08-31T04:11:39Z"
+      },
+      {
+        "numberOfRequests": 264963.0,
+        "numberOfFailures": 0.0,
+        "datetime": "2026-08-31T04:31:39Z"
+      },
+      {
+        "numberOfRequests": 137649.0,
+        "numberOfFailures": 6335.0,
+        "datetime": "2026-08-31T04:51:39Z"
+      }
+    ]
+  },
+  "/results-analytics/requests-per-second": {
+    "analytics": [
+      {
+        "requestsPerSecond": 1567.28,
+        "failuresPerSecond": 76.81,
+        "datetime": "2026-08-31T04:11:39Z"
+      },
+      {
+        "requestsPerSecond": 883.21,
+        "failuresPerSecond": 0.0,
+        "datetime": "2026-08-31T04:31:39Z"
+      },
+      {
+        "requestsPerSecond": 458.83,
+        "failuresPerSecond": 21.12,
+        "datetime": "2026-08-31T04:51:39Z"
+      }
+    ]
+  },
+  "/results-analytics/response-times": {
+    "analytics": [
+      {
+        "minResponseTime": 24.29,
+        "maxResponseTime": 3274.41,
+        "medianResponseTime": 192.68,
+        "averageResponseTime": 234.97,
+        "datetime": "2026-08-31T04:11:39Z"
+      },
+      {
+        "minResponseTime": 11.28,
+        "maxResponseTime": 608.1,
+        "medianResponseTime": 64.39,
+        "averageResponseTime": 78.53,
+        "datetime": "2026-08-31T04:31:39Z"
+      },
+      {
+        "minResponseTime": 39.9,
+        "maxResponseTime": 2151.75,
+        "medianResponseTime": 227.72,
+        "averageResponseTime": 277.7,
+        "datetime": "2026-08-31T04:51:39Z"
+      }
+    ]
+  },
+  "/methods-analytics/number-of-requests": {
+    "analytics": [
+      {
+        "numberOfRequests": 254201.08,
+        "numberOfFailures": 3891.28,
+        "method": "GET /cart",
+        "protocol": "http"
+      },
+      {
+        "numberOfRequests": 96272.74,
+        "numberOfFailures": 2381.79,
+        "method": "GET /orders/{id}",
+        "protocol": "http"
+      },
+      {
+        "numberOfRequests": 40226.78,
+        "numberOfFailures": 1246.09,
+        "method": "GET /shipping/rates",
+        "protocol": "http"
+      }
+    ]
+  },
+  "/methods-analytics/requests-per-second": {
+    "analytics": [
+      {
+        "requestsPerSecond": 260.61,
+        "failuresPerSecond": 4.05,
+        "method": "GET /cart",
+        "protocol": "http"
+      },
+      {
+        "requestsPerSecond": 98.63,
+        "failuresPerSecond": 2.48,
+        "method": "GET /orders/{id}",
+        "protocol": "http"
+      },
+      {
+        "requestsPerSecond": 41.24,
+        "failuresPerSecond": 1.3,
+        "method": "GET /shipping/rates",
+        "protocol": "http"
+      }
+    ]
+  },
+  "/methods-analytics/response-times": {
+    "analytics": [
+      {
+        "minResponseTime": 21.32,
+        "maxResponseTime": 492.91,
+        "medianResponseTime": 78.0,
+        "averageResponseTime": 95.12,
+        "method": "GET /cart",
+        "protocol": "http"
+      },
+      {
+        "minResponseTime": 26.65,
+        "maxResponseTime": 616.14,
+        "medianResponseTime": 97.5,
+        "averageResponseTime": 118.9,
+        "method": "GET /orders/{id}",
+        "protocol": "http"
+      },
+      {
+        "minResponseTime": 30.2,
+        "maxResponseTime": 698.29,
+        "medianResponseTime": 110.5,
+        "averageResponseTime": 134.75,
+        "method": "GET /shipping/rates",
+        "protocol": "http"
+      }
+    ]
+  },
+  "/methods/details-percentiles-analytics": {
+    "analytics": [
+      {
+        "responseTimePercentile50": 59.09,
+        "responseTimePercentile60": 68.45,
+        "responseTimePercentile70": 79.26,
+        "responseTimePercentile80": 93.67,
+        "responseTimePercentile90": 118.89,
+        "responseTimePercentile95": 147.71,
+        "responseTimePercentile99": 208.96,
+        "responseTimePercentile100": 311.85,
+        "datetime": "2026-09-04T03:11:39Z"
+      },
+      {
+        "responseTimePercentile50": 62.2,
+        "responseTimePercentile60": 72.06,
+        "responseTimePercentile70": 83.44,
+        "responseTimePercentile80": 98.61,
+        "responseTimePercentile90": 125.16,
+        "responseTimePercentile95": 155.51,
+        "responseTimePercentile99": 219.99,
+        "responseTimePercentile100": 328.3,
+        "datetime": "2026-09-04T13:21:39Z"
+      },
+      {
+        "responseTimePercentile50": 63.77,
+        "responseTimePercentile60": 73.88,
+        "responseTimePercentile70": 85.55,
+        "responseTimePercentile80": 101.1,
+        "responseTimePercentile90": 128.32,
+        "responseTimePercentile95": 159.43,
+        "responseTimePercentile99": 225.54,
+        "responseTimePercentile100": 336.58,
+        "datetime": "2026-09-04T23:36:39Z"
+      }
+    ]
+  },
+  "/methods/details-number-of-requests-analytics": {
+    "analytics": [
+      {
+        "numberOfRequests": 63304.0,
+        "numberOfFailures": 0.0,
+        "datetime": "2026-09-04T03:11:39Z"
+      },
+      {
+        "numberOfRequests": 197805.0,
+        "numberOfFailures": 201.0,
+        "datetime": "2026-09-04T13:21:39Z"
+      },
+      {
+        "numberOfRequests": 407714.0,
+        "numberOfFailures": 409.0,
+        "datetime": "2026-09-04T23:36:39Z"
+      }
+    ]
+  },
+  "/methods/details-requests-per-second-analytics": {
+    "analytics": [
+      {
+        "requestsPerSecond": 211.01,
+        "failuresPerSecond": 0.0,
+        "datetime": "2026-09-04T03:11:39Z"
+      },
+      {
+        "requestsPerSecond": 219.78,
+        "failuresPerSecond": 0.22,
+        "datetime": "2026-09-04T13:21:39Z"
+      },
+      {
+        "requestsPerSecond": 226.51,
+        "failuresPerSecond": 0.23,
+        "datetime": "2026-09-04T23:36:39Z"
+      }
+    ]
+  },
+  "/methods/details-response-times-analytics": {
+    "analytics": [
+      {
+        "minResponseTime": 17.35,
+        "maxResponseTime": 311.85,
+        "medianResponseTime": 59.09,
+        "averageResponseTime": 72.06,
+        "datetime": "2026-09-04T03:11:39Z"
+      },
+      {
+        "minResponseTime": 18.26,
+        "maxResponseTime": 328.3,
+        "medianResponseTime": 62.2,
+        "averageResponseTime": 75.86,
+        "datetime": "2026-09-04T13:21:39Z"
+      },
+      {
+        "minResponseTime": 18.72,
+        "maxResponseTime": 336.58,
+        "medianResponseTime": 63.77,
+        "averageResponseTime": 77.77,
+        "datetime": "2026-09-04T23:36:39Z"
+      }
+    ]
+  },
+  "/compares/compare-load-test-results-history-response-times": {
+    "compares": [
+      {
+        "title": "Current",
+        "results": [
+          {
+            "datetime": "2026-09-28T17:06:39Z",
+            "metrics": {
+              "minResponseTime": 31.09,
+              "maxResponseTime": 421.91,
+              "medianResponseTime": 91.04,
+              "averageResponseTime": 111.03
+            }
+          },
+          {
+            "datetime": "2026-09-28T17:07:39Z",
+            "metrics": {
+              "minResponseTime": 33.55,
+              "maxResponseTime": 455.26,
+              "medianResponseTime": 98.24,
+              "averageResponseTime": 119.81
+            }
+          },
+          {
+            "datetime": "2026-09-28T17:08:39Z",
+            "metrics": {
+              "minResponseTime": 35.15,
+              "maxResponseTime": 476.97,
+              "medianResponseTime": 102.93,
+              "averageResponseTime": 125.52
+            }
+          }
+        ]
+      },
+      {
+        "title": "demo-checkout-baseline-059",
+        "results": [
+          {
+            "datetime": "2026-09-28T07:06:39Z",
+            "metrics": {
+              "minResponseTime": 31.64,
+              "maxResponseTime": 429.34,
+              "medianResponseTime": 92.65,
+              "averageResponseTime": 112.99
+            }
+          },
+          {
+            "datetime": "2026-09-28T07:07:09Z",
+            "metrics": {
+              "minResponseTime": 34.14,
+              "maxResponseTime": 463.28,
+              "medianResponseTime": 99.97,
+              "averageResponseTime": 121.92
+            }
+          },
+          {
+            "datetime": "2026-09-28T07:07:39Z",
+            "metrics": {
+              "minResponseTime": 35.76,
+              "maxResponseTime": 485.37,
+              "medianResponseTime": 104.74,
+              "averageResponseTime": 127.73
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "/compares/compare-method-results-history-response-times": {
+    "compares": [
+      {
+        "title": "Current: GET /cart",
+        "results": [
+          {
+            "datetime": "2026-09-28T17:06:39Z",
+            "metrics": {
+              "minResponseTime": 18.55,
+              "maxResponseTime": 251.76,
+              "medianResponseTime": 54.33,
+              "averageResponseTime": 66.25
+            }
+          },
+          {
+            "datetime": "2026-09-28T17:07:39Z",
+            "metrics": {
+              "minResponseTime": 20.02,
+              "maxResponseTime": 271.67,
+              "medianResponseTime": 58.62,
+              "averageResponseTime": 71.49
+            }
+          },
+          {
+            "datetime": "2026-09-28T17:08:39Z",
+            "metrics": {
+              "minResponseTime": 20.97,
+              "maxResponseTime": 284.61,
+              "medianResponseTime": 61.42,
+              "averageResponseTime": 74.9
+            }
+          }
+        ]
+      },
+      {
+        "title": "demo-checkout-baseline-059: GET /cart",
+        "results": [
+          {
+            "datetime": "2026-09-28T07:06:39Z",
+            "metrics": {
+              "minResponseTime": 18.88,
+              "maxResponseTime": 256.2,
+              "medianResponseTime": 55.28,
+              "averageResponseTime": 67.42
+            }
+          },
+          {
+            "datetime": "2026-09-28T07:07:09Z",
+            "metrics": {
+              "minResponseTime": 20.37,
+              "maxResponseTime": 276.45,
+              "medianResponseTime": 59.65,
+              "averageResponseTime": 72.75
+            }
+          },
+          {
+            "datetime": "2026-09-28T07:07:39Z",
+            "metrics": {
+              "minResponseTime": 21.34,
+              "maxResponseTime": 289.62,
+              "medianResponseTime": 62.5,
+              "averageResponseTime": 76.22
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "/compares/compare-load-test-results-history-number-of-users": {
+    "compares": [
+      {
+        "title": "Current",
+        "results": [
+          {
+            "datetime": "2026-09-28T17:06:39Z",
+            "metrics": {
+              "numberOfUsers": 10.0
+            }
+          },
+          {
+            "datetime": "2026-09-28T17:07:39Z",
+            "metrics": {
+              "numberOfUsers": 17.0
+            }
+          },
+          {
+            "datetime": "2026-09-28T17:08:39Z",
+            "metrics": {
+              "numberOfUsers": 33.0
+            }
+          }
+        ]
+      },
+      {
+        "title": "demo-checkout-baseline-059",
+        "results": [
+          {
+            "datetime": "2026-09-28T07:06:39Z",
+            "metrics": {
+              "numberOfUsers": 10.0
+            }
+          },
+          {
+            "datetime": "2026-09-28T07:07:09Z",
+            "metrics": {
+              "numberOfUsers": 17.0
+            }
+          },
+          {
+            "datetime": "2026-09-28T07:07:39Z",
+            "metrics": {
+              "numberOfUsers": 33.0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "/compares/compare-method-results-history-number-of-users": {
+    "compares": [
+      {
+        "title": "Current: GET /cart",
+        "results": [
+          {
+            "datetime": "2026-09-28T17:06:39Z",
+            "metrics": {
+              "numberOfUsers": 10.0
+            }
+          },
+          {
+            "datetime": "2026-09-28T17:07:39Z",
+            "metrics": {
+              "numberOfUsers": 17.0
+            }
+          },
+          {
+            "datetime": "2026-09-28T17:08:39Z",
+            "metrics": {
+              "numberOfUsers": 33.0
+            }
+          }
+        ]
+      },
+      {
+        "title": "demo-checkout-baseline-059: GET /cart",
+        "results": [
+          {
+            "datetime": "2026-09-28T07:06:39Z",
+            "metrics": {
+              "numberOfUsers": 10.0
+            }
+          },
+          {
+            "datetime": "2026-09-28T07:07:09Z",
+            "metrics": {
+              "numberOfUsers": 17.0
+            }
+          },
+          {
+            "datetime": "2026-09-28T07:07:39Z",
+            "metrics": {
+              "numberOfUsers": 33.0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "/compares/compare-load-test-results-history-number-of-requests": {
+    "compares": [
+      {
+        "title": "Current",
+        "results": [
+          {
+            "datetime": "2026-09-28T17:06:39Z",
+            "metrics": {
+              "numberOfRequests": 0.0,
+              "numberOfFailures": 0.0
+            }
+          },
+          {
+            "datetime": "2026-09-28T17:07:39Z",
+            "metrics": {
+              "numberOfRequests": 7662.0,
+              "numberOfFailures": 10.0
+            }
+          },
+          {
+            "datetime": "2026-09-28T17:08:39Z",
+            "metrics": {
+              "numberOfRequests": 22898.0,
+              "numberOfFailures": 31.0
+            }
+          }
+        ]
+      },
+      {
+        "title": "demo-checkout-baseline-059",
+        "results": [
+          {
+            "datetime": "2026-09-28T07:06:39Z",
+            "metrics": {
+              "numberOfRequests": 0.0,
+              "numberOfFailures": 0.0
+            }
+          },
+          {
+            "datetime": "2026-09-28T07:07:09Z",
+            "metrics": {
+              "numberOfRequests": 3920.0,
+              "numberOfFailures": 5.0
+            }
+          },
+          {
+            "datetime": "2026-09-28T07:07:39Z",
+            "metrics": {
+              "numberOfRequests": 11788.0,
+              "numberOfFailures": 15.0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "/compares/compare-method-results-history-number-of-requests": {
+    "compares": [
+      {
+        "title": "Current: GET /cart",
+        "results": [
+          {
+            "datetime": "2026-09-28T17:06:39Z",
+            "metrics": {
+              "numberOfRequests": 0.0,
+              "numberOfFailures": 0.0
+            }
+          },
+          {
+            "datetime": "2026-09-28T17:07:39Z",
+            "metrics": {
+              "numberOfRequests": 2517.0,
+              "numberOfFailures": 3.0
+            }
+          },
+          {
+            "datetime": "2026-09-28T17:08:39Z",
+            "metrics": {
+              "numberOfRequests": 7855.0,
+              "numberOfFailures": 8.0
+            }
+          }
+        ]
+      },
+      {
+        "title": "demo-checkout-baseline-059: GET /cart",
+        "results": [
+          {
+            "datetime": "2026-09-28T07:06:39Z",
+            "metrics": {
+              "numberOfRequests": 0.0,
+              "numberOfFailures": 0.0
+            }
+          },
+          {
+            "datetime": "2026-09-28T07:07:09Z",
+            "metrics": {
+              "numberOfRequests": 1298.0,
+              "numberOfFailures": 1.0
+            }
+          },
+          {
+            "datetime": "2026-09-28T07:07:39Z",
+            "metrics": {
+              "numberOfRequests": 4054.0,
+              "numberOfFailures": 4.0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "/compares/compare-load-test-results-history-requests-per-second": {
+    "compares": [
+      {
+        "title": "Current",
+        "results": [
+          {
+            "datetime": "2026-09-28T17:06:39Z",
+            "metrics": {
+              "requestsPerSecond": 0.0,
+              "failuresPerSecond": 0.0
+            }
+          },
+          {
+            "datetime": "2026-09-28T17:07:39Z",
+            "metrics": {
+              "requestsPerSecond": 127.69,
+              "failuresPerSecond": 0.17
+            }
+          },
+          {
+            "datetime": "2026-09-28T17:08:39Z",
+            "metrics": {
+              "requestsPerSecond": 253.93,
+              "failuresPerSecond": 0.34
+            }
+          }
+        ]
+      },
+      {
+        "title": "demo-checkout-baseline-059",
+        "results": [
+          {
+            "datetime": "2026-09-28T07:06:39Z",
+            "metrics": {
+              "requestsPerSecond": 0.0,
+              "failuresPerSecond": 0.0
+            }
+          },
+          {
+            "datetime": "2026-09-28T07:07:09Z",
+            "metrics": {
+              "requestsPerSecond": 130.66,
+              "failuresPerSecond": 0.15
+            }
+          },
+          {
+            "datetime": "2026-09-28T07:07:39Z",
+            "metrics": {
+              "requestsPerSecond": 262.26,
+              "failuresPerSecond": 0.33
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "/compares/compare-method-results-history-requests-per-second": {
+    "compares": [
+      {
+        "title": "Current: GET /cart",
+        "results": [
+          {
+            "datetime": "2026-09-28T17:06:39Z",
+            "metrics": {
+              "requestsPerSecond": 0.0,
+              "failuresPerSecond": 0.0
+            }
+          },
+          {
+            "datetime": "2026-09-28T17:07:39Z",
+            "metrics": {
+              "requestsPerSecond": 41.95,
+              "failuresPerSecond": 0.05
+            }
+          },
+          {
+            "datetime": "2026-09-28T17:08:39Z",
+            "metrics": {
+              "requestsPerSecond": 88.97,
+              "failuresPerSecond": 0.08
+            }
+          }
+        ]
+      },
+      {
+        "title": "demo-checkout-baseline-059: GET /cart",
+        "results": [
+          {
+            "datetime": "2026-09-28T07:06:39Z",
+            "metrics": {
+              "requestsPerSecond": 0.0,
+              "failuresPerSecond": 0.0
+            }
+          },
+          {
+            "datetime": "2026-09-28T07:07:09Z",
+            "metrics": {
+              "requestsPerSecond": 43.27,
+              "failuresPerSecond": 0.03
+            }
+          },
+          {
+            "datetime": "2026-09-28T07:07:39Z",
+            "metrics": {
+              "requestsPerSecond": 91.87,
+              "failuresPerSecond": 0.1
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

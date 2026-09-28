@@ -10,12 +10,14 @@ export default defineConfig({
     globals: true,
     setupFiles: ['./src/setupTests.ts'],
     restoreMocks: true,
+    maxWorkers: 4,
+    testTimeout: 15000,
     coverage: {
       provider: 'v8',
       include: ['src/**/*.{ts,tsx}'],
       exclude: ['src/**/*.test.{ts,tsx}', 'src/**/*.d.ts', 'src/setupTests.ts', 'src/test/**'],
       reporter: ['text', 'lcov'],
-      thresholds: { statements: 30, branches: 25, functions: 22, lines: 30 }
+      thresholds: { statements: 90, branches: 90, functions: 90, lines: 90 }
     }
   }
 });
