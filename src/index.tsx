@@ -3,8 +3,8 @@ import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { NotFound } from './Pages/NotFound';
 import { AppRoutes } from './Services/Navigation/Routing';
-import { persistor, store } from './Redux/Store';
-import { PersistGate } from 'redux-persist/integration/react';
+import { store } from './Redux/Store';
+import { RehydrationGate } from './Providers/RehydrationGate';
 import { SuspenseBackdropView } from './Components/Views/SuspenseBackdropView';
 import { createRoot } from 'react-dom/client';
 import { ResultsRoutes } from './Navigation/Results/ResultsRoutes';
@@ -45,13 +45,13 @@ root.render(
   <React.StrictMode>
     <ConfigProvider>
       <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
+        <RehydrationGate>
           <ThemeProvider>
             <BrowserRouter>
               <IndexRoute />
             </BrowserRouter>
           </ThemeProvider>
-        </PersistGate>
+        </RehydrationGate>
       </Provider>
     </ConfigProvider>
   </React.StrictMode>

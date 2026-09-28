@@ -1,12 +1,8 @@
 import { CoreInitialState, INITIAL_CORE } from './InitialState';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { PersistConfig } from 'redux-persist/es/types';
-import storage from 'redux-persist/lib/storage';
-import { createMigrate, persistReducer } from 'redux-persist';
 import { ThemeSettings } from '../../Models/Core/Theme';
 import { TableSettings, TableType } from '../../Models/Core/TableSettings';
 import { ChartSettings, ChartType, ChartWidgetSettings, ChartWidgetType } from '../../Models/Core/ChartSettings';
-import { CORE_MIGRATIONS } from './Migrations';
 import { ValidationError } from '../../Services/Clients/Models';
 
 type SetTableSettings<Data> = {
@@ -58,14 +54,6 @@ export const slice = createSlice({
   }
 });
 
-const persistConfig: PersistConfig<CoreInitialState> = {
-  key: 'core',
-  storage,
-  version: 1,
-  migrate: createMigrate(CORE_MIGRATIONS, { debug: false }),
-  whitelist: ['theme', 'tableSettings', 'chartSettings', 'chartWidgetSettings']
-};
-
 export const {
   setTheme,
   setTableSettings,
@@ -75,4 +63,4 @@ export const {
   setChartWidgetSettings
 } = slice.actions;
 
-export default persistReducer(persistConfig, slice.reducer);
+export default slice.reducer;

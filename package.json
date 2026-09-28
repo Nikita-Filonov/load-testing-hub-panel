@@ -36,7 +36,7 @@
     "react-redux": "^9.3.0",
     "react-router-dom": "^7.18.4",
     "redux": "^5.0.1",
-    "redux-persist": "^6.0.0"
+    "redux-remember": "^6.0.2"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

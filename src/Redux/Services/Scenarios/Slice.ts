@@ -1,8 +1,5 @@
-import { INITIAL_SCENARIOS, ScenariosInitialState } from './InitialState';
+import { INITIAL_SCENARIOS } from './InitialState';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { PersistConfig } from 'redux-persist/es/types';
-import storage from 'redux-persist/lib/storage';
-import { persistReducer } from 'redux-persist';
 import { Scenario, ScenarioDetails } from '../../../Models/Services/Scenarios';
 import { ScenarioSettings } from '../../../Models/Services/ScenarioSettings';
 
@@ -47,12 +44,6 @@ export const slice = createSlice({
   }
 });
 
-const persistConfig: PersistConfig<ScenariosInitialState> = {
-  key: 'scenarios',
-  storage,
-  whitelist: ['scenario']
-};
-
 export const {
   setScenario,
   setScenarios,
@@ -64,4 +55,4 @@ export const {
   clearScenariosState
 } = slice.actions;
 
-export default persistReducer(persistConfig, slice.reducer);
+export default slice.reducer;

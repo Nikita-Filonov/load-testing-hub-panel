@@ -1,9 +1,6 @@
-import { INITIAL_SERVICES, ServicesInitialState } from './InitialState';
+import { INITIAL_SERVICES } from './InitialState';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Service, ServiceDetails } from '../../../Models/Services/Services';
-import { PersistConfig } from 'redux-persist/es/types';
-import storage from 'redux-persist/lib/storage';
-import { persistReducer } from 'redux-persist';
 
 type DeleteService = {
   serviceId: number;
@@ -44,12 +41,6 @@ export const slice = createSlice({
   }
 });
 
-const persistConfig: PersistConfig<ServicesInitialState> = {
-  key: 'services',
-  storage,
-  whitelist: ['service']
-};
-
 export const {
   setService,
   setServices,
@@ -60,4 +51,4 @@ export const {
   clearServicesState
 } = slice.actions;
 
-export default persistReducer(persistConfig, slice.reducer);
+export default slice.reducer;

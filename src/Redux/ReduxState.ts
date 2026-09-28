@@ -20,6 +20,7 @@ import { CompareMethodResultsHistoryInitialState } from './Compares/CompareMetho
 import { CompareLoadTestResultsHistoryInitialState } from './Compares/CompareLoadTestResultsHistory/InitialState';
 
 export interface ReduxState {
+  rehydrated: boolean;
   core: CoreInitialState;
   methods: MethodsInitialState;
   services: ServicesInitialState;
