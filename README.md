@@ -1,4 +1,4 @@
-# Load testing hub panel
+# Load Testing Hub panel
 
 [![CI](https://github.com/Nikita-Filonov/load-testing-hub-panel/actions/workflows/workflow-test.yml/badge.svg)](https://github.com/Nikita-Filonov/load-testing-hub-panel/actions/workflows/workflow-test.yml)
 [![codecov](https://codecov.io/gh/Nikita-Filonov/load-testing-hub-panel/branch/main/graph/badge.svg)](https://codecov.io/gh/Nikita-Filonov/load-testing-hub-panel)
