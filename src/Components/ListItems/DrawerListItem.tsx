@@ -18,7 +18,7 @@ export const DrawerListItem: FC<DrawerListItemProps> = (props) => {
   return (
     <ListItem disableGutters>
       <ListItemButton component={RouterLink} to={to} selected={location.pathname.startsWith(to)}>
-        {icon && <ListItemIcon>{icon}</ListItemIcon>}
+        {icon && <ListItemIcon sx={{ minWidth: 56 }}>{icon}</ListItemIcon>}
         <ListItemText primary={title} />
       </ListItemButton>
     </ListItem>
