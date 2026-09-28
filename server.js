@@ -1,31 +1,26 @@
-const express = require('express');
-const favicon = require('express-favicon');
-const path = require('path');
-const port = 13100;
+import express from 'express';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
+const buildDirectory = path.join(path.dirname(fileURLToPath(import.meta.url)), 'build');
 const app = express();
 
-app.use(favicon(__dirname + '/build/favicon.ico'));
-app.use(express.static(__dirname));
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(buildDirectory));
 
-app.get('/config', function (_, res) {
-  res.json({
+app.get('/config', (_, response) => {
+  response.json({
     serverUrl: process.env.SERVER_URL,
     apiVersion: process.env.API_VERSION,
-
     apiDateFormat: process.env.API_DATE_FORMAT,
     apiTimeFormat: process.env.API_TIME_FORMAT,
-
     durationFormat: process.env.DURATION_FORMAT,
-
     pickerDateFormat: process.env.PICKER_DATE_FORMAT,
     pickerTimeFormat: process.env.PICKER_TIME_FORMAT
   });
 });
 
-app.get('/*splat', function (req, res) {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+app.get('/*splat', (_, response) => {
+  response.sendFile(path.join(buildDirectory, 'index.html'));
 });
 
-app.listen(port, '0.0.0.0');
+app.listen(13100, '0.0.0.0');

@@ -1,5 +1,9 @@
 # Load testing hub panel
 
+[![CI](https://github.com/Nikita-Filonov/load-testing-hub-panel/actions/workflows/workflow-test.yml/badge.svg)](https://github.com/Nikita-Filonov/load-testing-hub-panel/actions/workflows/workflow-test.yml)
+[![codecov](https://codecov.io/gh/Nikita-Filonov/load-testing-hub-panel/branch/main/graph/badge.svg)](https://codecov.io/gh/Nikita-Filonov/load-testing-hub-panel)
+[![Docker pulls](https://img.shields.io/docker/pulls/nikitafilonov/load-testing-hub-panel)](https://hub.docker.com/r/nikitafilonov/load-testing-hub-panel)
+
 If you have any questions, you can ask [@Nikita Filonov](https://t.me/sound_right)
 
 ## Table of content
@@ -119,9 +123,11 @@ docker compose up -d
 
 ## Project setup
 
+Use Node.js 24.15 or newer in the 24.x series (or Node.js 26+) and npm. Copy `.env.example` to `.env` to configure the local Vite server. In Docker, `/config` still reads `SERVER_URL`, `API_VERSION`, and the other runtime variables shown in the quick start.
+
 ```shell
-yarn install
-yarn start
+npm ci
+npm run dev
 ```
 
 ## Services

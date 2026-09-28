@@ -1,10 +1,7 @@
 node_modules
 build
+coverage
 .git
-.gitignore
-Dockerfile*
-docker-compose*
-npm-debug.log
-pnpm-lock.yaml
-.vscode
-.DS_Store
+.github
+.env*
+npm-debug.log*
