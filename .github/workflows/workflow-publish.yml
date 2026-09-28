@@ -1,0 +1,21 @@
+name: Publish Docker image
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    uses: ./.github/workflows/reusable-lint.yml
+  test:
+    uses: ./.github/workflows/reusable-test.yml
+    secrets: inherit
+  build:
+    uses: ./.github/workflows/reusable-build.yml
+  docker:
+    needs: [lint, test, build]
+    uses: ./.github/workflows/reusable-docker.yml
+    secrets: inherit
